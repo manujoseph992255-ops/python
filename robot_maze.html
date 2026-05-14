@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 7: Algorithmic Thinking | KVJ Python Mastery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            /* Standard Module Light Theme Variables */
+            --primary: #1e40af;
+            --primary-dark: #1e3a8a;
+            --primary-light: #eff6ff;
+            --bg-page: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #cbd5e1;
+            
+            /* Game specific */
+            --cell-size: 55px; 
+            --grid-gap: 5px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            font-family: 'Outfit', sans-serif; 
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ====== NAVBAR ====== */
+        .navbar {
+            height: 68px;
+            background: white;
+            padding: 0 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            top: 0; width: 100%; z-index: 1000;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+        .logout-btn {
+            background: #ef4444; color: white;
+            padding: 9px 22px; border-radius: 8px;
+            text-decoration: none; font-weight: 700; font-size: 13px;
+        }
+
+        /* ====== LAYOUT ====== */
+        .layout-container {
+            display: flex;
+            align-items: flex-start;
+            max-width: 1360px;
+            margin: 90px auto 60px;
+            gap: 30px;
+            padding: 20px 20px 0;
+        }
+
+        /* ====== SIDEBAR ====== */
+        .sidebar { 
+            width: 270px; 
+            flex: 0 0 270px;
+            position: sticky; 
+            top: 90px; 
+            z-index: 100;
+        }
+        
+        .sidebar-inner {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            border: 1px solid #e2e8f0;
+        }
+        .sidebar h3 {
+            font-size: 11px; text-transform: uppercase;
+            letter-spacing: 1.5px; color: var(--text-muted);
+            margin: 0 0 12px; font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .sidebar a {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 13px; text-decoration: none;
+            color: #475569; font-weight: 500; font-size: 14px;
+            border-radius: 9px; transition: all 0.2s; margin-bottom: 3px;
+        }
+        .sidebar a:hover { background: var(--primary-light); color: var(--primary); }
+        .sidebar a.active {
+            background: var(--primary-light); color: var(--primary); font-weight: 700;
+        }
+        .sidebar a i { width: 18px; text-align: center; font-size: 13px; }
+
+        /* ====== MAIN CONTENT (LIGHT THEMED) ====== */
+        .main-content { 
+            flex: 1; 
+            min-width: 0; 
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+            min-height: calc(100vh - 150px);
+            z-index: 1;
+        }
+
+        /* Game Elements Styling */
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+            z-index: 2;
+        }
+
+        .game-header h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #1e40af, #0ea5e9);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .game-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .game-container {
+            display: flex;
+            gap: 50px;
+            width: 100%;
+            z-index: 2;
+        }
+
+        /* Maze Grid */
+        .maze-wrapper {
+            position: relative;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(6, var(--cell-size));
+            grid-template-rows: repeat(6, var(--cell-size));
+            gap: var(--grid-gap);
+            background: linear-gradient(135deg, #7dd3fc, #3b82f6); /* Vibrant light blue to royal blue */
+            padding: 15px;
+            border-radius: 16px;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3), inset 0 0 20px rgba(255,255,255,0.4);
+        }
+
+        .cell {
+            width: var(--cell-size);
+            height: var(--cell-size);
+            background: #ffffff;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: 0.3s all cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .cell.visited {
+            background: linear-gradient(135deg, #38bdf8, #818cf8); /* Vibrant blue path */
+            border-color: #60a5fa;
+            box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.5), 0 0 10px rgba(56, 189, 248, 0.5);
+            transform: scale(0.98);
+        }
+
+        .cell.wall {
+            background: linear-gradient(135deg, #f59e0b, #ef4444); /* Vibrant orange to red walls */
+            border-color: #dc2626;
+            box-shadow: inset 0 4px 8px rgba(255,255,255,0.4), 0 4px 10px rgba(239, 68, 68, 0.3);
+            transform: scale(0.95);
+        }
+
+        .cell.start {
+            background: linear-gradient(135deg, #4ade80, #10b981); /* Bright emerald start */
+            border-color: #22c55e;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+        }
+
+        .cell.end {
+            background: linear-gradient(135deg, #fef08a, #f59e0b); /* Glowing gold */
+            border-color: #fbbf24;
+            font-size: 1.8rem;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.6);
+            animation: pulse-glow 1.5s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            from { box-shadow: 0 0 10px rgba(234, 179, 8, 0.4); transform: scale(1); }
+            to { box-shadow: 0 0 25px rgba(234, 179, 8, 0.8); transform: scale(1.05); }
+        }
+
+        /* Robot Sprite */
+        .robot {
+            position: absolute;
+            top: 0; left: 0;
+            width: var(--cell-size);
+            height: var(--cell-size);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.4rem;
+            filter: drop-shadow(0 8px 10px rgba(0,0,0,0.25));
+        }
+
+        /* Controls Panel */
+        .controls-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text-main);
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 10px;
+        }
+
+        /* Code Input Area */
+        .code-input-container {
+            margin-bottom: 25px;
+        }
+
+        .cmd-textarea {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe); /* Light blue gradient */
+            border: 2px solid #3b82f6; /* Royal blue border */
+            border-radius: 12px;
+            padding: 15px;
+            font-family: 'Fira Code', monospace;
+            font-size: 1.1rem;
+            color: #1e3a8a; /* Dark blue text */
+            font-weight: 600;
+            resize: none;
+            outline: none;
+            overflow: hidden; /* Removes the scrollbar */
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .cmd-textarea:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+        }
+
+        .input-hint {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            border: none;
+        }
+
+        .btn-run {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-run:hover { background: var(--primary-dark); }
+        .btn-run:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .btn-reset {
+            background: #f1f5f9;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+        }
+        .btn-reset:hover { background: #e2e8f0; }
+
+        .status-message {
+            margin-top: 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            min-height: 24px;
+        }
+        .status-error { color: #dc2626; }
+        .status-success { color: #16a34a; }
+
+        @media (max-width: 1000px) {
+            .game-container { flex-direction: column; align-items: center; }
+            .controls-panel { width: 100%; max-width: 400px; }
+        }
+        @media (max-width: 768px) {
+            .layout-container { flex-direction: column; }
+            .sidebar { width: 100%; position: static; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Standard Module Navbar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <img src="Kvj logo.jpeg" alt="KVJ Logo" style="height: 40px;" onerror="this.style.display='none';">
+        </div>
+        <a href="roadmap.html" class="logout-btn">EXIT</a>
+    </nav>
+
+    <!-- Layout Container -->
+    <div class="layout-container">
+        
+        <!-- Standard Module Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-inner">
+                <h3 style="color: var(--primary); font-weight: 800; margin-top: 0; margin-bottom: 15px;"><i class="fas fa-map-signs"></i> MODULE PATH</h3>
+                <a href="Module-1.html"><i class="fas fa-book-open"></i> 01 Foundation</a>
+                <a href="Module-2.html"><i class="fas fa-code-branch"></i> 02 Flow Control</a>
+                <a href="Module-3.html"><i class="fas fa-exchange-alt"></i> 03 I/O Operations</a>
+                <a href="Module-4.html"><i class="fas fa-file-alt"></i> 04 Documentation</a>
+                <a href="Module-5.html"><i class="fas fa-exclamation-triangle"></i> 05 Error Handling</a>
+                <a href="Module-6.html"><i class="fas fa-cubes"></i> 06 Built-in Modules</a>
+                <a href="robot_maze.html" class="active"><i class="fas fa-gamepad"></i> 07 Algorithmic Thinking</a>
+
+                <h3 style="margin-top:30px; margin-bottom: 15px;"><i class="fas fa-compass"></i> NAVIGATION</h3>
+                <a href="roadmap.html" style="background: #f8fafc; border: 1px solid var(--border);"><i class="fas fa-arrow-left"></i> Return to Roadmap</a>
+            </div>
+        </aside>
+
+        <!-- Main Content (Game Interface) -->
+        <main class="main-content">
+            <div class="game-header">
+                <h1>Let's take the Treasure</h1>
+                <div class="game-subtitle">Program the robot to reach the data crystal</div>
+            </div>
+
+            <div class="game-container">
+                <!-- Maze Display -->
+                <div class="maze-wrapper">
+                    <div class="grid" id="maze-grid">
+                        <!-- Cells generated by JS -->
+                    </div>
+                    <!-- Robot Character -->
+                    <div class="robot" id="robot">
+                        🤖
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="controls-panel">
+                    <div class="panel-title">Command Input</div>
+                    
+                    <div class="code-input-container">
+                        <textarea id="cmd-input" class="cmd-textarea"></textarea>
+                        <div class="input-hint">Valid commands: <b>up, down, left, right</b></div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn-action btn-reset" onclick="resetGame()">Reset</button>
+                        <button class="btn-action btn-run" id="btn-run" onclick="runSequence()">Execute Sequence</button>
+                    </div>
+
+                    <div class="status-message" id="status-message"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Game Logic Scripts -->
+    <script>
+        // Game Configuration
+        const gridSize = 6;
+        const cellSize = 55; // match CSS var
+        const gridGap = 5;   // match CSS var
+        const offset = 10;   // padding in CSS
+
+        // Level Design: 0 = path, 1 = wall, 'S' = start, 'E' = end
+        const level = [
+            ['S', 0,  0,  1,  0,  0],
+            [1,   1,  0,  1,  0,  1],
+            [0,   0,  0,  0,  0,  0],
+            [0,   1,  1,  1,  1,  0],
+            [0,   0,  0,  0,  1,  0],
+            [1,   1,  1,  0,  0, 'E']
+        ];
+
+        let startPos = {x: 0, y: 0};
+        let endPos = {x: 0, y: 0};
+        
+        let robotPos = {x: 0, y: 0};
+        let isRunning = false;
+
+        // Initialize Grid
+        function initGrid() {
+            const gridEl = document.getElementById('maze-grid');
+            gridEl.innerHTML = '';
+
+            for (let y = 0; y < gridSize; y++) {
+                for (let x = 0; x < gridSize; x++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    
+                    if (level[y][x] === 1) cell.classList.add('wall');
+                    else if (level[y][x] === 'S') {
+                        cell.classList.add('start');
+                        startPos = {x, y};
+                    }
+                    else if (level[y][x] === 'E') {
+                        cell.classList.add('end');
+                        cell.innerHTML = '💎';
+                        endPos = {x, y};
+                    }
+                    
+                    gridEl.appendChild(cell);
+                }
+            }
+            
+            robotPos = {...startPos};
+            updateRobotPosition(false);
+        }
+
+        // Update Robot Visual Position
+        function updateRobotPosition(animate = true) {
+            const robotEl = document.getElementById('robot');
+            const posX = offset + (robotPos.x * (cellSize + gridGap));
+            const posY = offset + (robotPos.y * (cellSize + gridGap));
+            
+            if (!animate) {
+                robotEl.style.transition = 'none';
+            } else {
+                robotEl.style.transition = 'all 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+            }
+            
+            robotEl.style.transform = `translate(${posX}px, ${posY}px)`;
+            
+            // Force reflow if not animating to apply immediately
+            if (!animate) robotEl.offsetHeight; 
+        }
+
+        function setStatus(msg, type) {
+            const statusEl = document.getElementById('status-message');
+            statusEl.innerText = msg;
+            statusEl.className = `status-message status-${type}`;
+        }
+
+        function resetGame() {
+            if (isRunning) return;
+            robotPos = {...startPos};
+            updateRobotPosition(false);
+            setStatus('', '');
+            document.querySelectorAll('.cell.visited').forEach(c => c.classList.remove('visited'));
+        }
+
+        function parseCommands(text) {
+            // Split by commas, spaces, or newlines
+            const rawTokens = text.split(/[\s,]+/);
+            const valid = ['up', 'down', 'left', 'right'];
+            const parsed = [];
+            
+            for (let t of rawTokens) {
+                const clean = t.trim().toLowerCase();
+                if (clean === '') continue; // Skip empty
+                if (valid.includes(clean)) {
+                    parsed.push(clean);
+                } else {
+                    return { success: false, error: `Invalid command found: "${clean}"` };
+                }
+            }
+            return { success: true, commands: parsed };
+        }
+
+        async function runSequence() {
+            if (isRunning) return;
+            
+            const inputText = document.getElementById('cmd-input').value;
+            const parseResult = parseCommands(inputText);
+            
+            if (!parseResult.success) {
+                setStatus(parseResult.error, 'error');
+                return;
+            }
+
+            const commands = parseResult.commands;
+            if (commands.length === 0) {
+                setStatus('Please enter some commands first!', 'error');
+                return;
+            }
+
+            isRunning = true;
+            document.getElementById('btn-run').disabled = true;
+            document.getElementById('cmd-input').disabled = true;
+            setStatus('Executing...', '');
+            
+            // Mark the starting position of this specific sequence execution as visited
+            const startIndex = robotPos.y * gridSize + robotPos.x;
+            const sCells = document.getElementById('maze-grid').children;
+            if (!sCells[startIndex].classList.contains('start') && !sCells[startIndex].classList.contains('end')) {
+                sCells[startIndex].classList.add('visited');
+            }
+            
+            await new Promise(r => setTimeout(r, 200));
+
+            for (let i = 0; i < commands.length; i++) {
+                const cmd = commands[i];
+                let nextX = robotPos.x;
+                let nextY = robotPos.y;
+
+                if (cmd === 'up') nextY--;
+                if (cmd === 'down') nextY++;
+                if (cmd === 'left') nextX--;
+                if (cmd === 'right') nextX++;
+
+                // Check Bounds
+                if (nextX < 0 || nextX >= gridSize || nextY < 0 || nextY >= gridSize) {
+                    setStatus('Error: Robot crashed into the boundary!', 'error');
+                    isRunning = false;
+                    document.getElementById('btn-run').disabled = false;
+                    document.getElementById('cmd-input').disabled = false;
+                    return;
+                }
+
+                // Check Walls
+                if (level[nextY][nextX] === 1) {
+                    setStatus('Error: Robot crashed into a wall!', 'error');
+                    isRunning = false;
+                    document.getElementById('btn-run').disabled = false;
+                    document.getElementById('cmd-input').disabled = false;
+                    return;
+                }
+
+                // Move
+                robotPos.x = nextX;
+                robotPos.y = nextY;
+
+                // Add visited path
+                const cellIndex = robotPos.y * gridSize + robotPos.x;
+                const gridCells = document.getElementById('maze-grid').children;
+                if (!gridCells[cellIndex].classList.contains('start') && !gridCells[cellIndex].classList.contains('end')) {
+                    gridCells[cellIndex].classList.add('visited');
+                }
+
+                updateRobotPosition(true);
+
+                await new Promise(r => setTimeout(r, 400)); // Delay for animation
+            }
+
+            // Check Win Condition
+            if (robotPos.x === endPos.x && robotPos.y === endPos.y) {
+                setStatus('Success! Data Crystal acquired.', 'success');
+                // Confetti inside main content
+                const myCanvas = document.createElement('canvas');
+                myCanvas.style.position = 'absolute';
+                myCanvas.style.top = '0';
+                myCanvas.style.left = '0';
+                myCanvas.style.width = '100%';
+                myCanvas.style.height = '100%';
+                myCanvas.style.pointerEvents = 'none';
+                myCanvas.style.zIndex = '100';
+                document.querySelector('.main-content').appendChild(myCanvas);
+                
+                const myConfetti = confetti.create(myCanvas, {
+                    resize: true,
+                    useWorker: true
+                });
+                
+                myConfetti({
+                    particleCount: 150,
+                    spread: 80,
+                    origin: { y: 0.6 },
+                    colors: ['#1e40af', '#22c55e', '#eab308']
+                });
+                
+                setTimeout(() => myCanvas.remove(), 4000);
+            } else {
+                setStatus('Sequence finished, but crystal not reached.', 'error');
+            }
+
+            isRunning = false;
+            document.getElementById('btn-run').disabled = false;
+            document.getElementById('cmd-input').disabled = false;
+        }
+
+        // Start
+        initGrid();
+
+    </script>
+</body>
+</html>
