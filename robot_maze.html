@@ -177,8 +177,24 @@
         .quiz-values-grid .quiz-value-box:nth-child(3) { border-color: #a855f7; color: #a855f7; background: #faf5ff; }
         .quiz-values-grid .quiz-value-box:nth-child(4) { border-color: #f97316; color: #f97316; background: #fff7ed; }
 
+        .reason-box.selected-correct {
+            background: #f0fdf4 !important;
+            border-color: #22c55e !important;
+            color: #166534 !important;
+            font-weight: 700;
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.2);
+            transform: scale(1.02);
+        }
+        .reason-box.selected-wrong {
+            background: #fef2f2 !important;
+            border-color: #ef4444 !important;
+            color: #991b1b !important;
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+        }
+
         /* Selected States */
-        [id^="q"] .quiz-value-box.selected-correct {
+        .selected-correct {
             border-width: 4px !important;
             border-color: #22c55e !important;
             background: #f0fdf4 !important;
@@ -186,7 +202,7 @@
             box-shadow: 0 0 30px rgba(34, 197, 94, 0.2) !important;
             z-index: 10;
         }
-        [id^="q"] .quiz-value-box.selected-wrong {
+        .selected-wrong {
             border-width: 4px !important;
             border-color: #ef4444 !important;
             background: #fef2f2 !important;
