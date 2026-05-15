@@ -181,6 +181,65 @@
         }
         .explanation-box strong { color: #1e3a8a; }
 
+        /* Quiz Modal Popup */
+        .quiz-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.3s ease;
+        }
+        .quiz-modal-content {
+            background: white;
+            border-radius: 28px;
+            width: 95%;
+            max-width: 600px;
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+            position: relative;
+            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .modal-header {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .modal-header h3 {
+            font-size: 1.5rem;
+            color: #1e293b;
+            font-weight: 800;
+        }
+        .close-modal {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: #f1f5f9;
+            border: none;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            font-size: 22px;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .close-modal:hover { background: #fee2e2; color: #ef4444; transform: rotate(90deg); }
+        
+        .modal-reasons-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
 
         /* ====== LAYOUT ====== */
         .layout-container {
@@ -2640,39 +2699,75 @@
             
             if (isCorrect) {
                 element.classList.add('selected-correct');
-                document.getElementById(`reasons-${qNum}`).style.display = 'block';
-                // Scroll slightly to show reasons
-                document.getElementById(`reasons-${qNum}`).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                openQuizModal(qNum);
             } else {
                 element.classList.add('selected-wrong');
-                // Optional: shake effect
                 element.style.animation = 'none';
                 void element.offsetWidth;
                 element.style.animation = 'shake 0.4s';
             }
         }
 
-        function checkReason(qNum, element, isCorrect) {
-            const container = document.getElementById(`reasons-${qNum}`);
-            const boxes = container.querySelectorAll('.reason-box');
+        function openQuizModal(qNum) {
+            const modal = document.getElementById('quiz-modal');
+            const container = document.getElementById('modal-reasons-container');
+            const expContainer = document.getElementById('modal-explanation');
             
-            if (isCorrect) {
-                element.classList.add('correct');
-                document.getElementById(`exp-${qNum}`).style.display = 'block';
-                // Success confetti localized
-                if (typeof confetti === 'function') {
-                    confetti({
-                        particleCount: 40,
-                        spread: 60,
-                        origin: { y: 0.8 },
-                        colors: ['#22c55e', '#4ade80']
-                    });
-                }
-            } else {
-                element.classList.add('wrong');
-                setTimeout(() => element.classList.remove('wrong'), 1000);
+            expContainer.style.display = 'none';
+            container.innerHTML = '';
+            
+            // Get reasons from the main page source
+            const sourceReasons = document.getElementById(`reasons-${qNum}`).querySelectorAll('.reason-box');
+            const sourceExp = document.getElementById(`exp-${qNum}`).innerHTML;
+            
+            sourceReasons.forEach(reason => {
+                const clone = reason.cloneNode(true);
+                const isCorrect = reason.getAttribute('onclick').includes('true');
+                clone.onclick = () => {
+                    // Remove existing classes
+                    container.querySelectorAll('.reason-box').forEach(b => b.classList.remove('correct', 'wrong'));
+                    
+                    if (isCorrect) {
+                        clone.classList.add('correct');
+                        expContainer.innerHTML = sourceExp;
+                        expContainer.style.display = 'block';
+                        
+                        if (typeof confetti === 'function') {
+                            confetti({ particleCount: 60, spread: 70, origin: { y: 0.6 } });
+                        }
+                    } else {
+                        clone.classList.add('wrong');
+                        setTimeout(() => clone.classList.remove('wrong'), 800);
+                    }
+                };
+                container.appendChild(clone);
+            });
+            
+            modal.style.display = 'flex';
+        }
+
+        function closeQuizModal() {
+            document.getElementById('quiz-modal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('quiz-modal');
+            if (event.target == modal) {
+                closeQuizModal();
             }
         }
+
+    <!-- Quiz Modal -->
+    <div id="quiz-modal" class="quiz-modal-overlay">
+        <div class="quiz-modal-content">
+            <button class="close-modal" onclick="closeQuizModal()">&times;</button>
+            <div class="modal-header">
+                <h3>Select the Correct Reason</h3>
+            </div>
+            <div id="modal-reasons-container" class="modal-reasons-list"></div>
+            <div id="modal-explanation" class="explanation-box"></div>
+        </div>
+    </div>
 
     </script>
 </body>
