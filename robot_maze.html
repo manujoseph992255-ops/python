@@ -2347,7 +2347,7 @@
                 <section class="content-card basics-quiz-section" style="margin-top: 40px; margin-bottom: 100px;">
                     <h2 class="premium-heading"><span class="small-ball" style="background: radial-gradient(circle at 30% 30%, #3b82f6, #1d4ed8); box-shadow: 0 0 12px rgba(37, 99, 235, 0.4);"></span>Final Mission: Python Basics Quiz</h2>
                     <hr class="section-divider">
-                    <p class="section-intro">Test your overall knowledge of Python basics. Choose the correct answer for each of the 10 questions to complete your mastery!</p>
+                    <p class="section-intro">Test your overall knowledge of Python basics. Choose the correct answer for each of the 5 questions to complete your mastery!</p>
 
                     <div id="basics-quiz-container">
                         <!-- Q1 -->
@@ -2417,76 +2417,6 @@
                             </div>
                             <div class="explanation-box" id="bexp-5">
                                 <strong>Explanation:</strong> Text values enclosed in quotation marks are <strong>Strings (str)</strong>.
-                            </div>
-                        </div>
-
-                        <!-- Q6 -->
-                        <div class="quiz-item-container" id="bq6">
-                            <div class="quiz-question-header">6. Which of these is a major advantage of Python?</div>
-                            <div class="quiz-reasons-container" style="display: block !important;">
-                                <div class="reason-box" onclick="checkBasicsQuiz(6, this, true)"><b>A</b> Easy to read and learn (English-like syntax)</div>
-                                <div class="reason-box" onclick="checkBasicsQuiz(6, this, false)"><b>B</b> It only works on Windows computers</div>
-                                <div class="reason-box" onclick="checkBasicsQuiz(6, this, false)"><b>C</b> You have to pay a lot of money to use it</div>
-                                <div class="reason-box" onclick="checkBasicsQuiz(6, this, false)"><b>D</b> It is a very old and dead language</div>
-                            </div>
-                            <div class="explanation-box" id="bexp-6">
-                                <strong>Explanation:</strong> Python is famous for its simple, readable syntax that makes it easy for beginners to learn.
-                            </div>
-                        </div>
-
-                        <!-- Q7 -->
-                        <div class="quiz-item-container" id="bq7">
-                            <div class="quiz-question-header">7. What is the data type of the value 3.14?</div>
-                            <div class="quiz-reasons-container" style="display: block !important;">
-                                <div class="reason-box" onclick="checkBasicsQuiz(7, this, false)"><b>A</b> Integer (int)</div>
-                                <div class="reason-box" onclick="checkBasicsQuiz(7, this, true)"><b>B</b> Float (float)</div>
-                                <div class="reason-box" onclick="checkBasicsQuiz(7, this, false)"><b>C</b> String (str)</div>
-                                <div class="reason-box" onclick="checkBasicsQuiz(7, this, false)"><b>D</b> Boolean (bool)</div>
-                            </div>
-                            <div class="explanation-box" id="bexp-7">
-                                <strong>Explanation:</strong> Numbers with decimal points belong to the <strong>Float (float)</strong> data type.
-                            </div>
-                        </div>
-
-                        <!-- Q8 -->
-                        <div class="quiz-item-container" id="bq8">
-                            <div class="quiz-question-header">8. How do you start a single-line comment in Python?</div>
-                            <div class="quiz-reasons-container" style="display: block !important;">
-                                <div class="reason-box" onclick="checkBasicsQuiz(8, this, false)"><b>A</b> //</div>
-                                <div class="reason-box" onclick="checkBasicsQuiz(8, this, false)"><b>B</b> /*</div>
-                                <div class="reason-box" onclick="checkBasicsQuiz(8, this, true)"><b>C</b> #</div>
-                                <div class="reason-box" onclick="checkBasicsQuiz(8, this, false)"><b>D</b> --</div>
-                            </div>
-                            <div class="explanation-box" id="bexp-8">
-                                <strong>Explanation:</strong> In Python, any text following a <strong>#</strong> symbol on a line is treated as a comment and ignored by the computer.
-                            </div>
-                        </div>
-
-                        <!-- Q9 -->
-                        <div class="quiz-item-container" id="bq9">
-                            <div class="quiz-question-header">9. Which built-in function is used to show information on the screen?</div>
-                            <div class="quiz-reasons-container" style="display: block !important;">
-                                <div class="reason-box" onclick="checkBasicsQuiz(9, this, false)"><b>A</b> display()</div>
-                                <div class="reason-box" onclick="checkBasicsQuiz(9, this, false)"><b>B</b> show()</div>
-                                <div class="reason-box" onclick="checkBasicsQuiz(9, this, false)"><b>C</b> input()</div>
-                                <div class="reason-box" onclick="checkBasicsQuiz(9, this, true)"><b>D</b> print()</div>
-                            </div>
-                            <div class="explanation-box" id="bexp-9">
-                                <strong>Explanation:</strong> The <strong>print()</strong> function outputs text or variable values to the console.
-                            </div>
-                        </div>
-
-                        <!-- Q10 -->
-                        <div class="quiz-item-container" id="bq10">
-                            <div class="quiz-question-header">10. Which of these is a Boolean (bool) value in Python?</div>
-                            <div class="quiz-reasons-container" style="display: block !important;">
-                                <div class="reason-box" onclick="checkBasicsQuiz(10, this, true)"><b>A</b> True</div>
-                                <div class="reason-box" onclick="checkBasicsQuiz(10, this, false)"><b>B</b> "False"</div>
-                                <div class="reason-box" onclick="checkBasicsQuiz(10, this, false)"><b>C</b> 0.1</div>
-                                <div class="reason-box" onclick="checkBasicsQuiz(10, this, false)"><b>D</b> [1, 2, 3]</div>
-                            </div>
-                            <div class="explanation-box" id="bexp-10">
-                                <strong>Explanation:</strong> <strong>True</strong> and <strong>False</strong> (capitalized and without quotes) are the only two Boolean values.
                             </div>
                         </div>
                     </div>
@@ -3273,12 +3203,7 @@
                     2: "Variable names can contain letters, numbers, and underscores, but cannot start with a number or use reserved keywords like 'class'.",
                     3: "Initialization means assigning an initial value to a variable using the assignment operator (=).",
                     4: "Whole numbers belong to the <strong>Integer (int)</strong> data type in Python.",
-                    5: "Text values enclosed in quotation marks are <strong>Strings (str)</strong>.",
-                    6: "Python is famous for its simple, readable syntax that makes it easy for beginners to learn.",
-                    7: "Numbers with decimal points belong to the <strong>Float (float)</strong> data type.",
-                    8: "In Python, any text following a # symbol on a line is treated as a comment and ignored by the computer.",
-                    9: "The <strong>print()</strong> function outputs text or variable values to the console.",
-                    10: "<strong>True</strong> and <strong>False</strong> (capitalized and without quotes) are the only two Boolean values."
+                    5: "Text values enclosed in quotation marks are <strong>Strings (str)</strong>."
                 };
                 
                 exp.innerHTML = `<strong>Correct!</strong> ${explanations[qNum]}`;
