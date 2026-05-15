@@ -34,6 +34,27 @@
             min-height: 100vh;
         }
 
+        /* Decorative Ball */
+        .small-ball {
+            width: 14px;
+            height: 14px;
+            background: radial-gradient(circle at 30% 30%, #60a5fa, #2563eb);
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 12px;
+            box-shadow: 0 0 12px rgba(37, 99, 235, 0.4);
+            vertical-align: middle;
+            position: relative;
+            top: -2px;
+            animation: pulse-ball 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-ball {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 8px rgba(37, 99, 235, 0.4); }
+            50% { transform: scale(1.2); box-shadow: 0 0 18px rgba(37, 99, 235, 0.7); }
+        }
+
+
         /* ====== NAVBAR ====== */
         .navbar {
             height: 68px;
@@ -627,17 +648,23 @@
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 100%;
+            width: max-content;
+            animation: trainMotion 40s linear infinite;
+        }
+
+        .carousel-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes trainMotion {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
         .carousel-slide {
-            flex: 0 0 100%;
-            width: 100%;
             display: flex;
-            justify-content: center;
             gap: 20px;
-            padding: 10px;
+            padding: 10px 20px;
             box-sizing: border-box;
         }
 
@@ -1590,6 +1617,7 @@
                     </div>
                 </section>
 
+
                 <!-- Dashboard Section: Form & Table -->
                 <section class="dashboard-section" style="margin-top: 20px;">
                     <div style="margin-bottom: 40px; padding: 0 10px;">
@@ -1602,7 +1630,7 @@
                     <div class="dashboard-container">
                         <!-- User Input Form -->
                         <div class="content-card form-card">
-                            <h2 class="premium-heading">User Information Form</h2>
+                            <h2 class="premium-heading">USER INFORMATION FORM</h2>
                             <hr class="section-divider">
                             <form id="user-info-form" class="modern-form">
                                 <div class="form-group">
@@ -1626,7 +1654,7 @@
 
                         <!-- Code Console Section -->
                         <div class="content-card data-card">
-                            <h2 class="premium-heading">Code Console</h2>
+                            <h2 class="premium-heading">CODE CONSOLE</h2>
                             <hr class="section-divider">
                             
                             <!-- Integrated Live Code Box -->
@@ -1650,6 +1678,38 @@
                         </div>
                     </div>
                 </section>
+
+                <!-- Assignment Section -->
+                <section class="content-card code-section" style="margin-top: 40px;">
+                    <h2 class="premium-heading"><span class="small-ball"></span>Assignment: Variable Creation and Output Display in Python</h2>
+                    <hr class="section-divider">
+                    <p>Create variables to store the following details:</p>
+                    <ul style="color: #475569; font-size: 1.05rem; line-height: 1.6; margin-bottom: 20px; padding-left: 40px; list-style-type: disc;">
+                        <li>Your Name</li>
+                        <li>Admission Number</li>
+                        <li>Phone Number</li>
+                        <li>Address</li>
+                        <li>Department</li>
+                        <li>Mark</li>
+                    </ul>
+                    <p>After assigning values to each variable, write a Python program to display all the details in a clear and properly formatted manner.</p>
+                    
+                    <div class="interactive-code-card">
+                        <div class="try-badge"><i class="fas fa-play"></i> Try it out:</div>
+                        
+                        <div class="code-editor-container">
+                            <textarea id="assignment-program-code" class="code-textarea" rows="12" placeholder="# Write your code here..."></textarea>
+                        </div>
+                        
+                        <button class="run-btn" id="btn-run-assignment" onclick="runAssignmentProgram()"><i class="fas fa-play"></i> Run</button>
+                        
+                        <div class="terminal-container">
+                            <div class="terminal-label">TERMINAL OUTPUT</div>
+                            <div id="assignment-program-output" class="terminal-output"></div>
+                        </div>
+                    </div>
+                </section>
+
 
             </main>
     </div>
@@ -2191,9 +2251,81 @@
             setTimeout(() => myCanvas.remove(), 3000);
         }
 
-        // --- Dashboard Logic ---
-        let userData = [];
+        async function runAssignmentProgram() {
+            const btn = document.getElementById('btn-run-assignment');
+            const code = document.getElementById('assignment-program-code').value;
+            const output = document.getElementById('assignment-program-output');
+            
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running...';
+            output.innerText = '';
+            output.style.display = 'block';
+            output.style.color = '#10b981';
+            
+            await new Promise(r => setTimeout(r, 800));
+            
+            if (!code.trim()) {
+                output.innerText = 'Error: Please write some code first.';
+                output.style.color = '#dc2626';
+            } else {
+                const lines = code.split('\n');
+                let variables = {};
+                let terminalText = '';
+                
+                try {
+                    for (let line of lines) {
+                        let trimmedLine = line.trim();
+                        if (!trimmedLine || trimmedLine.startsWith('#')) continue;
+                        
+                        // Handle variable assignment
+                        if (trimmedLine.includes('=') && !trimmedLine.startsWith('print')) {
+                            const parts = trimmedLine.split('=');
+                            const varName = parts[0].trim();
+                            let varVal = parts.slice(1).join('=').trim();
+                            // Strip quotes
+                            varVal = varVal.replace(/^["'](.*)["']$/, '$1');
+                            variables[varName] = varVal;
+                        } 
+                        // Handle print statements
+                        else {
+                            const printMatch = trimmedLine.match(/^print\s*\((.*)\)$/);
+                            if (printMatch) {
+                                const params = printMatch[1].split(',');
+                                let outputLine = '';
+                                
+                                params.forEach(p => {
+                                    p = p.trim();
+                                    // String literal
+                                    if (p.match(/^["'](.*)["']$/)) {
+                                        outputLine += p.replace(/^["'](.*)["']$/, '$1') + ' ';
+                                    } 
+                                    // Variable
+                                    else if (variables[p] !== undefined) {
+                                        outputLine += variables[p] + ' ';
+                                    }
+                                    // Fallback
+                                    else {
+                                        outputLine += p + ' ';
+                                    }
+                                });
+                                terminalText += outputLine.trim() + '\n';
+                            }
+                        }
+                    }
+                    
+                    output.innerText = terminalText || "Program finished (no output).";
+                    if (!terminalText) output.style.color = '#f59e0b';
+                } catch (e) {
+                    output.innerText = "Syntax Error: Please check your code.";
+                    output.style.color = '#dc2626';
+                }
+            }
+            
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-play"></i> Run';
+        }
 
+        // --- Dashboard Logic ---
         function updateLivePreview() {
             const name = document.getElementById('input-name').value;
             const email = document.getElementById('input-email').value;
@@ -2207,58 +2339,59 @@
             }
 
             let html = '';
-            if (name) html += `<div><span style="color: #60a5fa;">name</span> <span style="color: #f8fafc;">=</span> <span style="color: #fb923c;">"${name}"</span></div>`;
-            if (email) html += `<div><span style="color: #60a5fa;">email</span> <span style="color: #f8fafc;">=</span> <span style="color: #fb923c;">"${email}"</span></div>`;
-            if (phone) html += `<div><span style="color: #60a5fa;">phone</span> <span style="color: #f8fafc;">=</span> <span style="color: #fb923c;">"${phone}"</span></div>`;
-            if (age) html += `<div><span style="color: #60a5fa;">age</span> <span style="color: #f8fafc;">=</span> <span style="color: #facc15;">${age}</span></div>`;
+            // Capitalized Variable Names and Integer Logic for Age
+            if (name) html += `<div><span style="color: #60a5fa;">Name</span> <span style="color: #f8fafc;">=</span> <span style="color: #fb923c;">"${name}"</span></div>`;
+            if (email) html += `<div><span style="color: #60a5fa;">Email</span> <span style="color: #f8fafc;">=</span> <span style="color: #fb923c;">"${email}"</span></div>`;
+            if (phone) html += `<div><span style="color: #60a5fa;">Phone</span> <span style="color: #f8fafc;">=</span> <span style="color: #facc15;">${phone}</span></div>`;
+            if (age) html += `<div><span style="color: #60a5fa;">Age</span> <span style="color: #f8fafc;">=</span> <span style="color: #facc15;">${age}</span></div>`;
 
             preview.innerHTML = html;
         }
 
         function printFieldValues() {
-            const input = document.getElementById('print-field-name').value.trim().toLowerCase();
+            const rawInput = document.getElementById('print-field-name').value.trim();
             const output = document.getElementById('print-output');
             
-            if (!input) {
+            if (!rawInput) {
                 output.style.display = 'flex';
                 output.innerText = 'Please enter a print() command.';
                 return;
             }
 
-            // Parse print(field) syntax again since user types full command
-            const match = input.match(/^print\s*\(\s*([a-z\s]+)\s*\)$/);
+            // Case-sensitive parsing for print()
+            const match = rawInput.match(/^print\s*\(\s*(.+)\s*\)$/);
             
             if (!match) {
                 output.style.display = 'flex';
-                output.innerText = 'Invalid syntax. Please use print(FieldName) format.';
+                output.innerText = 'Invalid syntax. Please use print(Variable) or print("Text").';
                 return;
             }
 
-            const fieldName = match[1].trim();
-            let value = '';
-            let label = '';
+            const param = match[1].trim();
+            let finalOutput = '';
 
-            if (fieldName === 'name') {
-                value = document.getElementById('input-name').value;
-                label = 'Name';
-            } else if (fieldName === 'email' || fieldName === 'email id') {
-                value = document.getElementById('input-email').value;
-                label = 'Email';
-            } else if (fieldName === 'phone' || fieldName === 'phone number') {
-                value = document.getElementById('input-phone').value;
-                label = 'Phone';
-            } else if (fieldName === 'age') {
-                value = document.getElementById('input-age').value;
-                label = 'Age';
+            // 1. Check for literal string (e.g., print("Age"))
+            const stringMatch = param.match(/^["'](.*)["']$/);
+            if (stringMatch) {
+                finalOutput = stringMatch[1];
+            } 
+            // 2. Check for defined variables (Case Sensitive)
+            else {
+                if (param === 'Name') {
+                    finalOutput = document.getElementById('input-name').value || '(empty)';
+                } else if (param === 'Email') {
+                    finalOutput = document.getElementById('input-email').value || '(empty)';
+                } else if (param === 'Phone') {
+                    finalOutput = document.getElementById('input-phone').value || '(empty)';
+                } else if (param === 'Age') {
+                    finalOutput = document.getElementById('input-age').value || '(empty)';
+                } else {
+                    finalOutput = `NameError: name '${param}' is not defined`;
+                }
             }
 
-            if (label) {
-                output.style.display = 'flex';
-                output.innerHTML = `<strong>${label}:</strong><br>${value || '(empty)'}`;
-            } else {
-                output.style.display = 'flex';
-                output.innerText = 'Field not found. Try print(Name), print(Email), etc.';
-            }
+            output.style.display = 'flex';
+            output.innerText = finalOutput;
         }
 
         // Start
