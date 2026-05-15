@@ -196,7 +196,6 @@
             z-index: 10;
         }
 
-        /* Error Label Style */
         .quiz-value-box.selected-wrong::after {
             content: 'Not the odd one!';
             position: absolute;
@@ -207,11 +206,108 @@
             color: white;
             padding: 4px 12px;
             border-radius: 8px;
-            font-size: 0.75rem;
-            white-space: nowrap;
+            font-size: 0.7rem;
             font-weight: 700;
-            opacity: 1;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            white-space: nowrap;
+            box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4);
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* Mastery Quiz Styles */
+        .mastery-quiz-item {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        .mastery-quiz-item:hover {
+            transform: translateX(5px);
+            border-color: #cbd5e1;
+        }
+        .mastery-q-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .mastery-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .mastery-opt {
+            padding: 18px 25px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .mastery-opt b {
+            background: #f1f5f9;
+            color: #64748b;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+        .mastery-opt:hover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+            color: #1e40af;
+            transform: translateY(-2px);
+        }
+        .mastery-opt:hover b {
+            background: #3b82f6;
+            color: white;
+        }
+        .mastery-opt.correct {
+            background: #f0fdf4 !important;
+            border-color: #22c55e !important;
+            color: #15803d !important;
+        }
+        .mastery-opt.correct b {
+            background: #22c55e !important;
+            color: white !important;
+        }
+        .mastery-opt.wrong {
+            background: #fef2f2 !important;
+            border-color: #ef4444 !important;
+            color: #b91c1c !important;
+        }
+        .mastery-opt.wrong b {
+            background: #ef4444 !important;
+            color: white !important;
+        }
+
+        .mastery-quiz-item .explanation-box {
+            display: none;
+            margin-top: 20px;
+            background: #f0fdf4;
+            border-left-color: #22c55e;
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         }
 
         .quiz-reasons-container {
@@ -2340,6 +2436,154 @@
                     </div>
                 </section>
 
+                <section class="content-card quiz-section" style="margin-top: 40px; margin-bottom: 100px;">
+                    <h2 class="premium-heading"><span class="small-ball" style="background: radial-gradient(circle at 30% 30%, #3b82f6, #1d4ed8); box-shadow: 0 0 12px rgba(37, 99, 235, 0.4);"></span>Mission Final: Python Basics Mastery Quiz</h2>
+                    <hr class="section-divider">
+                    <p class="section-intro">Test your knowledge on Variables, Data Types, and Python's unique features. Choose the best answer for each question to complete your mission!</p>
+
+                    <div id="mastery-quiz-container">
+                        <!-- Q1 -->
+                        <div class="mastery-quiz-item" id="mq1">
+                            <div class="mastery-q-text">1. What is a variable in Python?</div>
+                            <div class="mastery-options">
+                                <div class="mastery-opt" onclick="checkMastery(1, this, false)"><b>A</b> A keyword in Python</div>
+                                <div class="mastery-opt" onclick="checkMastery(1, this, true)"><b>B</b> A container used to store data</div>
+                                <div class="mastery-opt" onclick="checkMastery(1, this, false)"><b>C</b> A mathematical operator</div>
+                                <div class="mastery-opt" onclick="checkMastery(1, this, false)"><b>D</b> A built-in function</div>
+                            </div>
+                            <div class="explanation-box" id="mexp-1">
+                                <strong>Correct!</strong> A variable is used to store data values in Python.
+                            </div>
+                        </div>
+
+                        <!-- Q2 -->
+                        <div class="mastery-quiz-item" id="mq2">
+                            <div class="mastery-q-text">2. Which of the following is a valid variable name in Python?</div>
+                            <div class="mastery-options">
+                                <div class="mastery-opt" onclick="checkMastery(2, this, false)"><b>A</b> 2name</div>
+                                <div class="mastery-opt" onclick="checkMastery(2, this, false)"><b>B</b> student-name</div>
+                                <div class="mastery-opt" onclick="checkMastery(2, this, true)"><b>C</b> student_name</div>
+                                <div class="mastery-opt" onclick="checkMastery(2, this, false)"><b>D</b> class</div>
+                            </div>
+                            <div class="explanation-box" id="mexp-2">
+                                <strong>Correct!</strong> Variable names can contain letters, numbers, and underscores, but cannot start with a number or use reserved keywords like 'class'.
+                            </div>
+                        </div>
+
+                        <!-- Q3 -->
+                        <div class="mastery-quiz-item" id="mq3">
+                            <div class="mastery-q-text">3. What is variable initialization?</div>
+                            <div class="mastery-options">
+                                <div class="mastery-opt" onclick="checkMastery(3, this, false)"><b>A</b> Deleting a variable</div>
+                                <div class="mastery-opt" onclick="checkMastery(3, this, true)"><b>B</b> Giving a value to a variable for the first time</div>
+                                <div class="mastery-opt" onclick="checkMastery(3, this, false)"><b>C</b> Printing a variable</div>
+                                <div class="mastery-opt" onclick="checkMastery(3, this, false)"><b>D</b> Renaming a variable</div>
+                            </div>
+                            <div class="explanation-box" id="mexp-3">
+                                <strong>Correct!</strong> Initialization means assigning an initial value to a variable using the assignment operator (=).
+                            </div>
+                        </div>
+
+                        <!-- Q4 -->
+                        <div class="mastery-quiz-item" id="mq4">
+                            <div class="mastery-q-text">4. Which data type does the value 25 belong to?</div>
+                            <div class="mastery-options">
+                                <div class="mastery-opt" onclick="checkMastery(4, this, false)"><b>A</b> String (str)</div>
+                                <div class="mastery-opt" onclick="checkMastery(4, this, false)"><b>B</b> Float (float)</div>
+                                <div class="mastery-opt" onclick="checkMastery(4, this, true)"><b>C</b> Integer (int)</div>
+                                <div class="mastery-opt" onclick="checkMastery(4, this, false)"><b>D</b> Boolean (bool)</div>
+                            </div>
+                            <div class="explanation-box" id="mexp-4">
+                                <strong>Correct!</strong> Whole numbers belong to the <strong>Integer (int)</strong> data type in Python.
+                            </div>
+                        </div>
+
+                        <!-- Q5 -->
+                        <div class="mastery-quiz-item" id="mq5">
+                            <div class="mastery-q-text">5. Which data type does "Hello" belong to?</div>
+                            <div class="mastery-options">
+                                <div class="mastery-opt" onclick="checkMastery(5, this, true)"><b>A</b> String (str)</div>
+                                <div class="mastery-opt" onclick="checkMastery(5, this, false)"><b>B</b> Integer (int)</div>
+                                <div class="mastery-opt" onclick="checkMastery(5, this, false)"><b>C</b> Float (float)</div>
+                                <div class="mastery-opt" onclick="checkMastery(5, this, false)"><b>D</b> Boolean (bool)</div>
+                            </div>
+                            <div class="explanation-box" id="mexp-5">
+                                <strong>Correct!</strong> Text values enclosed in double or single quotes are <strong>Strings (str)</strong>.
+                            </div>
+                        </div>
+
+                        <!-- Q6 -->
+                        <div class="mastery-quiz-item" id="mq6">
+                            <div class="mastery-q-text">6. Which of these is a major advantage of Python?</div>
+                            <div class="mastery-options">
+                                <div class="mastery-opt" onclick="checkMastery(6, this, true)"><b>A</b> Easy to read and learn (English-like syntax)</div>
+                                <div class="mastery-opt" onclick="checkMastery(6, this, false)"><b>B</b> It only works on Windows computers</div>
+                                <div class="mastery-opt" onclick="checkMastery(6, this, false)"><b>C</b> You have to pay a lot of money to use it</div>
+                                <div class="mastery-opt" onclick="checkMastery(6, this, false)"><b>D</b> It is a very old and dead language</div>
+                            </div>
+                            <div class="explanation-box" id="mexp-6">
+                                <strong>Correct!</strong> Python is famous for its simple, readable syntax that makes it easy for beginners to learn.
+                            </div>
+                        </div>
+
+                        <!-- Q7 -->
+                        <div class="mastery-quiz-item" id="mq7">
+                            <div class="mastery-q-text">7. What is the data type of the value 3.14?</div>
+                            <div class="mastery-options">
+                                <div class="mastery-opt" onclick="checkMastery(7, this, false)"><b>A</b> Integer (int)</div>
+                                <div class="mastery-opt" onclick="checkMastery(7, this, true)"><b>B</b> Float (float)</div>
+                                <div class="mastery-opt" onclick="checkMastery(7, this, false)"><b>C</b> String (str)</div>
+                                <div class="mastery-opt" onclick="checkMastery(7, this, false)"><b>D</b> Boolean (bool)</div>
+                            </div>
+                            <div class="explanation-box" id="mexp-7">
+                                <strong>Correct!</strong> Numbers with decimal points belong to the <strong>Float (float)</strong> data type.
+                            </div>
+                        </div>
+
+                        <!-- Q8 -->
+                        <div class="mastery-quiz-item" id="mq8">
+                            <div class="mastery-q-text">8. How do you start a single-line comment in Python?</div>
+                            <div class="mastery-options">
+                                <div class="mastery-opt" onclick="checkMastery(8, this, false)"><b>A</b> //</div>
+                                <div class="mastery-opt" onclick="checkMastery(8, this, false)"><b>B</b> /*</div>
+                                <div class="mastery-opt" onclick="checkMastery(8, this, true)"><b>C</b> #</div>
+                                <div class="mastery-opt" onclick="checkMastery(8, this, false)"><b>D</b> --</div>
+                            </div>
+                            <div class="explanation-box" id="mexp-8">
+                                <strong>Correct!</strong> In Python, any text following a <strong>#</strong> symbol is treated as a comment and ignored by the computer.
+                            </div>
+                        </div>
+
+                        <!-- Q9 -->
+                        <div class="mastery-quiz-item" id="mq9">
+                            <div class="mastery-q-text">9. Which built-in function is used to show information on the screen?</div>
+                            <div class="mastery-options">
+                                <div class="mastery-opt" onclick="checkMastery(9, this, false)"><b>A</b> display()</div>
+                                <div class="mastery-opt" onclick="checkMastery(9, this, false)"><b>B</b> show()</div>
+                                <div class="mastery-opt" onclick="checkMastery(9, this, false)"><b>C</b> input()</div>
+                                <div class="mastery-opt" onclick="checkMastery(9, this, true)"><b>D</b> print()</div>
+                            </div>
+                            <div class="explanation-box" id="mexp-9">
+                                <strong>Correct!</strong> The <strong>print()</strong> function outputs text or variable values to the console.
+                            </div>
+                        </div>
+
+                        <!-- Q10 -->
+                        <div class="mastery-quiz-item" id="mq10">
+                            <div class="mastery-q-text">10. Which of these is a Boolean (bool) value in Python?</div>
+                            <div class="mastery-options">
+                                <div class="mastery-opt" onclick="checkMastery(10, this, true)"><b>A</b> True</div>
+                                <div class="mastery-opt" onclick="checkMastery(10, this, false)"><b>B</b> "False"</div>
+                                <div class="mastery-opt" onclick="checkMastery(10, this, false)"><b>C</b> 0.1</div>
+                                <div class="mastery-opt" onclick="checkMastery(10, this, false)"><b>D</b> [1, 2, 3]</div>
+                            </div>
+                            <div class="explanation-box" id="mexp-10">
+                                <strong>Correct!</strong> <strong>True</strong> and <strong>False</strong> (without quotes and capitalized) are the only two Boolean values.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
 
 
             </main>
@@ -3100,6 +3344,41 @@
 
         function closeQuizModal() {
             document.getElementById('quiz-modal').style.display = 'none';
+        }
+
+        function checkMastery(qNum, element, isCorrect) {
+            const container = document.getElementById(`mq${qNum}`);
+            const options = container.querySelectorAll('.mastery-opt');
+            const exp = document.getElementById(`mexp-${qNum}`);
+            
+            if (isCorrect) {
+                // Remove existing states
+                options.forEach(opt => opt.classList.remove('correct', 'wrong'));
+                element.classList.add('correct');
+                
+                // Show explanation
+                exp.style.display = 'block';
+                
+                // Confetti for mastery!
+                if (typeof confetti === 'function') {
+                    confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { y: 0.8 },
+                        colors: ['#3b82f6', '#10b981', '#f59e0b']
+                    });
+                }
+            } else {
+                element.classList.add('wrong');
+                element.style.animation = 'none';
+                void element.offsetWidth; // trigger reflow
+                element.style.animation = 'shake 0.4s';
+                
+                // Remove wrong state after a moment
+                setTimeout(() => {
+                    element.classList.remove('wrong');
+                }, 1000);
+            }
         }
 
         window.onclick = function(event) {
