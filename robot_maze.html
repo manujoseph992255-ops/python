@@ -177,6 +177,162 @@
         .quiz-values-grid .quiz-value-box:nth-child(3) { border-color: #a855f7; color: #a855f7; background: #faf5ff; }
         .quiz-values-grid .quiz-value-box:nth-child(4) { border-color: #f97316; color: #f97316; background: #fff7ed; }
 
+        /* ====== USER FORM & CONSOLE STYLES ====== */
+        .form-console-container {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+            align-items: stretch;
+        }
+
+        .user-form-card {
+            flex: 1;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
+
+        .user-form-card h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            font-size: 1rem;
+            color: #334155;
+            transition: all 0.3s;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .code-console-card {
+            flex: 1.2;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .code-console-card h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .console-subheader {
+            font-family: 'Fira Code', monospace;
+            color: #475569;
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .interactive-script-box {
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 30px;
+            flex-grow: 1;
+            position: relative;
+            margin-bottom: 25px;
+            border: 1px solid #334155;
+        }
+
+        .script-content {
+            font-family: 'Fira Code', monospace;
+            color: #94a3b8;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .script-line {
+            margin-bottom: 15px;
+        }
+
+        .run-script-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .run-script-btn:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+        }
+
+        .run-script-btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .terminal-label {
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .mini-terminal {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Fira Code', monospace;
+            color: #334155;
+            min-height: 80px;
+        }
+
+        @media (max-width: 992px) {
+            .form-console-container { flex-direction: column; }
+        }
+
         /* ====== STUDENT DATA VAULT STYLES ====== */
         .vault-section {
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
@@ -2302,7 +2458,61 @@
                             </div>
                 </section>
 
+                </section>
+
                 <section class="content-card">
+                    <h2 class="premium-heading"><span class="small-ball" style="background: radial-gradient(circle at 30% 30%, #3b82f6, #1d4ed8); box-shadow: 0 0 12px rgba(37, 99, 235, 0.4);"></span>Variable Practice: From Form to Variables</h2>
+                    <hr class="section-divider">
+                    <p class="section-intro">Fill out the form below to see how your information is converted into <b>Python Variables</b> and stored in memory!</p>
+
+                    <div class="form-console-container">
+                        <!-- Left: User Form -->
+                        <div class="user-form-card">
+                            <h3>USER INFORMATION FORM</h3>
+                            <div class="form-group">
+                                <label for="form-name">Name</label>
+                                <input type="text" id="form-name" placeholder="Enter your full name" oninput="updateScriptPreview()">
+                            </div>
+                            <div class="form-group">
+                                <label for="form-email">Email ID</label>
+                                <input type="email" id="form-email" placeholder="example@domain.com" oninput="updateScriptPreview()">
+                            </div>
+                            <div class="form-group">
+                                <label for="form-phone">Phone Number</label>
+                                <input type="text" id="form-phone" placeholder="+91 00000 00000" oninput="updateScriptPreview()">
+                            </div>
+                            <div class="form-group">
+                                <label for="form-age">Age</label>
+                                <input type="text" id="form-age" placeholder="e.g. 18" oninput="updateScriptPreview()">
+                            </div>
+                        </div>
+
+                        <!-- Right: Code Console -->
+                        <div class="code-console-card">
+                            <h3>CODE CONSOLE</h3>
+                            <div class="console-subheader">
+                                <i class="fas fa-terminal"></i> Interactive Python Script
+                            </div>
+                            <div class="interactive-script-box">
+                                <div class="script-content" id="script-preview">
+                                    <div class="script-line"><span class="code-comment"># variable initialization</span></div>
+                                    <div class="script-line"><span class="code-comment"># print any variables to see the result</span></div>
+                                    <div id="dynamic-script-lines"></div>
+                                </div>
+                            </div>
+                            <button class="run-script-btn" id="run-form-script-btn" onclick="runFormScript()">
+                                <i class="fas fa-play"></i> Run Script
+                            </button>
+
+                            <div style="margin-top: 30px;">
+                                <div class="terminal-label">Terminal Output</div>
+                                <div class="mini-terminal" id="form-terminal-output">
+                                    <span style="color: #64748b;">Waiting for input...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
                     <h2 class="premium-heading"><span class="small-ball" style="background: radial-gradient(circle at 30% 30%, #38bdf8, #0284c7); box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);"></span>Variable Concept: The Secure Data Vault</h2>
                     <hr class="section-divider">
                     <p class="section-intro">Variables are like secure boxes that <b>store information</b> for us. Click on any field in the <b>Student Data Vault</b> below to see how Python retrieves and displays that data!</p>
@@ -3434,6 +3644,48 @@
                 }, 1000);
             }
         }
+
+        function updateScriptPreview() {
+            const name = document.getElementById('form-name').value || '...';
+            const email = document.getElementById('form-email').value || '...';
+            const phone = document.getElementById('form-phone').value || '...';
+            const age = document.getElementById('form-age').value || '...';
+            
+            const dynamicLines = document.getElementById('dynamic-script-lines');
+            dynamicLines.innerHTML = `
+                <div class="script-line" style="color: #4ade80;">user_name = <span style="color: #fbbf24;">"${name}"</span></div>
+                <div class="script-line" style="color: #4ade80;">user_email = <span style="color: #fbbf24;">"${email}"</span></div>
+                <div class="script-line" style="color: #4ade80;">user_phone = <span style="color: #fbbf24;">"${phone}"</span></div>
+                <div class="script-line" style="color: #4ade80;">user_age = <span style="color: #fbbf24;">${age}</span></div>
+            `;
+        }
+
+        async function runFormScript() {
+            const btn = document.getElementById('run-form-script-btn');
+            const terminal = document.getElementById('form-terminal-output');
+            
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Executing...';
+            terminal.innerHTML = '<span style="color: #3b82f6;">> Initializing variables...</span>';
+            
+            await new Promise(r => setTimeout(r, 800));
+            terminal.innerHTML += '<br><span style="color: #10b981;">> Memory allocated successfully.</span>';
+            
+            await new Promise(r => setTimeout(r, 600));
+            terminal.innerHTML += '<br><span style="color: #f59e0b;">> All 4 variables stored in Student Data Vault!</span>';
+            
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.8 }
+            });
+            
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-play"></i> Run Script';
+        }
+
+        // Initialize preview
+        updateScriptPreview();
 
         async function openVaultBox(element, varName, value) {
             if (element.classList.contains('blasting')) return;
