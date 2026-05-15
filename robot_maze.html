@@ -1656,13 +1656,13 @@
                             
                             <div class="print-field-section">
                                 <h3 class="sub-heading">Print Any Field</h3>
-                                <div class="print-input-group">
-                                    <input type="text" id="print-field-name" placeholder="Type like print(Name), print(Age)...">
-                                    <button class="run-btn" onclick="printFieldValues()">
-                                        <i class="fas fa-print"></i> Print Value
-                                    </button>
-                                </div>
-                                <div id="print-output" class="terminal-output" style="display: none; white-space: pre-wrap; margin-top: 15px;"></div>
+                                <textarea id="print-field-name" class="code-textarea" style="height: 100px; margin-bottom: 20px;" placeholder="Type like:
+print(Name)
+print(Age)"></textarea>
+                                <button class="run-btn" style="margin-bottom: 30px;" onclick="printFieldValues()">
+                                    <i class="fas fa-print"></i> Print Value
+                                </button>
+                                <div id="print-output" class="terminal-output" style="display: none; white-space: pre-wrap;"></div>
                             </div>
                         </div>
                     </div>
