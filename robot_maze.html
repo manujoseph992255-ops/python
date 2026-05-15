@@ -145,11 +145,11 @@
         }
         
         /* Attractive Dark Colors for Questions */
-        #q1 .quiz-value-box { background: #f97316; } /* Deep Orange */
-        #q2 .quiz-value-box { background: #2563eb; } /* Royal Blue */
-        #q3 .quiz-value-box { background: #059669; } /* Emerald Green */
-        #q4 .quiz-value-box { background: #7c3aed; } /* Vivid Purple */
-        #q5 .quiz-value-box { background: #db2777; } /* Deep Pink */
+        #q1 .quiz-value-box, #q6 .quiz-value-box { background: #f97316; } /* Deep Orange */
+        #q2 .quiz-value-box, #q7 .quiz-value-box { background: #2563eb; } /* Royal Blue */
+        #q3 .quiz-value-box, #q8 .quiz-value-box { background: #059669; } /* Emerald Green */
+        #q4 .quiz-value-box, #q9 .quiz-value-box { background: #7c3aed; } /* Vivid Purple */
+        #q5 .quiz-value-box, #q10 .quiz-value-box { background: #db2777; } /* Deep Pink */
 
         @keyframes slideDown {
             from { opacity: 0; transform: translateY(-10px); }
@@ -1902,32 +1902,32 @@
                 </section>
 
                 <!-- Data Types Quiz Section -->
-                <section class="content-card quiz-section" style="margin-top: 40px; margin-bottom: 100px;">
-                    <h2 class="premium-heading"><span class="small-ball" style="background: radial-gradient(circle at 30% 30%, #facc15, #ca8a04); box-shadow: 0 0 12px rgba(234, 179, 8, 0.4);"></span>Level 2 Activity: Find the Odd One</h2>
+                <section class="content-card quiz-section" style="margin-top: 40px; margin-bottom: 50px;">
+                    <h2 class="premium-heading"><span class="small-ball" style="background: radial-gradient(circle at 30% 30%, #facc15, #ca8a04); box-shadow: 0 0 12px rgba(234, 179, 8, 0.4);"></span>Level 1 Activity: Pick the Odd One</h2>
                     <hr class="section-divider">
-                    <p class="section-intro">Observe the values carefully. All values may look similar, but one belongs to a different data type. <b>Identify the odd one</b> and then <b>choose the correct reason</b> from the options that appear.</p>
+                    <p class="section-intro">Look at the values below. One of them belongs to a different data type. First, <b>click the odd value</b>, then <b>select the correct reason</b> from the options that appear.</p>
 
-                    <div id="quiz-container">
+                    <div id="quiz-container-l1">
                         <!-- Question 1 -->
                         <div class="quiz-item-container" id="q1">
                             <div class="quiz-question-header">Question 1: Values</div>
                             <div class="quiz-values-grid">
-                                <div class="quiz-value-box" onclick="checkValue(1, this, 'String-Double')">"Linto"</div>
-                                <div class="quiz-value-box" onclick="checkValue(1, this, 'String-Single')">'Linto'</div>
-                                <div class="quiz-value-box" onclick="checkValue(1, this, 'String-Triple')">"""Linto"""</div>
-                                <div class="quiz-value-box" onclick="checkValue(1, this, 'Identifier', true)">Linto</div>
+                                <div class="quiz-value-box" onclick="checkValue(1, this, '25')">25</div>
+                                <div class="quiz-value-box" onclick="checkValue(1, this, '40')">40</div>
+                                <div class="quiz-value-box" onclick="checkValue(1, this, '18')">18</div>
+                                <div class="quiz-value-box" onclick="checkValue(1, this, 'Python', true)">"Python"</div>
                             </div>
                             
                             <div class="quiz-reasons-container" id="reasons-1">
                                 <div class="quiz-question-header" style="font-size: 1rem; color: #64748b;">Select the Correct Reason:</div>
-                                <div class="reason-box" onclick="checkReason(1, this, true)"><b>A</b> It is an identifier/variable name, not a string value.</div>
-                                <div class="reason-box" onclick="checkReason(1, this, false)"><b>B</b> It is written using double quotes.</div>
-                                <div class="reason-box" onclick="checkReason(1, this, false)"><b>C</b> It contains alphabetic characters.</div>
-                                <div class="reason-box" onclick="checkReason(1, this, false)"><b>D</b> It has the same number of letters as others.</div>
+                                <div class="reason-box" onclick="checkReason(1, this, true)"><b>A</b> It belongs to the String (str) data type.</div>
+                                <div class="reason-box" onclick="checkReason(1, this, true)"><b>B</b> It contains text characters enclosed in quotation marks.</div>
+                                <div class="reason-box" onclick="checkReason(1, this, false)"><b>C</b> It belongs to the Integer (int) data type.</div>
+                                <div class="reason-box" onclick="checkReason(1, this, false)"><b>D</b> It contains uppercase letters.</div>
                             </div>
                             
                             <div class="explanation-box" id="exp-1">
-                                <strong>Explanation:</strong> Linto is the odd one because it is treated as a <strong>variable name (identifier)</strong> in Python, while the others are <strong>Strings (str)</strong> because they are enclosed in quotes.
+                                <strong>Explanation:</strong> "Python" is a <strong>String (str)</strong> because text values are written inside quotation marks. The others are <strong>Integers (int)</strong>.
                             </div>
                         </div>
 
@@ -1935,22 +1935,22 @@
                         <div class="quiz-item-container" id="q2">
                             <div class="quiz-question-header">Question 2: Values</div>
                             <div class="quiz-values-grid">
-                                <div class="quiz-value-box" onclick="checkValue(2, this, '32')">32</div>
-                                <div class="quiz-value-box" onclick="checkValue(2, this, '45')">45</div>
-                                <div class="quiz-value-box" onclick="checkValue(2, this, '18')">18</div>
-                                <div class="quiz-value-box" onclick="checkValue(2, this, '3.2', true)">3.2</div>
+                                <div class="quiz-value-box" onclick="checkValue(2, this, '3.14')">3.14</div>
+                                <div class="quiz-value-box" onclick="checkValue(2, this, '7.5')">7.5</div>
+                                <div class="quiz-value-box" onclick="checkValue(2, this, '2.8')">2.8</div>
+                                <div class="quiz-value-box" onclick="checkValue(2, this, '100', true)">100</div>
                             </div>
                             
                             <div class="quiz-reasons-container" id="reasons-2">
                                 <div class="quiz-question-header" style="font-size: 1rem; color: #64748b;">Select the Correct Reason:</div>
-                                <div class="reason-box" onclick="checkReason(2, this, true)"><b>A</b> It belongs to the Float (float) data type.</div>
-                                <div class="reason-box" onclick="checkReason(2, this, false)"><b>B</b> It belongs to the Integer (int) data type.</div>
-                                <div class="reason-box" onclick="checkReason(2, this, false)"><b>C</b> It is the smallest value.</div>
-                                <div class="reason-box" onclick="checkReason(2, this, false)"><b>D</b> It contains digits only.</div>
+                                <div class="reason-box" onclick="checkReason(2, this, true)"><b>A</b> It represents a whole number without a decimal point.</div>
+                                <div class="reason-box" onclick="checkReason(2, this, true)"><b>B</b> It belongs to the Integer (int) data type.</div>
+                                <div class="reason-box" onclick="checkReason(2, this, false)"><b>C</b> It belongs to the Float (float) data type.</div>
+                                <div class="reason-box" onclick="checkReason(2, this, false)"><b>D</b> It is greater than all other values.</div>
                             </div>
                             
                             <div class="explanation-box" id="exp-2">
-                                <strong>Explanation:</strong> 3.2 is a <strong>Float (float)</strong> because it contains a decimal point. The others are <strong>Integers (int)</strong>.
+                                <strong>Explanation:</strong> 100 is an <strong>Integer (int)</strong> because it does not have a decimal point. The others are <strong>Floats (float)</strong>.
                             </div>
                         </div>
 
@@ -1958,22 +1958,21 @@
                         <div class="quiz-item-container" id="q3">
                             <div class="quiz-question-header">Question 3: Values</div>
                             <div class="quiz-values-grid">
-                                <div class="quiz-value-box" onclick="checkValue(3, this, '3.2-str')">"3.2"</div>
-                                <div class="quiz-value-box" onclick="checkValue(3, this, '5.6-str')">'5.6'</div>
-                                <div class="quiz-value-box" onclick="checkValue(3, this, '7.8-str')">"7.8"</div>
-                                <div class="quiz-value-box" onclick="checkValue(3, this, '3.2-float', true)">3.2</div>
+                                <div class="quiz-value-box" onclick="checkValue(3, this, 'False')">False</div>
+                                <div class="quiz-value-box" onclick="checkValue(3, this, 'True')">True</div>
+                                <div class="quiz-value-box" onclick="checkValue(3, this, 'False-str', true)">"False"</div>
                             </div>
                             
                             <div class="quiz-reasons-container" id="reasons-3">
                                 <div class="quiz-question-header" style="font-size: 1rem; color: #64748b;">Select the Correct Reason:</div>
-                                <div class="reason-box" onclick="checkReason(3, this, true)"><b>A</b> It belongs to the Float (float) data type instead of String.</div>
-                                <div class="reason-box" onclick="checkReason(3, this, false)"><b>B</b> It contains numbers and a decimal point.</div>
-                                <div class="reason-box" onclick="checkReason(3, this, false)"><b>C</b> It has fewer characters.</div>
-                                <div class="reason-box" onclick="checkReason(3, this, false)"><b>D</b> It is written without quotes by mistake.</div>
+                                <div class="reason-box" onclick="checkReason(3, this, true)"><b>A</b> It belongs to the String (str) data type.</div>
+                                <div class="reason-box" onclick="checkReason(3, this, true)"><b>B</b> It represents text enclosed in quotation marks instead of a logical value.</div>
+                                <div class="reason-box" onclick="checkReason(3, this, false)"><b>C</b> It belongs to the Boolean (bool) data type.</div>
+                                <div class="reason-box" onclick="checkReason(3, this, false)"><b>D</b> It starts with a capital letter.</div>
                             </div>
                             
                             <div class="explanation-box" id="exp-3">
-                                <strong>Explanation:</strong> 3.2 is a <strong>Float (float)</strong>, while the others are <strong>Strings (str)</strong> because they are enclosed in quotes.
+                                <strong>Explanation:</strong> "False" is a <strong>String (str)</strong>, while True and False without quotes are <strong>Boolean (bool)</strong> values.
                             </div>
                         </div>
 
@@ -1981,22 +1980,22 @@
                         <div class="quiz-item-container" id="q4">
                             <div class="quiz-question-header">Question 4: Values</div>
                             <div class="quiz-values-grid">
-                                <div class="quiz-value-box" onclick="checkValue(4, this, 'True-Cap')">True</div>
-                                <div class="quiz-value-box" onclick="checkValue(4, this, 'False-Cap')">False</div>
-                                <div class="quiz-value-box" onclick="checkValue(4, this, 'true-low', true)">true</div>
-                                <div class="quiz-value-box" onclick="checkValue(4, this, 'True-Cap2')">True</div>
+                                <div class="quiz-value-box" onclick="checkValue(4, this, 'Apple')">"Apple"</div>
+                                <div class="quiz-value-box" onclick="checkValue(4, this, 'Mango')">"Mango"</div>
+                                <div class="quiz-value-box" onclick="checkValue(4, this, 'Orange')">"Orange"</div>
+                                <div class="quiz-value-box" onclick="checkValue(4, this, '45', true)">45</div>
                             </div>
                             
                             <div class="quiz-reasons-container" id="reasons-4">
                                 <div class="quiz-question-header" style="font-size: 1rem; color: #64748b;">Select the Correct Reason:</div>
-                                <div class="reason-box" onclick="checkReason(4, this, true)"><b>A</b> It is treated as an identifier/invalid boolean keyword, not a Boolean value.</div>
-                                <div class="reason-box" onclick="checkReason(4, this, false)"><b>B</b> It contains lowercase letters.</div>
-                                <div class="reason-box" onclick="checkReason(4, this, false)"><b>C</b> It has four letters.</div>
-                                <div class="reason-box" onclick="checkReason(4, this, false)"><b>D</b> It appears in the middle.</div>
+                                <div class="reason-box" onclick="checkReason(4, this, true)"><b>A</b> It represents a numeric value instead of text.</div>
+                                <div class="reason-box" onclick="checkReason(4, this, true)"><b>B</b> It belongs to the Integer (int) data type.</div>
+                                <div class="reason-box" onclick="checkReason(4, this, false)"><b>C</b> It belongs to the String (str) data type.</div>
+                                <div class="reason-box" onclick="checkReason(4, this, false)"><b>D</b> It has fewer characters than the others.</div>
                             </div>
                             
                             <div class="explanation-box" id="exp-4">
-                                <strong>Explanation:</strong> In Python, <strong>True</strong> and <strong>False</strong> (Capitalized) are valid Boolean (bool) values. <strong>true</strong> (lowercase) is not a Boolean keyword; Python treats it as an identifier.
+                                <strong>Explanation:</strong> 45 is an <strong>Integer (int)</strong>, while "Apple", "Mango", and "Orange" are <strong>Strings (str)</strong>.
                             </div>
                         </div>
 
@@ -2004,21 +2003,144 @@
                         <div class="quiz-item-container" id="q5">
                             <div class="quiz-question-header">Question 5: Values</div>
                             <div class="quiz-values-grid">
-                                <div class="quiz-value-box" onclick="checkValue(5, this, '100-str1')">"100"</div>
-                                <div class="quiz-value-box" onclick="checkValue(5, this, '200-str2')">'200'</div>
-                                <div class="quiz-value-box" onclick="checkValue(5, this, '300-str3')">"300"</div>
-                                <div class="quiz-value-box" onclick="checkValue(5, this, '100-int', true)">100</div>
+                                <div class="quiz-value-box" onclick="checkValue(5, this, '9.99')">9.99</div>
+                                <div class="quiz-value-box" onclick="checkValue(5, this, '15.5')">15.5</div>
+                                <div class="quiz-value-box" onclick="checkValue(5, this, '0.5')">0.5</div>
+                                <div class="quiz-value-box" onclick="checkValue(5, this, 'Python', true)">"Python"</div>
                             </div>
                             
                             <div class="quiz-reasons-container" id="reasons-5">
                                 <div class="quiz-question-header" style="font-size: 1rem; color: #64748b;">Select the Correct Reason:</div>
-                                <div class="reason-box" onclick="checkReason(5, this, true)"><b>A</b> It belongs to the Integer (int) data type instead of String.</div>
-                                <div class="reason-box" onclick="checkReason(5, this, false)"><b>B</b> It has fewer digits.</div>
-                                <div class="reason-box" onclick="checkReason(5, this, false)"><b>C</b> It is not enclosed in quotes.</div>
-                                <div class="reason-box" onclick="checkReason(5, this, false)"><b>D</b> It is the smallest value.</div>
+                                <div class="reason-box" onclick="checkReason(5, this, true)"><b>A</b> It belongs to the String (str) data type.</div>
+                                <div class="reason-box" onclick="checkReason(5, this, true)"><b>B</b> It consists of text enclosed in quotes.</div>
+                                <div class="reason-box" onclick="checkReason(5, this, false)"><b>C</b> It belongs to the Float (float) data type.</div>
+                                <div class="reason-box" onclick="checkReason(5, this, false)"><b>D</b> It contains letters instead of numbers.</div>
                             </div>
                             
                             <div class="explanation-box" id="exp-5">
+                                <strong>Explanation:</strong> "Python" is a <strong>String (str)</strong>, while 9.99, 15.5, and 0.5 are <strong>Floats (float)</strong>.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="content-card quiz-section" style="margin-top: 40px; margin-bottom: 100px;">
+                    <h2 class="premium-heading"><span class="small-ball" style="background: radial-gradient(circle at 30% 30%, #facc15, #ca8a04); box-shadow: 0 0 12px rgba(234, 179, 8, 0.4);"></span>Level 2 Activity: Find the Odd One</h2>
+                    <hr class="section-divider">
+                    <p class="section-intro">Observe the values carefully. All values may look similar, but one belongs to a different data type. <b>Identify the odd one</b> and then <b>choose the correct reason</b> from the options that appear.</p>
+
+                    <div id="quiz-container-l2">
+                        <!-- Question 6 -->
+                        <div class="quiz-item-container" id="q6">
+                            <div class="quiz-question-header">Question 1: Values</div>
+                            <div class="quiz-values-grid">
+                                <div class="quiz-value-box" onclick="checkValue(6, this, 'String-Double')">"Linto"</div>
+                                <div class="quiz-value-box" onclick="checkValue(6, this, 'String-Single')">'Linto'</div>
+                                <div class="quiz-value-box" onclick="checkValue(6, this, 'String-Triple')">"""Linto"""</div>
+                                <div class="quiz-value-box" onclick="checkValue(6, this, 'Identifier', true)">Linto</div>
+                            </div>
+                            
+                            <div class="quiz-reasons-container" id="reasons-6">
+                                <div class="quiz-question-header" style="font-size: 1rem; color: #64748b;">Select the Correct Reason:</div>
+                                <div class="reason-box" onclick="checkReason(6, this, true)"><b>A</b> It is an identifier/variable name, not a string value.</div>
+                                <div class="reason-box" onclick="checkReason(6, this, false)"><b>B</b> It is written using double quotes.</div>
+                                <div class="reason-box" onclick="checkReason(6, this, false)"><b>C</b> It contains alphabetic characters.</div>
+                                <div class="reason-box" onclick="checkReason(6, this, false)"><b>D</b> It has the same number of letters as others.</div>
+                            </div>
+                            
+                            <div class="explanation-box" id="exp-6">
+                                <strong>Explanation:</strong> Linto is the odd one because it is treated as a <strong>variable name (identifier)</strong> in Python, while the others are <strong>Strings (str)</strong> because they are enclosed in quotes.
+                            </div>
+                        </div>
+
+                        <!-- Question 7 -->
+                        <div class="quiz-item-container" id="q7">
+                            <div class="quiz-question-header">Question 2: Values</div>
+                            <div class="quiz-values-grid">
+                                <div class="quiz-value-box" onclick="checkValue(7, this, '32')">32</div>
+                                <div class="quiz-value-box" onclick="checkValue(7, this, '45')">45</div>
+                                <div class="quiz-value-box" onclick="checkValue(7, this, '18')">18</div>
+                                <div class="quiz-value-box" onclick="checkValue(7, this, '3.2', true)">3.2</div>
+                            </div>
+                            
+                            <div class="quiz-reasons-container" id="reasons-7">
+                                <div class="quiz-question-header" style="font-size: 1rem; color: #64748b;">Select the Correct Reason:</div>
+                                <div class="reason-box" onclick="checkReason(7, this, true)"><b>A</b> It belongs to the Float (float) data type.</div>
+                                <div class="reason-box" onclick="checkReason(7, this, false)"><b>B</b> It belongs to the Integer (int) data type.</div>
+                                <div class="reason-box" onclick="checkReason(7, this, false)"><b>C</b> It is the smallest value.</div>
+                                <div class="reason-box" onclick="checkReason(7, this, false)"><b>D</b> It contains digits only.</div>
+                            </div>
+                            
+                            <div class="explanation-box" id="exp-7">
+                                <strong>Explanation:</strong> 3.2 is a <strong>Float (float)</strong> because it contains a decimal point. The others are <strong>Integers (int)</strong>.
+                            </div>
+                        </div>
+
+                        <!-- Question 8 -->
+                        <div class="quiz-item-container" id="q8">
+                            <div class="quiz-question-header">Question 3: Values</div>
+                            <div class="quiz-values-grid">
+                                <div class="quiz-value-box" onclick="checkValue(8, this, '3.2-str')">"3.2"</div>
+                                <div class="quiz-value-box" onclick="checkValue(8, this, '5.6-str')">'5.6'</div>
+                                <div class="quiz-value-box" onclick="checkValue(8, this, '7.8-str')">"7.8"</div>
+                                <div class="quiz-value-box" onclick="checkValue(8, this, '3.2-float', true)">3.2</div>
+                            </div>
+                            
+                            <div class="quiz-reasons-container" id="reasons-8">
+                                <div class="quiz-question-header" style="font-size: 1rem; color: #64748b;">Select the Correct Reason:</div>
+                                <div class="reason-box" onclick="checkReason(8, this, true)"><b>A</b> It belongs to the Float (float) data type instead of String.</div>
+                                <div class="reason-box" onclick="checkReason(8, this, false)"><b>B</b> It contains numbers and a decimal point.</div>
+                                <div class="reason-box" onclick="checkReason(8, this, false)"><b>C</b> It has fewer characters.</div>
+                                <div class="reason-box" onclick="checkReason(8, this, false)"><b>D</b> It is written without quotes by mistake.</div>
+                            </div>
+                            
+                            <div class="explanation-box" id="exp-8">
+                                <strong>Explanation:</strong> 3.2 is a <strong>Float (float)</strong>, while the others are <strong>Strings (str)</strong> because they are enclosed in quotes.
+                            </div>
+                        </div>
+
+                        <!-- Question 9 -->
+                        <div class="quiz-item-container" id="q9">
+                            <div class="quiz-question-header">Question 4: Values</div>
+                            <div class="quiz-values-grid">
+                                <div class="quiz-value-box" onclick="checkValue(9, this, 'True-Cap')">True</div>
+                                <div class="quiz-value-box" onclick="checkValue(9, this, 'False-Cap')">False</div>
+                                <div class="quiz-value-box" onclick="checkValue(9, this, 'true-low', true)">true</div>
+                                <div class="quiz-value-box" onclick="checkValue(9, this, 'True-Cap2')">True</div>
+                            </div>
+                            
+                            <div class="quiz-reasons-container" id="reasons-9">
+                                <div class="quiz-question-header" style="font-size: 1rem; color: #64748b;">Select the Correct Reason:</div>
+                                <div class="reason-box" onclick="checkReason(9, this, true)"><b>A</b> It is treated as an identifier/invalid boolean keyword, not a Boolean value.</div>
+                                <div class="reason-box" onclick="checkReason(9, this, false)"><b>B</b> It contains lowercase letters.</div>
+                                <div class="reason-box" onclick="checkReason(9, this, false)"><b>C</b> It has four letters.</div>
+                                <div class="reason-box" onclick="checkReason(9, this, false)"><b>D</b> It appears in the middle.</div>
+                            </div>
+                            
+                            <div class="explanation-box" id="exp-9">
+                                <strong>Explanation:</strong> In Python, <strong>True</strong> and <strong>False</strong> (Capitalized) are valid Boolean (bool) values. <strong>true</strong> (lowercase) is not a Boolean keyword; Python treats it as an identifier.
+                            </div>
+                        </div>
+
+                        <!-- Question 10 -->
+                        <div class="quiz-item-container" id="q10">
+                            <div class="quiz-question-header">Question 5: Values</div>
+                            <div class="quiz-values-grid">
+                                <div class="quiz-value-box" onclick="checkValue(10, this, '100-str1')">"100"</div>
+                                <div class="quiz-value-box" onclick="checkValue(10, this, '200-str2')">'200'</div>
+                                <div class="quiz-value-box" onclick="checkValue(10, this, '300-str3')">"300"</div>
+                                <div class="quiz-value-box" onclick="checkValue(10, this, '100-int', true)">100</div>
+                            </div>
+                            
+                            <div class="quiz-reasons-container" id="reasons-10">
+                                <div class="quiz-question-header" style="font-size: 1rem; color: #64748b;">Select the Correct Reason:</div>
+                                <div class="reason-box" onclick="checkReason(10, this, true)"><b>A</b> It belongs to the Integer (int) data type instead of String.</div>
+                                <div class="reason-box" onclick="checkReason(10, this, false)"><b>B</b> It has fewer digits.</div>
+                                <div class="reason-box" onclick="checkReason(10, this, false)"><b>C</b> It is not enclosed in quotes.</div>
+                                <div class="reason-box" onclick="checkReason(10, this, false)"><b>D</b> It is the smallest value.</div>
+                            </div>
+                            
+                            <div class="explanation-box" id="exp-10">
                                 <strong>Explanation:</strong> 100 is an <strong>Integer (int)</strong>, while the others are <strong>Strings (str)</strong> because they are enclosed in quotes.
                             </div>
                         </div>
