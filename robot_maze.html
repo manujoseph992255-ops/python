@@ -212,32 +212,118 @@
             font-weight: 700;
             opacity: 1;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        /* Colorful Challenge Sprint Styles */
+        .challenge-container {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            margin-top: 60px;
         }
-
-        .quiz-reasons-container {
-            display: none !important;
+        .challenge-card {
+            border-radius: 24px;
+            padding: 40px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .challenge-card:hover {
+            transform: translateY(-8px) scale(1.02);
         }
         
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Individual Card Themes */
+        .challenge-q1 { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+        .challenge-q2 { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .challenge-q3 { background: linear-gradient(135deg, #10b981, #047857); }
+        .challenge-q4 { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .challenge-q5 { background: linear-gradient(135deg, #f43f5e, #be123c); }
+
+        .challenge-card .q-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
-        .reason-box {
-            padding: 14px 20px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            margin-bottom: 10px;
+        .challenge-card h3 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            line-height: 1.3;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .challenge-options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 15px;
+        }
+        .challenge-opt {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+            padding: 20px 24px;
+            border-radius: 16px;
             cursor: pointer;
-            transition: all 0.2s;
-            font-weight: 500;
-            color: #475569;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 0.95rem;
+            font-weight: 600;
+            font-size: 1.05rem;
         }
-        .reason-box:hover {
+        .challenge-opt:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateX(10px);
+        }
+        .challenge-opt .opt-letter {
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .challenge-opt.correct {
+            background: #22c55e !important;
+            border-color: #f0fdf4 !important;
+            box-shadow: 0 0 25px rgba(34, 197, 94, 0.5);
+        }
+        .challenge-opt.wrong {
+            background: #ef4444 !important;
+            border-color: #fef2f2 !important;
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.5);
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        .challenge-explanation {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 16px;
+            font-size: 1rem;
+            line-height: 1.6;
+            animation: fadeIn 0.5s ease;
+            border-left: 5px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
             border-color: #3b82f6;
             background: #f0f9ff;
             transform: translateX(5px);
@@ -2340,6 +2426,133 @@
                     </div>
                 </section>
 
+                <section class="content-card challenge-section" style="margin-top: 60px; margin-bottom: 120px; background: #0f172a; color: white;">
+                    <div style="text-align: center; margin-bottom: 50px;">
+                        <h2 class="premium-heading" style="color: white; justify-content: center;">
+                            <span class="small-ball" style="background: #f43f5e; box-shadow: 0 0 20px rgba(244, 63, 94, 0.6);"></span>
+                            Python Knowledge Sprint
+                        </h2>
+                        <p style="color: #94a3b8; font-size: 1.1rem; max-width: 600px; margin: 0 auto;">Final challenge! Race through these 5 questions to prove your Python mastery. Colorful, fast, and fun!</p>
+                    </div>
+
+                    <div class="challenge-container">
+                        <!-- Challenge 1 -->
+                        <div class="challenge-card challenge-q1" id="cq1">
+                            <span class="q-badge">Question 01</span>
+                            <h3>1. What is a variable in Python?</h3>
+                            <div class="challenge-options-grid">
+                                <div class="challenge-opt" onclick="checkChallenge(1, this, false)">
+                                    <span class="opt-letter">A</span> A keyword in Python
+                                </div>
+                                <div class="challenge-opt" onclick="checkChallenge(1, this, true)">
+                                    <span class="opt-letter">B</span> A container used to store data
+                                </div>
+                                <div class="challenge-opt" onclick="checkChallenge(1, this, false)">
+                                    <span class="opt-letter">C</span> A mathematical operator
+                                </div>
+                                <div class="challenge-opt" onclick="checkChallenge(1, this, false)">
+                                    <span class="opt-letter">D</span> A built-in function
+                                </div>
+                            </div>
+                            <div class="challenge-explanation" id="cexp-1">
+                                <strong>💡 Mastery Insight:</strong> A variable is like a labeled box that holds information for the computer to remember and use later.
+                            </div>
+                        </div>
+
+                        <!-- Challenge 2 -->
+                        <div class="challenge-card challenge-q2" id="cq2">
+                            <span class="q-badge">Question 02</span>
+                            <h3>2. Which of the following is a valid variable name in Python?</h3>
+                            <div class="challenge-options-grid">
+                                <div class="challenge-opt" onclick="checkChallenge(2, this, false)">
+                                    <span class="opt-letter">A</span> 2name
+                                </div>
+                                <div class="challenge-opt" onclick="checkChallenge(2, this, false)">
+                                    <span class="opt-letter">B</span> student-name
+                                </div>
+                                <div class="challenge-opt" onclick="checkChallenge(2, this, true)">
+                                    <span class="opt-letter">C</span> student_name
+                                </div>
+                                <div class="challenge-opt" onclick="checkChallenge(2, this, false)">
+                                    <span class="opt-letter">D</span> class
+                                </div>
+                            </div>
+                            <div class="challenge-explanation" id="cexp-2">
+                                <strong>💡 Mastery Insight:</strong> Variable names can use underscores (`_`), but can't start with numbers or use reserved keywords like `class`.
+                            </div>
+                        </div>
+
+                        <!-- Challenge 3 -->
+                        <div class="challenge-card challenge-q3" id="cq3">
+                            <span class="q-badge">Question 03</span>
+                            <h3>3. What is variable initialization?</h3>
+                            <div class="challenge-options-grid">
+                                <div class="challenge-opt" onclick="checkChallenge(3, this, false)">
+                                    <span class="opt-letter">A</span> Deleting a variable
+                                </div>
+                                <div class="challenge-opt" onclick="checkChallenge(3, this, true)">
+                                    <span class="opt-letter">B</span> Giving a value to a variable for the first time
+                                </div>
+                                <div class="challenge-opt" onclick="checkChallenge(3, this, false)">
+                                    <span class="opt-letter">C</span> Printing a variable
+                                </div>
+                                <div class="challenge-opt" onclick="checkChallenge(3, this, false)">
+                                    <span class="opt-letter">D</span> Renaming a variable
+                                </div>
+                            </div>
+                            <div class="challenge-explanation" id="cexp-3">
+                                <strong>💡 Mastery Insight:</strong> Initialization is the "birth" of a variable—it's when you first give it a value to hold.
+                            </div>
+                        </div>
+
+                        <!-- Challenge 4 -->
+                        <div class="challenge-card challenge-q4" id="cq4">
+                            <span class="q-badge">Question 04</span>
+                            <h3>4. Which data type does 25 belong to?</h3>
+                            <div class="challenge-options-grid">
+                                <div class="challenge-opt" onclick="checkChallenge(4, this, false)">
+                                    <span class="opt-letter">A</span> String (str)
+                                </div>
+                                <div class="challenge-opt" onclick="checkChallenge(4, this, false)">
+                                    <span class="opt-letter">B</span> Float (float)
+                                </div>
+                                <div class="challenge-opt" onclick="checkChallenge(4, this, true)">
+                                    <span class="opt-letter">C</span> Integer (int)
+                                </div>
+                                <div class="challenge-opt" onclick="checkChallenge(4, this, false)">
+                                    <span class="opt-letter">D</span> Boolean (bool)
+                                </div>
+                            </div>
+                            <div class="challenge-explanation" id="cexp-4">
+                                <strong>💡 Mastery Insight:</strong> Whole numbers without decimals are always **Integers** (ints).
+                            </div>
+                        </div>
+
+                        <!-- Challenge 5 -->
+                        <div class="challenge-card challenge-q5" id="cq5">
+                            <span class="q-badge">Question 05</span>
+                            <h3>5. Which data type does "Hello" belong to?</h3>
+                            <div class="challenge-options-grid">
+                                <div class="challenge-opt" onclick="checkChallenge(5, this, true)">
+                                    <span class="opt-letter">A</span> String (str)
+                                </div>
+                                <div class="challenge-opt" onclick="checkChallenge(5, this, false)">
+                                    <span class="opt-letter">B</span> Integer (int)
+                                </div>
+                                <div class="challenge-opt" onclick="checkChallenge(5, this, false)">
+                                    <span class="opt-letter">C</span> Float (float)
+                                </div>
+                                <div class="challenge-opt" onclick="checkChallenge(5, this, false)">
+                                    <span class="opt-letter">D</span> Boolean (bool)
+                                </div>
+                            </div>
+                            <div class="challenge-explanation" id="cexp-5">
+                                <strong>💡 Mastery Insight:</strong> Anything inside quotes (`""`) is a **String**, even if it contains numbers!
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
 
 
             </main>
@@ -3100,6 +3313,41 @@
 
         function closeQuizModal() {
             document.getElementById('quiz-modal').style.display = 'none';
+        }
+
+        function checkChallenge(qNum, element, isCorrect) {
+            const card = document.getElementById(`cq${qNum}`);
+            const options = card.querySelectorAll('.challenge-opt');
+            const exp = document.getElementById(`cexp-${qNum}`);
+            
+            if (isCorrect) {
+                // Clear previous and set correct
+                options.forEach(opt => opt.classList.remove('correct', 'wrong'));
+                element.classList.add('correct');
+                
+                // Show explanation with animation
+                exp.style.display = 'block';
+                
+                // Big Confetti for Sprint Success!
+                if (typeof confetti === 'function') {
+                    confetti({
+                        particleCount: 150,
+                        spread: 100,
+                        origin: { y: 0.7 },
+                        colors: ['#f43f5e', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6']
+                    });
+                }
+            } else {
+                element.classList.add('wrong');
+                element.style.animation = 'none';
+                void element.offsetWidth; // reflow
+                element.style.animation = 'shake 0.4s';
+                
+                // Remove wrong state
+                setTimeout(() => {
+                    element.classList.remove('wrong');
+                }, 1000);
+            }
         }
 
         window.onclick = function(event) {
