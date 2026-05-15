@@ -127,11 +127,11 @@
             border-color: #ef4444;
         }
         .quiz-reasons-container {
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px solid #f1f5f9;
-            display: none;
-            animation: slideDown 0.4s ease-out;
+            display: none !important; /* Always hide from main page */
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         @keyframes slideDown {
             from { opacity: 0; transform: translateY(-10px); }
@@ -169,12 +169,12 @@
             color: #991b1b;
         }
         .explanation-box {
+            display: none !important; /* Always hide from main page */
             margin-top: 20px;
             padding: 18px;
             background: #f0f9ff;
             border-left: 4px solid #3b82f6;
             border-radius: 12px;
-            display: none;
             font-size: 0.95rem;
             line-height: 1.6;
             color: #1e40af;
@@ -2719,34 +2719,44 @@
             const container = document.getElementById('modal-reasons-container');
             const expContainer = document.getElementById('modal-explanation');
             
-            expContainer.style.display = 'none';
+            expContainer.style.setProperty('display', 'none', 'important');
             container.innerHTML = '';
             
-            // Get reasons from the main page source
-            const sourceReasons = document.getElementById(`reasons-${qNum}`).querySelectorAll('.reason-box');
+            const sourceContainer = document.getElementById(`reasons-${qNum}`);
+            const sourceReasons = sourceContainer.querySelectorAll('.reason-box');
             const sourceExp = document.getElementById(`exp-${qNum}`).innerHTML;
             
             sourceReasons.forEach(reason => {
                 const clone = reason.cloneNode(true);
-                const isCorrect = reason.getAttribute('onclick').includes('true');
-                clone.onclick = () => {
-                    // Remove existing classes
-                    container.querySelectorAll('.reason-box').forEach(b => b.classList.remove('correct', 'wrong'));
+                // Extracting isCorrect from the onclick string of the original element
+                const onClickAttr = reason.getAttribute('onclick') || '';
+                const isCorrect = onClickAttr.toLowerCase().includes('true');
+                
+                clone.onclick = function() {
+                    container.querySelectorAll('.reason-box').forEach(b => {
+                        b.classList.remove('correct', 'wrong');
+                        b.style.animation = 'none';
+                    });
                     
                     if (isCorrect) {
-                        clone.classList.add('correct');
+                        this.classList.add('correct');
                         expContainer.innerHTML = sourceExp;
-                        expContainer.style.display = 'block';
+                        expContainer.style.setProperty('display', 'block', 'important');
                         
                         if (typeof confetti === 'function') {
-                            confetti({ particleCount: 60, spread: 70, origin: { y: 0.6 } });
+                            confetti({ 
+                                particleCount: 80, 
+                                spread: 70, 
+                                origin: { y: 0.6 },
+                                zIndex: 11000
+                            });
                         }
                     } else {
-                        clone.classList.add('wrong');
-                        clone.style.animation = 'none';
-                        void clone.offsetWidth;
-                        clone.style.animation = 'shake 0.4s';
-                        setTimeout(() => clone.classList.remove('wrong'), 800);
+                        this.classList.add('wrong');
+                        this.style.animation = 'none';
+                        void this.offsetWidth;
+                        this.style.animation = 'shake 0.4s';
+                        setTimeout(() => this.classList.remove('wrong'), 800);
                     }
                 };
                 container.appendChild(clone);
