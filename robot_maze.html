@@ -1391,7 +1391,122 @@
                         line-height: 1.6;
                         font-size: 0.95rem;
                     }
+
+                    /* First Program Section Styles */
+                    .code-section {
+                        margin-top: 60px;
+                        padding: 0 10px;
+                        animation: fadeIn 0.8s ease-out;
+                    }
+                    .section-divider {
+                        border: none;
+                        border-top: 1px solid #e2e8f0;
+                        margin: 15px 0 25px 0;
+                    }
+                    .code-section p {
+                        color: #475569;
+                        margin-bottom: 12px;
+                        font-size: 1.05rem;
+                    }
+                    .interactive-code-card {
+                        background: #f8fafc;
+                        border: 1px solid #e2e8f0;
+                        border-radius: 24px;
+                        padding: 35px;
+                        margin-top: 25px;
+                        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+                    }
+                    .try-badge {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 8px;
+                        background: #0f172a;
+                        color: white;
+                        padding: 8px 18px;
+                        border-radius: 10px;
+                        font-weight: 700;
+                        font-size: 0.9rem;
+                        margin-bottom: 20px;
+                        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                    }
+                    .code-textarea {
+                        width: 100%;
+                        background: #f1f5f9;
+                        border: 1px solid #cbd5e1;
+                        border-radius: 16px;
+                        padding: 25px;
+                        font-family: 'JetBrains Mono', 'Fira Code', monospace;
+                        font-size: 1.1rem;
+                        color: #1e293b;
+                        resize: none;
+                        margin-bottom: 20px;
+                        outline: none;
+                    }
+                    .run-btn {
+                        background: #2563eb;
+                        color: white;
+                        border: none;
+                        padding: 10px 28px;
+                        border-radius: 10px;
+                        font-weight: 700;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        cursor: pointer;
+                        transition: all 0.2s ease;
+                        margin-bottom: 25px;
+                    }
+                    .run-btn:hover {
+                        background: #1d4ed8;
+                        transform: translateY(-2px);
+                        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+                    }
+                    .terminal-container {
+                        margin-top: 10px;
+                    }
+                    .terminal-label {
+                        font-size: 0.75rem;
+                        font-weight: 800;
+                        color: #64748b;
+                        letter-spacing: 0.05em;
+                        margin-bottom: 10px;
+                    }
+                    .terminal-output {
+                        background: #f1f5f9;
+                        border: 1px solid #cbd5e1;
+                        border-radius: 16px;
+                        padding: 20px 25px;
+                        min-height: 60px;
+                        font-family: 'JetBrains Mono', 'Fira Code', monospace;
+                        color: #334155;
+                        font-size: 1rem;
+                        display: flex;
+                        align-items: center;
+                    }
                     </style>
+                </section>
+
+                <!-- Writing Your First Python Program -->
+                <section class="code-section">
+                    <h2 class="premium-heading">Writing Your First Python Program</h2>
+                    <hr class="section-divider">
+                    <p>Now that Python is installed, let us write and run our first Python program.</p>
+                    <p>In Python, the <code style="background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px;">print()</code> function is used to display output on the screen.</p>
+                    
+                    <div class="interactive-code-card">
+                        <div class="try-badge"><i class="fas fa-play"></i> Try it out:</div>
+                        
+                        <div class="code-editor-container">
+                            <textarea id="first-program-code" class="code-textarea" rows="2" readonly>print("Hello, World!")</textarea>
+                        </div>
+                        
+                        <button class="run-btn" id="btn-run-first" onclick="runFirstProgram()"><i class="fas fa-play"></i> Run</button>
+                        
+                        <div class="terminal-container">
+                            <div class="terminal-label">TERMINAL OUTPUT</div>
+                            <div id="first-program-output" class="terminal-output"></div>
+                        </div>
+                    </div>
                 </section>
 
             </main>
@@ -1890,6 +2005,49 @@
         carouselOuter.addEventListener('mouseleave', () => {
             slideInterval = setInterval(nextSlide, 2000);
         });
+
+        async function runFirstProgram() {
+            const btn = document.getElementById('btn-run-first');
+            const output = document.getElementById('first-program-output');
+            
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running...';
+            output.innerText = '';
+            
+            await new Promise(r => setTimeout(r, 1000));
+            
+            output.innerText = 'Hello, World!';
+            
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-play"></i> Run';
+            
+            // Confetti effect localized to this card
+            const card = document.querySelector('.interactive-code-card');
+            const myCanvas = document.createElement('canvas');
+            myCanvas.style.position = 'absolute';
+            myCanvas.style.top = '0';
+            myCanvas.style.left = '0';
+            myCanvas.style.width = '100%';
+            myCanvas.style.height = '100%';
+            myCanvas.style.pointerEvents = 'none';
+            myCanvas.style.zIndex = '100';
+            card.style.position = 'relative'; // Ensure canvas is positioned relative to card
+            card.appendChild(myCanvas);
+            
+            const myConfetti = confetti.create(myCanvas, {
+                resize: true,
+                useWorker: true
+            });
+            
+            myConfetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#2563eb', '#3b82f6', '#60a5fa']
+            });
+            
+            setTimeout(() => myCanvas.remove(), 3000);
+        }
 
         // Start
         initGrid();
