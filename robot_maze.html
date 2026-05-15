@@ -1621,9 +1621,6 @@
                                     <label for="input-age">Age</label>
                                     <input type="number" id="input-age" placeholder="e.g. 18" oninput="updateLivePreview()">
                                 </div>
-                                <button type="button" class="run-btn" style="width: 100%; justify-content: center;" onclick="addToTable()">
-                                    <i class="fas fa-plus"></i> Add to Table
-                                </button>
                             </form>
                         </div>
 
@@ -1638,29 +1635,11 @@
                                 <div style="color: #64748b; font-style: italic;"># Start typing in the form to see variables...</div>
                             </div>
 
-                            <div class="table-scroll">
-                                <table id="data-table" class="modern-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Email ID</th>
-                                            <th>Phone Number</th>
-                                            <th>Age</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="table-body">
-                                        <!-- Dynamic Rows -->
-                                    </tbody>
-                                </table>
-                            </div>
-                            
                             <div class="print-field-section">
                                 <h3 class="sub-heading">Print Any Field</h3>
-                                <textarea id="print-field-name" class="code-textarea" style="height: 100px; margin-bottom: 20px;" placeholder="Type like:
-print(Name)
-print(Age)"></textarea>
+                                <textarea id="print-field-name" class="code-textarea" style="height: 100px; margin-bottom: 20px;" placeholder=""></textarea>
                                 <button class="run-btn" style="margin-bottom: 30px;" onclick="printFieldValues()">
-                                    <i class="fas fa-print"></i> Print Value
+                                    <i class="fas fa-play"></i> Run
                                 </button>
                                 <div id="print-output" class="terminal-output" style="display: none; white-space: pre-wrap;"></div>
                             </div>
@@ -2232,52 +2211,10 @@ print(Age)"></textarea>
             preview.innerHTML = html;
         }
 
-        function addToTable() {
-            const name = document.getElementById('input-name').value.trim();
-            const email = document.getElementById('input-email').value.trim();
-            const phone = document.getElementById('input-phone').value.trim();
-            const age = document.getElementById('input-age').value.trim();
-
-            if (!name || !email || !phone || !age) {
-                alert('Please fill all fields before adding.');
-                return;
-            }
-
-            const user = { name, email, phone, age };
-            userData.push(user);
-
-            // Update Table
-            const tbody = document.getElementById('table-body');
-            const row = document.createElement('tr');
-            row.style.animation = 'fadeIn 0.5s ease-out forwards';
-            row.innerHTML = `
-                <td>${name}</td>
-                <td>${email}</td>
-                <td>${phone}</td>
-                <td>${age}</td>
-            `;
-            tbody.appendChild(row);
-
-            // Clear Form
-            document.getElementById('user-info-form').reset();
-            updateLivePreview();
-            
-            // Subtle success effect on the card
-            const card = document.querySelector('.form-card');
-            card.style.borderColor = '#22c55e';
-            setTimeout(() => card.style.borderColor = '#e2e8f0', 1000);
-        }
-
         function printFieldValues() {
             const input = document.getElementById('print-field-name').value.trim().toLowerCase();
             const output = document.getElementById('print-output');
             
-            if (userData.length === 0) {
-                output.style.display = 'flex';
-                output.innerText = 'No data available in table.';
-                return;
-            }
-
             // Parse print(field) syntax
             const match = input.match(/^print\s*\(\s*([a-z\s]+)\s*\)$/);
             
@@ -2288,18 +2225,26 @@ print(Age)"></textarea>
             }
 
             const fieldName = match[1].trim();
-            let values = [];
-            let key = '';
+            let value = '';
+            let label = '';
 
-            if (fieldName === 'name') key = 'name';
-            else if (fieldName === 'email' || fieldName === 'email id') key = 'email';
-            else if (fieldName === 'phone' || fieldName === 'phone number') key = 'phone';
-            else if (fieldName === 'age') key = 'age';
+            if (fieldName === 'name') {
+                value = document.getElementById('input-name').value;
+                label = 'Name';
+            } else if (fieldName === 'email' || fieldName === 'email id') {
+                value = document.getElementById('input-email').value;
+                label = 'Email';
+            } else if (fieldName === 'phone' || fieldName === 'phone number') {
+                value = document.getElementById('input-phone').value;
+                label = 'Phone';
+            } else if (fieldName === 'age') {
+                value = document.getElementById('input-age').value;
+                label = 'Age';
+            }
 
-            if (key) {
-                values = userData.map(u => u[key]);
+            if (label) {
                 output.style.display = 'flex';
-                output.innerHTML = `<strong>Stored ${key.charAt(0).toUpperCase() + key.slice(1)}s:</strong><br>${values.join(', ')}`;
+                output.innerHTML = `<strong>${label}:</strong><br>${value || '(empty)'}`;
             } else {
                 output.style.display = 'flex';
                 output.innerText = 'Field not found. Try print(Name), print(Email), etc.';
