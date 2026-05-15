@@ -74,6 +74,114 @@
             text-decoration: none; font-weight: 700; font-size: 13px;
         }
 
+        /* Quiz Styles */
+        .quiz-item-container {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: transform 0.3s ease;
+        }
+        .quiz-question-header {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .quiz-values-grid {
+            display: flex;
+            gap: 12px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .quiz-value-box {
+            padding: 10px 20px;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: 'Fira Code', monospace;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #334155;
+            font-size: 1.05rem;
+        }
+        .quiz-value-box:hover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+            transform: translateY(-2px);
+        }
+        .quiz-value-box.selected-correct {
+            background: #dcfce7;
+            color: #166534;
+            border-color: #22c55e;
+        }
+        .quiz-value-box.selected-wrong {
+            background: #fef2f2;
+            color: #991b1b;
+            border-color: #ef4444;
+        }
+        .quiz-reasons-container {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #f1f5f9;
+            display: none;
+            animation: slideDown 0.4s ease-out;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .reason-box {
+            padding: 14px 20px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+        }
+        .reason-box:hover {
+            border-color: #3b82f6;
+            background: #f0f9ff;
+            transform: translateX(5px);
+        }
+        .reason-box.correct {
+            background: #f0fdf4;
+            border-color: #22c55e;
+            color: #166534;
+            font-weight: 700;
+        }
+        .reason-box.wrong {
+            background: #fef2f2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+        .explanation-box {
+            margin-top: 20px;
+            padding: 18px;
+            background: #f0f9ff;
+            border-left: 4px solid #3b82f6;
+            border-radius: 12px;
+            display: none;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #1e40af;
+        }
+        .explanation-box strong { color: #1e3a8a; }
+
+
         /* ====== LAYOUT ====== */
         .layout-container {
             display: flex;
@@ -1710,6 +1818,131 @@
                     </div>
                 </section>
 
+                <!-- Data Types Quiz Section -->
+                <section class="content-card quiz-section" style="margin-top: 40px; margin-bottom: 100px;">
+                    <h2 class="premium-heading"><span class="small-ball" style="background: radial-gradient(circle at 30% 30%, #facc15, #ca8a04); box-shadow: 0 0 12px rgba(234, 179, 8, 0.4);"></span>Activity: Pick the Odd One – Python Data Types</h2>
+                    <hr class="section-divider">
+                    <p class="section-intro">Look at the values below. One of them belongs to a different data type. First, <b>click the odd value</b>, then <b>select the correct reason</b> from the options that appear.</p>
+
+                    <div id="quiz-container">
+                        <!-- Question 1 -->
+                        <div class="quiz-item-container" id="q1">
+                            <div class="quiz-question-header">Question 1: Values</div>
+                            <div class="quiz-values-grid">
+                                <div class="quiz-value-box" onclick="checkValue(1, this, '25')">25</div>
+                                <div class="quiz-value-box" onclick="checkValue(1, this, '40')">40</div>
+                                <div class="quiz-value-box" onclick="checkValue(1, this, '18')">18</div>
+                                <div class="quiz-value-box" onclick="checkValue(1, this, '\"Python\"', true)">"Python"</div>
+                            </div>
+                            
+                            <div class="quiz-reasons-container" id="reasons-1">
+                                <div class="quiz-question-header" style="font-size: 1rem; color: #64748b;">Select the Correct Reason:</div>
+                                <div class="reason-box" onclick="checkReason(1, this, true)"><b>A</b> It belongs to the String (str) data type.</div>
+                                <div class="reason-box" onclick="checkReason(1, this, true)"><b>B</b> It contains text characters enclosed in quotation marks.</div>
+                                <div class="reason-box" onclick="checkReason(1, this, false)"><b>C</b> It belongs to the Integer (int) data type.</div>
+                                <div class="reason-box" onclick="checkReason(1, this, false)"><b>D</b> It contains uppercase letters.</div>
+                            </div>
+                            
+                            <div class="explanation-box" id="exp-1">
+                                <strong>Explanation:</strong> "Python" is a <strong>String (str)</strong> because text values are written inside quotation marks. The others are <strong>Integers (int)</strong>.
+                            </div>
+                        </div>
+
+                        <!-- Question 2 -->
+                        <div class="quiz-item-container" id="q2">
+                            <div class="quiz-question-header">Question 2: Values</div>
+                            <div class="quiz-values-grid">
+                                <div class="quiz-value-box" onclick="checkValue(2, this, '3.14')">3.14</div>
+                                <div class="quiz-value-box" onclick="checkValue(2, this, '7.5')">7.5</div>
+                                <div class="quiz-value-box" onclick="checkValue(2, this, '2.8')">2.8</div>
+                                <div class="quiz-value-box" onclick="checkValue(2, this, '100', true)">100</div>
+                            </div>
+                            
+                            <div class="quiz-reasons-container" id="reasons-2">
+                                <div class="quiz-question-header" style="font-size: 1rem; color: #64748b;">Select the Correct Reason:</div>
+                                <div class="reason-box" onclick="checkReason(2, this, true)"><b>A</b> It represents a whole number without a decimal point.</div>
+                                <div class="reason-box" onclick="checkReason(2, this, true)"><b>B</b> It belongs to the Integer (int) data type.</div>
+                                <div class="reason-box" onclick="checkReason(2, this, false)"><b>C</b> It belongs to the Float (float) data type.</div>
+                                <div class="reason-box" onclick="checkReason(2, this, false)"><b>D</b> It is greater than all other values.</div>
+                            </div>
+                            
+                            <div class="explanation-box" id="exp-2">
+                                <strong>Explanation:</strong> 100 is an <strong>Integer (int)</strong> because it has no decimal part. The others are <strong>Float (float)</strong> values.
+                            </div>
+                        </div>
+
+                        <!-- Question 3 -->
+                        <div class="quiz-item-container" id="q3">
+                            <div class="quiz-question-header">Question 3: Values</div>
+                            <div class="quiz-values-grid">
+                                <div class="quiz-value-box" onclick="checkValue(3, this, 'True')">True</div>
+                                <div class="quiz-value-box" onclick="checkValue(3, this, 'False')">False</div>
+                                <div class="quiz-value-box" onclick="checkValue(3, this, 'True')">True</div>
+                                <div class="quiz-value-box" onclick="checkValue(3, this, '\"False\"', true)">"False"</div>
+                            </div>
+                            
+                            <div class="quiz-reasons-container" id="reasons-3">
+                                <div class="quiz-question-header" style="font-size: 1rem; color: #64748b;">Select the Correct Reason:</div>
+                                <div class="reason-box" onclick="checkReason(3, this, true)"><b>A</b> It belongs to the String (str) data type.</div>
+                                <div class="reason-box" onclick="checkReason(3, this, true)"><b>B</b> It represents text enclosed in quotation marks instead of a logical value.</div>
+                                <div class="reason-box" onclick="checkReason(3, this, false)"><b>C</b> It belongs to the Boolean (bool) data type.</div>
+                                <div class="reason-box" onclick="checkReason(3, this, false)"><b>D</b> It starts with a capital letter.</div>
+                            </div>
+                            
+                            <div class="explanation-box" id="exp-3">
+                                <strong>Explanation:</strong> "False" is a <strong>String (str)</strong>, while True and False without quotes are <strong>Boolean (bool)</strong> values.
+                            </div>
+                        </div>
+
+                        <!-- Question 4 -->
+                        <div class="quiz-item-container" id="q4">
+                            <div class="quiz-question-header">Question 4: Values</div>
+                            <div class="quiz-values-grid">
+                                <div class="quiz-value-box" onclick="checkValue(4, this, '\"Apple\"')">"Apple"</div>
+                                <div class="quiz-value-box" onclick="checkValue(4, this, '\"Mango\"')">"Mango"</div>
+                                <div class="quiz-value-box" onclick="checkValue(4, this, '\"Orange\"')">"Orange"</div>
+                                <div class="quiz-value-box" onclick="checkValue(4, this, '45', true)">45</div>
+                            </div>
+                            
+                            <div class="quiz-reasons-container" id="reasons-4">
+                                <div class="quiz-question-header" style="font-size: 1rem; color: #64748b;">Select the Correct Reason:</div>
+                                <div class="reason-box" onclick="checkReason(4, this, true)"><b>A</b> It represents a numeric value instead of text.</div>
+                                <div class="reason-box" onclick="checkReason(4, this, true)"><b>B</b> It belongs to the Integer (int) data type.</div>
+                                <div class="reason-box" onclick="checkReason(4, this, false)"><b>C</b> It belongs to the String (str) data type.</div>
+                                <div class="reason-box" onclick="checkReason(4, this, false)"><b>D</b> It does not represent a fruit name.</div>
+                            </div>
+                            
+                            <div class="explanation-box" id="exp-4">
+                                <strong>Explanation:</strong> 45 is an <strong>Integer (int)</strong>, while the others are <strong>Strings (str)</strong>.
+                            </div>
+                        </div>
+
+                        <!-- Question 5 -->
+                        <div class="quiz-item-container" id="q5">
+                            <div class="quiz-question-header">Question 5: Values</div>
+                            <div class="quiz-values-grid">
+                                <div class="quiz-value-box" onclick="checkValue(5, this, '12.5')">12.5</div>
+                                <div class="quiz-value-box" onclick="checkValue(5, this, '8.9')">8.9</div>
+                                <div class="quiz-value-box" onclick="checkValue(5, this, 'True', true)">True</div>
+                                <div class="quiz-value-box" onclick="checkValue(5, this, '6.7')">6.7</div>
+                            </div>
+                            
+                            <div class="quiz-reasons-container" id="reasons-5">
+                                <div class="quiz-question-header" style="font-size: 1rem; color: #64748b;">Select the Correct Reason:</div>
+                                <div class="reason-box" onclick="checkReason(5, this, true)"><b>A</b> It belongs to the Boolean (bool) data type.</div>
+                                <div class="reason-box" onclick="checkReason(5, this, true)"><b>B</b> It represents a logical value (True/False) instead of a decimal number.</div>
+                                <div class="reason-box" onclick="checkReason(5, this, false)"><b>C</b> It belongs to the Float (float) data type.</div>
+                                <div class="reason-box" onclick="checkReason(5, this, false)"><b>D</b> It does not contain a decimal point.</div>
+                            </div>
+                            
+                            <div class="explanation-box" id="exp-5">
+                                <strong>Explanation:</strong> True belongs to the <strong>Boolean (bool)</strong> data type, while the others are <strong>Float (float)</strong> values.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
 
             </main>
     </div>
@@ -2396,6 +2629,50 @@
 
         // Start
         initGrid();
+
+        // --- Quiz Logic ---
+        function checkValue(qNum, element, value, isCorrect) {
+            const container = document.getElementById(`q${qNum}`);
+            const boxes = container.querySelectorAll('.quiz-value-box');
+            
+            // Clear previous selections in this question
+            boxes.forEach(b => b.classList.remove('selected-correct', 'selected-wrong'));
+            
+            if (isCorrect) {
+                element.classList.add('selected-correct');
+                document.getElementById(`reasons-${qNum}`).style.display = 'block';
+                // Scroll slightly to show reasons
+                document.getElementById(`reasons-${qNum}`).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                element.classList.add('selected-wrong');
+                // Optional: shake effect
+                element.style.animation = 'none';
+                void element.offsetWidth;
+                element.style.animation = 'shake 0.4s';
+            }
+        }
+
+        function checkReason(qNum, element, isCorrect) {
+            const container = document.getElementById(`reasons-${qNum}`);
+            const boxes = container.querySelectorAll('.reason-box');
+            
+            if (isCorrect) {
+                element.classList.add('correct');
+                document.getElementById(`exp-${qNum}`).style.display = 'block';
+                // Success confetti localized
+                if (typeof confetti === 'function') {
+                    confetti({
+                        particleCount: 40,
+                        spread: 60,
+                        origin: { y: 0.8 },
+                        colors: ['#22c55e', '#4ade80']
+                    });
+                }
+            } else {
+                element.classList.add('wrong');
+                setTimeout(() => element.classList.remove('wrong'), 1000);
+            }
+        }
 
     </script>
 </body>
