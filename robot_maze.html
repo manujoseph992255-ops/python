@@ -1607,19 +1607,19 @@
                             <form id="user-info-form" class="modern-form">
                                 <div class="form-group">
                                     <label for="input-name">Name</label>
-                                    <input type="text" id="input-name" placeholder="Enter your full name">
+                                    <input type="text" id="input-name" placeholder="Enter your full name" oninput="updateLivePreview()">
                                 </div>
                                 <div class="form-group">
                                     <label for="input-email">Email ID</label>
-                                    <input type="email" id="input-email" placeholder="example@domain.com">
+                                    <input type="email" id="input-email" placeholder="example@domain.com" oninput="updateLivePreview()">
                                 </div>
                                 <div class="form-group">
                                     <label for="input-phone">Phone Number</label>
-                                    <input type="tel" id="input-phone" placeholder="+91 00000 00000">
+                                    <input type="tel" id="input-phone" placeholder="+91 00000 00000" oninput="updateLivePreview()">
                                 </div>
                                 <div class="form-group">
                                     <label for="input-age">Age</label>
-                                    <input type="number" id="input-age" placeholder="e.g. 18">
+                                    <input type="number" id="input-age" placeholder="e.g. 18" oninput="updateLivePreview()">
                                 </div>
                                 <button type="button" class="run-btn" style="width: 100%; justify-content: center;" onclick="addToTable()">
                                     <i class="fas fa-plus"></i> Add to Table
@@ -1631,6 +1631,13 @@
                         <div class="content-card data-card">
                             <h2 class="premium-heading">Stored Data</h2>
                             <hr class="section-divider">
+                            
+                            <!-- Live Variable Preview (Real-time) -->
+                            <div class="sub-heading"><i class="fas fa-code"></i> Live Variable Preview</div>
+                            <div id="live-preview-box" class="code-textarea" style="background: #1e293b; color: #f8fafc; padding: 20px; border-radius: 12px; font-family: 'JetBrains Mono', monospace; min-height: 100px; margin-bottom: 30px; line-height: 1.8;">
+                                <div style="color: #64748b; font-style: italic;"># Start typing in the form to see variables...</div>
+                            </div>
+
                             <div class="table-scroll">
                                 <table id="data-table" class="modern-table">
                                     <thead>
@@ -2204,6 +2211,27 @@
         // --- Dashboard Logic ---
         let userData = [];
 
+        function updateLivePreview() {
+            const name = document.getElementById('input-name').value;
+            const email = document.getElementById('input-email').value;
+            const phone = document.getElementById('input-phone').value;
+            const age = document.getElementById('input-age').value;
+            const preview = document.getElementById('live-preview-box');
+
+            if (!name && !email && !phone && !age) {
+                preview.innerHTML = '<div style="color: #64748b; font-style: italic;"># Start typing in the form to see variables...</div>';
+                return;
+            }
+
+            let html = '';
+            if (name) html += `<div><span style="color: #60a5fa;">name</span> <span style="color: #f8fafc;">=</span> <span style="color: #fb923c;">"${name}"</span></div>`;
+            if (email) html += `<div><span style="color: #60a5fa;">email</span> <span style="color: #f8fafc;">=</span> <span style="color: #fb923c;">"${email}"</span></div>`;
+            if (phone) html += `<div><span style="color: #60a5fa;">phone</span> <span style="color: #f8fafc;">=</span> <span style="color: #fb923c;">"${phone}"</span></div>`;
+            if (age) html += `<div><span style="color: #60a5fa;">age</span> <span style="color: #f8fafc;">=</span> <span style="color: #facc15;">${age}</span></div>`;
+
+            preview.innerHTML = html;
+        }
+
         function addToTable() {
             const name = document.getElementById('input-name').value.trim();
             const email = document.getElementById('input-email').value.trim();
@@ -2232,6 +2260,7 @@
 
             // Clear Form
             document.getElementById('user-info-form').reset();
+            updateLivePreview();
             
             // Subtle success effect on the card
             const card = document.querySelector('.form-card');
