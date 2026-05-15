@@ -117,34 +117,44 @@
             min-height: 100px;
             min-width: 120px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            overflow: visible;
+            overflow: hidden; /* Keep decorations inside */
         }
         
-        /* Premium Corner Decorations */
-        .quiz-value-box::before, .quiz-value-box::after {
-            content: '';
+        /* Inner Decorations (Quotes & Brackets) */
+        .quiz-value-box::before, .quiz-value-box::after,
+        .quiz-value-box .corner-decor::before, .quiz-value-box .corner-decor::after {
             position: absolute;
-            width: 10px;
-            height: 10px;
-            border-color: inherit;
-            opacity: 0.4;
+            font-family: "Inter", sans-serif;
+            font-weight: 900;
+            opacity: 0.15;
+            font-size: 1.2rem;
+            line-height: 1;
             transition: all 0.3s ease;
         }
-        /* Top-Left & Bottom-Right Brackets */
-        .quiz-value-box::before { top: 6px; left: 6px; border-top: 2px solid; border-left: 2px solid; border-radius: 3px 0 0 0; }
-        .quiz-value-box::after { bottom: 6px; right: 6px; border-bottom: 2px solid; border-right: 2px solid; border-radius: 0 0 3px 0; }
-        
-        /* Subtle Inner Decorations (Dots) */
-        .quiz-value-box .decoration-dot {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: currentColor;
-            border-radius: 50%;
-            opacity: 0.2;
+
+        /* --- Quotes Design (for Strings) --- */
+        .design-quotes::before { content: '“'; top: 5px; left: 8px; }
+        .design-quotes::after { content: '”'; top: 5px; right: 8px; }
+        .design-quotes .corner-decor::before { content: '„'; bottom: 5px; left: 8px; }
+        .design-quotes .corner-decor::after { content: '“'; bottom: 5px; right: 8px; }
+
+        /* --- Brackets Design (for Numbers/General) --- */
+        .design-brackets::before { content: '['; top: 8px; left: 10px; font-size: 1rem; }
+        .design-brackets::after { content: ']'; top: 8px; right: 10px; font-size: 1rem; }
+        .design-brackets .corner-decor::before { content: '['; bottom: 8px; left: 10px; font-size: 1rem; transform: scaleY(-1); }
+        .design-brackets .corner-decor::after { content: ']'; bottom: 8px; right: 10px; font-size: 1rem; transform: scaleY(-1); }
+
+        /* --- Angle Design (for Code/Logic) --- */
+        .design-code::before { content: '<'; top: 8px; left: 10px; font-size: 0.9rem; }
+        .design-code::after { content: '>'; top: 8px; right: 10px; font-size: 0.9rem; }
+        .design-code .corner-decor::before { content: '{'; bottom: 8px; left: 10px; font-size: 0.9rem; }
+        .design-code .corner-decor::after { content: '}'; bottom: 8px; right: 10px; font-size: 0.9rem; }
+
+        .quiz-value-box:hover::before, .quiz-value-box:hover::after,
+        .quiz-value-box:hover .corner-decor::before, .quiz-value-box:hover .corner-decor::after {
+            opacity: 0.5;
+            transform: scale(1.2);
         }
-        .dot-tr { top: 8px; right: 8px; }
-        .dot-bl { bottom: 8px; left: 8px; }
 
         .box-value {
             font-size: 1.3rem;
@@ -153,14 +163,13 @@
             z-index: 2;
             word-break: break-word;
             padding: 0 5px;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
         }
 
         .quiz-value-box:hover {
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.1);
         }
-        .quiz-value-box:hover::before { top: 4px; left: 4px; opacity: 0.8; }
-        .quiz-value-box:hover::after { bottom: 4px; right: 4px; opacity: 0.8; }
 
         /* Mixed Colors per Box (Matching Screenshot Pattern) */
         .quiz-values-grid .quiz-value-box:nth-child(1) { border-color: #22c55e; color: #22c55e; background: #f0fdf4; }
@@ -1970,24 +1979,25 @@
                         <div class="quiz-item-container" id="q1">
                             <div class="quiz-question-header">Question 1: Values</div>
                             <div class="quiz-values-grid">
-                                <div class="quiz-value-box" onclick="checkValue(1, this, '25')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                    <div id="quiz-container-l1">
+                        <!-- Question 1 -->
+                        <div class="quiz-item-container" id="q1">
+                            <div class="quiz-question-header">Question 1: Values</div>
+                            <div class="quiz-values-grid">
+                                <div class="quiz-value-box design-brackets" onclick="checkValue(1, this, '25')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">25</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(1, this, '40')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-brackets" onclick="checkValue(1, this, '40')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">40</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(1, this, '18')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-brackets" onclick="checkValue(1, this, '18')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">18</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(1, this, 'Python', true)">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-quotes" onclick="checkValue(1, this, 'Python', true)">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">"Python"</div>
                                 </div>
                             </div>
@@ -2009,24 +2019,20 @@
                         <div class="quiz-item-container" id="q2">
                             <div class="quiz-question-header">Question 2: Values</div>
                             <div class="quiz-values-grid">
-                                <div class="quiz-value-box" onclick="checkValue(2, this, '3.14')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-brackets" onclick="checkValue(2, this, '3.14')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">3.14</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(2, this, '7.5')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-brackets" onclick="checkValue(2, this, '7.5')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">7.5</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(2, this, '2.8')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-brackets" onclick="checkValue(2, this, '2.8')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">2.8</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(2, this, '100', true)">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-brackets" onclick="checkValue(2, this, '100', true)">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">100</div>
                                 </div>
                             </div>
@@ -2048,24 +2054,20 @@
                         <div class="quiz-item-container" id="q3">
                             <div class="quiz-question-header">Question 3: Values</div>
                             <div class="quiz-values-grid">
-                                <div class="quiz-value-box" onclick="checkValue(3, this, 'True1')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-code" onclick="checkValue(3, this, 'True1')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">True</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(3, this, 'False')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-code" onclick="checkValue(3, this, 'False')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">False</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(3, this, 'True2')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-code" onclick="checkValue(3, this, 'True2')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">True</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(3, this, 'False-str', true)">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-quotes" onclick="checkValue(3, this, 'False-str', true)">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">"False"</div>
                                 </div>
                             </div>
@@ -2087,24 +2089,20 @@
                         <div class="quiz-item-container" id="q4">
                             <div class="quiz-question-header">Question 4: Values</div>
                             <div class="quiz-values-grid">
-                                <div class="quiz-value-box" onclick="checkValue(4, this, 'Apple')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-quotes" onclick="checkValue(4, this, 'Apple')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">"Apple"</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(4, this, 'Mango')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-quotes" onclick="checkValue(4, this, 'Mango')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">"Mango"</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(4, this, 'Orange')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-quotes" onclick="checkValue(4, this, 'Orange')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">"Orange"</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(4, this, '45', true)">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-brackets" onclick="checkValue(4, this, '45', true)">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">45</div>
                                 </div>
                             </div>
@@ -2126,24 +2124,20 @@
                         <div class="quiz-item-container" id="q5">
                             <div class="quiz-question-header">Question 5: Values</div>
                             <div class="quiz-values-grid">
-                                <div class="quiz-value-box" onclick="checkValue(5, this, '9.99')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-brackets" onclick="checkValue(5, this, '9.99')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">9.99</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(5, this, '15.5')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-brackets" onclick="checkValue(5, this, '15.5')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">15.5</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(5, this, '0.5')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-brackets" onclick="checkValue(5, this, '0.5')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">0.5</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(5, this, 'Python', true)">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-quotes" onclick="checkValue(5, this, 'Python', true)">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">"Python"</div>
                                 </div>
                             </div>
@@ -2173,24 +2167,20 @@
                         <div class="quiz-item-container" id="q6">
                             <div class="quiz-question-header">Question 1: Values</div>
                             <div class="quiz-values-grid">
-                                <div class="quiz-value-box" onclick="checkValue(6, this, 'String-Double')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-quotes" onclick="checkValue(6, this, 'String-Double')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">"Linto"</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(6, this, 'String-Single')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-quotes" onclick="checkValue(6, this, 'String-Single')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">'Linto'</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(6, this, 'String-Triple')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-quotes" onclick="checkValue(6, this, 'String-Triple')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">"""Linto"""</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(6, this, 'Identifier', true)">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-code" onclick="checkValue(6, this, 'Identifier', true)">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">Linto</div>
                                 </div>
                             </div>
@@ -2212,24 +2202,20 @@
                         <div class="quiz-item-container" id="q7">
                             <div class="quiz-question-header">Question 2: Values</div>
                             <div class="quiz-values-grid">
-                                <div class="quiz-value-box" onclick="checkValue(7, this, '32')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-brackets" onclick="checkValue(7, this, '32')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">32</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(7, this, '45')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-brackets" onclick="checkValue(7, this, '45')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">45</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(7, this, '18')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-brackets" onclick="checkValue(7, this, '18')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">18</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(7, this, '3.2', true)">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-brackets" onclick="checkValue(7, this, '3.2', true)">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">3.2</div>
                                 </div>
                             </div>
@@ -2251,24 +2237,20 @@
                         <div class="quiz-item-container" id="q8">
                             <div class="quiz-question-header">Question 3: Values</div>
                             <div class="quiz-values-grid">
-                                <div class="quiz-value-box" onclick="checkValue(8, this, '3.2-str')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-quotes" onclick="checkValue(8, this, '3.2-str')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">"3.2"</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(8, this, '5.6-str')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-quotes" onclick="checkValue(8, this, '5.6-str')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">'5.6'</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(8, this, '7.8-str')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-quotes" onclick="checkValue(8, this, '7.8-str')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">"7.8"</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(8, this, '3.2-float', true)">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-brackets" onclick="checkValue(8, this, '3.2-float', true)">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">3.2</div>
                                 </div>
                             </div>
@@ -2290,24 +2272,20 @@
                         <div class="quiz-item-container" id="q9">
                             <div class="quiz-question-header">Question 4: Values</div>
                             <div class="quiz-values-grid">
-                                <div class="quiz-value-box" onclick="checkValue(9, this, 'True-Cap')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-code" onclick="checkValue(9, this, 'True-Cap')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">True</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(9, this, 'False-Cap')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-code" onclick="checkValue(9, this, 'False-Cap')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">False</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(9, this, 'true-low', true)">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-code" onclick="checkValue(9, this, 'true-low', true)">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">true</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(9, this, 'True-Cap2')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-code" onclick="checkValue(9, this, 'True-Cap2')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">True</div>
                                 </div>
                             </div>
@@ -2329,24 +2307,20 @@
                         <div class="quiz-item-container" id="q10">
                             <div class="quiz-question-header">Question 5: Values</div>
                             <div class="quiz-values-grid">
-                                <div class="quiz-value-box" onclick="checkValue(10, this, '100-str1')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-quotes" onclick="checkValue(10, this, '100-str1')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">"100"</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(10, this, '200-str2')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-quotes" onclick="checkValue(10, this, '200-str2')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">'200'</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(10, this, '300-str3')">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-quotes" onclick="checkValue(10, this, '300-str3')">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">"300"</div>
                                 </div>
-                                <div class="quiz-value-box" onclick="checkValue(10, this, '100-int', true)">
-                                    <div class="decoration-dot dot-tr"></div>
-                                    <div class="decoration-dot dot-bl"></div>
+                                <div class="quiz-value-box design-brackets" onclick="checkValue(10, this, '100-int', true)">
+                                    <div class="corner-decor"></div>
                                     <div class="box-value">100</div>
                                 </div>
                             </div>
