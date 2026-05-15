@@ -111,45 +111,51 @@
             color: #334155;
             font-size: 1.05rem;
         }
+        .quiz-value-box {
+            padding: 20px 40px;
+            background: white;
+            border: 3px solid #e2e8f0;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: #1e293b;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 140px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
         .quiz-value-box:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.15);
             border-color: #3b82f6;
-            background: #eff6ff;
-            transform: translateY(-2px);
         }
         .quiz-value-box.selected-correct {
-            background: #dcfce7;
-            color: #166534;
-            border-color: #22c55e;
+            background: #dcfce7 !important;
+            color: #15803d !important;
+            border-color: #22c55e !important;
+            transform: scale(1.08);
         }
         .quiz-value-box.selected-wrong {
-            background: #fef2f2;
-            color: #991b1b;
-            border-color: #ef4444;
+            background: #fee2e2 !important;
+            color: #b91c1c !important;
+            border-color: #ef4444 !important;
+            box-shadow: 0 0 0 5px rgba(239, 68, 68, 0.2);
+            animation: shake 0.4s;
         }
         .quiz-reasons-container {
-            display: none !important; /* Always hide from main page */
+            display: none !important;
         }
         
-        /* Unique Colors for Questions */
-        #q1 .quiz-value-box { background: #f0f7ff; color: #0369a1; border-color: #bae6fd; }
-        #q1 .quiz-value-box:hover { background: #e0f2fe; transform: translateY(-3px); box-shadow: 0 4px 12px rgba(186, 230, 253, 0.4); }
-        
-        #q2 .quiz-value-box { background: #fff1f2; color: #be123c; border-color: #fecdd3; }
-        #q2 .quiz-value-box:hover { background: #ffe4e6; transform: translateY(-3px); box-shadow: 0 4px 12px rgba(254, 205, 211, 0.4); }
-        
-        #q3 .quiz-value-box { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
-        #q3 .quiz-value-box:hover { background: #dcfce7; transform: translateY(-3px); box-shadow: 0 4px 12px rgba(187, 247, 208, 0.4); }
-        
-        #q4 .quiz-value-box { background: #fffbeb; color: #b45309; border-color: #fef3c7; }
-        #q4 .quiz-value-box:hover { background: #fef3c7; transform: translateY(-3px); box-shadow: 0 4px 12px rgba(254, 243, 199, 0.4); }
-        
-        #q5 .quiz-value-box { background: #f5f3ff; color: #6d28d9; border-color: #ddd6fe; }
-        #q5 .quiz-value-box:hover { background: #ede9fe; transform: translateY(-3px); box-shadow: 0 4px 12px rgba(221, 214, 254, 0.4); }
+        /* Question Hover Themes */
+        #q1 .quiz-value-box:hover { border-color: #0284c7; background: #f0f9ff; }
+        #q2 .quiz-value-box:hover { border-color: #e11d48; background: #fff1f2; }
+        #q3 .quiz-value-box:hover { border-color: #16a34a; background: #f0fdf4; }
+        #q4 .quiz-value-box:hover { border-color: #d97706; background: #fffbeb; }
+        #q5 .quiz-value-box:hover { border-color: #7c3aed; background: #f5f3ff; }
 
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
         @keyframes slideDown {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -1914,7 +1920,7 @@
                                 <div class="quiz-value-box" onclick="checkValue(1, this, '25')">25</div>
                                 <div class="quiz-value-box" onclick="checkValue(1, this, '40')">40</div>
                                 <div class="quiz-value-box" onclick="checkValue(1, this, '18')">18</div>
-                                <div class="quiz-value-box" onclick="checkValue(1, this, '\"Python\"', true)">"Python"</div>
+                                <div class="quiz-value-box" onclick="checkValue(1, this, 'Python', true)">"Python"</div>
                             </div>
                             
                             <div class="quiz-reasons-container" id="reasons-1">
@@ -1960,7 +1966,7 @@
                                 <div class="quiz-value-box" onclick="checkValue(3, this, 'True')">True</div>
                                 <div class="quiz-value-box" onclick="checkValue(3, this, 'False')">False</div>
                                 <div class="quiz-value-box" onclick="checkValue(3, this, 'True')">True</div>
-                                <div class="quiz-value-box" onclick="checkValue(3, this, '\"False\"', true)">"False"</div>
+                                <div class="quiz-value-box" onclick="checkValue(3, this, 'False', true)">"False"</div>
                             </div>
                             
                             <div class="quiz-reasons-container" id="reasons-3">
