@@ -3258,11 +3258,30 @@
             const exp = document.getElementById(`bexp-${qNum}`);
             
             if (isCorrect) {
-                // Remove all states
+                // Clear any previous wrong message
+                exp.style.color = '';
+                exp.style.borderColor = '';
+                exp.style.backgroundColor = '';
+                
+                // Remove all states from boxes
                 boxes.forEach(box => box.classList.remove('selected-correct', 'selected-wrong'));
                 element.classList.add('selected-correct');
                 
-                // Show explanation
+                // Set the correct explanation text
+                const explanations = {
+                    1: "A variable is used to store data values in Python, acting like a named container.",
+                    2: "Variable names can contain letters, numbers, and underscores, but cannot start with a number or use reserved keywords like 'class'.",
+                    3: "Initialization means assigning an initial value to a variable using the assignment operator (=).",
+                    4: "Whole numbers belong to the <strong>Integer (int)</strong> data type in Python.",
+                    5: "Text values enclosed in quotation marks are <strong>Strings (str)</strong>.",
+                    6: "Python is famous for its simple, readable syntax that makes it easy for beginners to learn.",
+                    7: "Numbers with decimal points belong to the <strong>Float (float)</strong> data type.",
+                    8: "In Python, any text following a # symbol on a line is treated as a comment and ignored by the computer.",
+                    9: "The <strong>print()</strong> function outputs text or variable values to the console.",
+                    10: "<strong>True</strong> and <strong>False</strong> (capitalized and without quotes) are the only two Boolean values."
+                };
+                
+                exp.innerHTML = `<strong>Correct!</strong> ${explanations[qNum]}`;
                 exp.style.display = 'block';
                 
                 // Celebrate!
@@ -3274,8 +3293,17 @@
                 });
             } else {
                 element.classList.add('selected-wrong');
+                
+                // Show wrong message
+                exp.innerHTML = `<strong>Oops!</strong> Wrong answer. Please try again!`;
+                exp.style.display = 'block';
+                exp.style.color = '#dc2626';
+                exp.style.borderColor = '#fecaca';
+                exp.style.backgroundColor = '#fef2f2';
+                
                 setTimeout(() => {
                     element.classList.remove('selected-wrong');
+                    // We keep the message until they try again or get it right
                 }, 1000);
             }
         }
