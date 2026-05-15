@@ -1650,7 +1650,7 @@
                             <div class="print-field-section">
                                 <h3 class="sub-heading">Print Any Field</h3>
                                 <div class="print-input-group">
-                                    <input type="text" id="print-field-name" placeholder="Type field name like Name, Email, Age...">
+                                    <input type="text" id="print-field-name" placeholder="Type like print(Name), print(Age)...">
                                     <button class="run-btn" onclick="printFieldValues()">
                                         <i class="fas fa-print"></i> Print Value
                                     </button>
@@ -2240,7 +2240,7 @@
         }
 
         function printFieldValues() {
-            const fieldName = document.getElementById('print-field-name').value.trim().toLowerCase();
+            const input = document.getElementById('print-field-name').value.trim().toLowerCase();
             const output = document.getElementById('print-output');
             
             if (userData.length === 0) {
@@ -2249,6 +2249,16 @@
                 return;
             }
 
+            // Parse print(field) syntax
+            const match = input.match(/^print\s*\(\s*([a-z\s]+)\s*\)$/);
+            
+            if (!match) {
+                output.style.display = 'flex';
+                output.innerText = 'Invalid syntax. Please use print(FieldName) format.';
+                return;
+            }
+
+            const fieldName = match[1].trim();
             let values = [];
             let key = '';
 
@@ -2263,7 +2273,7 @@
                 output.innerHTML = `<strong>Stored ${key.charAt(0).toUpperCase() + key.slice(1)}s:</strong><br>${values.join(', ')}`;
             } else {
                 output.style.display = 'flex';
-                output.innerText = 'Field not found. Try Name, Email, Phone, or Age.';
+                output.innerText = 'Field not found. Try print(Name), print(Email), etc.';
             }
         }
 
