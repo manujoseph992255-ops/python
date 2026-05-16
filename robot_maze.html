@@ -2515,59 +2515,7 @@
 
                 </section>
 
-                <section class="content-card" style="margin-top: 40px; margin-bottom: 50px;">
-                    <h2 class="premium-heading"><span class="small-ball" style="background: radial-gradient(circle at 30% 30%, #3b82f6, #1d4ed8); box-shadow: 0 0 12px rgba(37, 99, 235, 0.4);"></span>Variable Practice: From Form to Variables</h2>
-                    <hr class="section-divider">
-                    <p class="section-intro">Fill out the form below to see how your information is converted into <b>Python Variables</b> and stored in memory!</p>
 
-                    <div class="form-console-container">
-                        <!-- Left: User Form -->
-                        <div class="user-form-card">
-                            <h3>USER INFORMATION FORM</h3>
-                            <div class="form-group">
-                                <label for="form-name">Name</label>
-                                <input type="text" id="form-name" placeholder="Enter your full name" oninput="updateScriptPreview()">
-                            </div>
-                            <div class="form-group">
-                                <label for="form-email">Email ID</label>
-                                <input type="email" id="form-email" placeholder="example@domain.com" oninput="updateScriptPreview()">
-                            </div>
-                            <div class="form-group">
-                                <label for="form-phone">Phone Number</label>
-                                <input type="text" id="form-phone" placeholder="+91 00000 00000" oninput="updateScriptPreview()">
-                            </div>
-                            <div class="form-group">
-                                <label for="form-age">Age</label>
-                                <input type="text" id="form-age" placeholder="e.g. 18" oninput="updateScriptPreview()">
-                            </div>
-                        </div>
-
-                        <!-- Right: Code Console -->
-                        <div class="code-console-card">
-                            <h3>CODE CONSOLE</h3>
-                            <div class="console-subheader">
-                                <i class="fas fa-terminal"></i> Interactive Python Script
-                            </div>
-                            <div class="interactive-script-box">
-                                <div class="script-content" id="script-preview">
-                                    <div class="script-line"><span class="code-comment"># variable initialization</span></div>
-                                    <div class="script-line"><span class="code-comment"># print any variables to see the result</span></div>
-                                    <div id="dynamic-script-lines"></div>
-                                </div>
-                            </div>
-                            <button class="run-script-btn" id="run-form-script-btn" onclick="runFormScript()">
-                                <i class="fas fa-play"></i> Run Script
-                            </button>
-
-                            <div style="margin-top: 30px;">
-                                <div class="terminal-label">Terminal Output</div>
-                                <div class="mini-terminal" id="form-terminal-output">
-                                    <span style="color: #64748b;">Waiting for input...</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
 
                 <section class="content-card quiz-section" style="margin-top: 40px; margin-bottom: 100px;">
                     <h2 class="premium-heading"><span class="small-ball" style="background: radial-gradient(circle at 30% 30%, #facc15, #ca8a04); box-shadow: 0 0 12px rgba(234, 179, 8, 0.4);"></span>Level 2 Activity: Find the Odd One</h2>
@@ -2840,6 +2788,202 @@
                                 <strong>Explanation:</strong> Text values enclosed in quotation marks are <strong>Strings (str)</strong>.
                             </div>
                         </div>
+                    </div>
+                </section>
+
+                <!-- Input Function Demo Section -->
+                <section class="content-card" style="margin-top: 40px; margin-bottom: 80px; border: none; box-shadow: none; background: transparent; padding: 0;">
+                    <h2 class="premium-heading" style="text-align: center; margin-bottom: 30px;"><span class="small-ball" style="background: radial-gradient(circle at 30% 30%, #38bdf8, #0ea5e9); box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);"></span>How Applications Take Input</h2>
+                    <p class="section-intro" style="text-align: center; margin-bottom: 40px;">When you fill out a form like a <b>User Login</b>, the application needs a way to capture what you typed. In Python, we use the <code style="color: #2563eb; background: #eff6ff; padding: 3px 8px; border-radius: 4px;">input()</code> function to do exactly that!</p>
+
+                    <div style="display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: flex-start;">
+                        
+                        <!-- Left: Login UI -->
+                        <div style="flex: 1 1 350px; background: white; border: 2px solid #e2e8f0; border-radius: 8px; max-width: 450px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); font-family: 'Inter', sans-serif;">
+                            <div style="background: #eff6ff; border-bottom: 2px solid #bfdbfe; padding: 20px; text-align: center; color: #1e3a8a; font-size: 1.5rem; font-weight: 800;">
+                                <i class="fas fa-lock" style="margin-right: 8px;"></i> USER LOGIN
+                            </div>
+                            <div style="padding: 30px;">
+                                <div style="margin-bottom: 20px;">
+                                    <label style="display: block; color: #0f172a; font-size: 0.85rem; font-weight: 800; margin-bottom: 8px;">USERNAME</label>
+                                    <div style="position: relative; display: flex; align-items: center;">
+                                        <i class="fas fa-user" style="position: absolute; left: 15px; color: #64748b;"></i>
+                                        <input type="text" id="demo-username" placeholder="Enter username" oninput="let pw = document.getElementById('demo-password'); if(this.value.trim() === '') { pw.disabled = true; pw.style.cursor = 'not-allowed'; pw.style.backgroundColor = '#f8fafc'; } else { pw.disabled = false; pw.style.cursor = 'text'; pw.style.backgroundColor = 'white'; } let colabUser = document.getElementById('colab-live-username'); if (!colabUser && this.value.length > 0) { runColabInput(true); colabUser = document.getElementById('colab-live-username'); } if (colabUser) { colabUser.value = this.value; }" style="width: 100%; padding: 12px 15px 12px 40px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; outline: none;">
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 20px;">
+                                    <label style="display: block; color: #0f172a; font-size: 0.85rem; font-weight: 800; margin-bottom: 8px;">PASSWORD</label>
+                                    <div style="position: relative; display: flex; align-items: center;">
+                                        <i class="fas fa-lock" style="position: absolute; left: 15px; color: #64748b;"></i>
+                                        <input type="password" id="demo-password" placeholder="Enter password" disabled oninput="let colabPass = document.getElementById('colab-live-password'); if (colabPass) { colabPass.value = this.value; if(this.value.length > 0) setColabRunning(true); }" style="width: 100%; padding: 12px 15px 12px 40px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; outline: none; background-color: #f8fafc; cursor: not-allowed; transition: all 0.2s;">
+                                        <i class="fas fa-eye" style="position: absolute; right: 15px; color: #64748b; cursor: pointer;"></i>
+                                    </div>
+                                </div>
+                                <button id="demo-login-btn" style="width: 100%; background: #2563eb; color: white; border: none; padding: 14px; border-radius: 6px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 10px; transition: background 0.2s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
+                                    LOGIN
+                                </button>
+                                <div style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: #475569;">
+                                    Don't have an account? <a href="#" style="color: #2563eb; text-decoration: none; font-weight: 700;">Sign up</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: Colab UI -->
+                        <div style="flex: 1 1 400px; background: #282a36; border-radius: 8px; max-width: 500px; overflow: hidden; font-family: 'Fira Code', monospace; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 1px solid #44475a;">
+                            <div style="display: flex; padding: 15px 20px; align-items: center; background: #282a36;">
+                                <button id="colab-run-btn" onclick="runColabInput()" style="position: relative; display: inline-flex; align-items: center; justify-content: center; width: 35px; height: 35px; margin-right: 15px; border-radius: 50%; background: rgba(241, 250, 140, 0.1); border: none; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='rgba(241, 250, 140, 0.3)'" onmouseout="this.style.background='rgba(241, 250, 140, 0.1)'">
+                                    <i id="colab-btn-spin" class="fas fa-circle-notch fa-spin" style="position: absolute; font-size: 1.6rem; color: #8be9fd; display: none;"></i>
+                                    <i id="colab-btn-icon" class="fas fa-play" style="font-size: 1.2rem; color: #f8f8f2; margin-left: 3px;"></i>
+                                </button>
+                            </div>
+                            <div id="colab-blue-line" style="height: 1px; background: transparent; margin-bottom: 0; transition: background 0.2s;"></div>
+                            <div id="colab-output" style="padding: 15px 20px 15px 70px; background: #1e1f29; min-height: 80px; display: none;">
+                                <!-- Output injected via JS -->
+                            </div>
+                        </div>
+
+                        <script>
+                                let btnIcon, btnSpin, line, output;
+
+                                function setColabRunning(isRunning) {
+                                    if (!btnIcon || !btnSpin) {
+                                        btnIcon = document.getElementById('colab-btn-icon');
+                                        btnSpin = document.getElementById('colab-btn-spin');
+                                    }
+                                    if (btnIcon && btnSpin) {
+                                        if (isRunning) {
+                                            btnIcon.className = 'fas fa-square';
+                                            btnIcon.style.fontSize = '0.7rem';
+                                            btnIcon.style.marginLeft = '0';
+                                            btnSpin.style.display = 'block';
+                                        } else {
+                                            btnIcon.className = 'fas fa-play';
+                                            btnIcon.style.fontSize = '1.2rem';
+                                            btnIcon.style.marginLeft = '3px';
+                                            btnSpin.style.display = 'none';
+                                        }
+                                    }
+                                }
+
+                                function runColabInput(fromSync = false) {
+                                    btnIcon = document.getElementById('colab-btn-icon');
+                                    btnSpin = document.getElementById('colab-btn-spin');
+                                    line = document.getElementById('colab-blue-line');
+                                    output = document.getElementById('colab-output');
+                                
+                                // Set running state
+                                setColabRunning(true);
+                                line.style.background = '#38bdf8';
+                                line.style.height = '2px';
+                                output.style.display = 'block';
+                                
+                                // Step 1 Setup
+                                output.innerHTML = `
+                                    <div id="colab-step-1" style="color: #ffb86c; display: flex; align-items: center; font-size: 0.95rem;">
+                                        Enter a username <input type="text" id="colab-live-username" style="background: transparent; border: 1px solid #6272a4; color: #f8f8f2; font-family: 'Fira Code', monospace; padding: 6px 10px; margin-left: 10px; width: 220px; outline: none; border-radius: 2px;" autocomplete="off">
+                                    </div>
+                                    <div id="colab-step-1-out" style="display: none;"></div>
+                                    <div id="colab-step-2" style="display: none; color: #ffb86c; align-items: center; font-size: 0.95rem; margin-top: 10px;">
+                                        Enter a password <input type="password" id="colab-live-password" style="background: transparent; border: 1px solid #6272a4; color: #f8f8f2; font-family: 'Fira Code', monospace; padding: 6px 10px; margin-left: 10px; width: 220px; outline: none; border-radius: 2px;" autocomplete="off">
+                                    </div>
+                                    <div id="colab-step-2-out" style="display: none;"></div>
+                                `;
+                                
+                                const userField = document.getElementById('colab-live-username');
+                                const passField = document.getElementById('colab-live-password');
+                                
+                                userField.value = document.getElementById('demo-username').value;
+                                
+                                if (!fromSync) {
+                                    userField.focus();
+                                }
+                                
+                                userField.addEventListener('input', function() {
+                                    document.getElementById('demo-username').value = this.value;
+                                    let pw = document.getElementById('demo-password');
+                                    if(this.value.trim() === '') {
+                                        pw.disabled = true; pw.style.cursor = 'not-allowed'; pw.style.backgroundColor = '#f8fafc';
+                                    } else {
+                                        pw.disabled = false; pw.style.cursor = 'text'; pw.style.backgroundColor = 'white';
+                                    }
+                                });
+                                
+                                let isStep1Done = false;
+                                
+                                function advanceToStep2() {
+                                     if (!isStep1Done && userField) {
+                                        isStep1Done = true;
+                                        
+                                        // Pause spinning when starting password entry
+                                        setColabRunning(false);
+
+                                        const uVal = userField.value;
+                                        
+                                        document.getElementById('colab-step-1').style.display = 'none';
+                                        const step1Out = document.getElementById('colab-step-1-out');
+                                        step1Out.style.display = 'block';
+                                        step1Out.innerHTML = `
+                                            <div style="color: #ffb86c; font-size: 1.05rem; margin-bottom: 12px;">'${uVal}'</div>
+                                        `;
+                                        
+                                        document.getElementById('colab-step-2').style.display = 'flex';
+                                        passField.value = document.getElementById('demo-password').value;
+                                    }
+                                }
+                                
+                                userField.addEventListener('keypress', function(e) {
+                                    if (e.key === 'Enter') {
+                                        advanceToStep2();
+                                        passField.focus();
+                                    }
+                                });
+                                
+                                document.getElementById('demo-password').addEventListener('focus', advanceToStep2);
+                                
+                                passField.addEventListener('input', function() {
+                                                                        document.getElementById('demo-password').value = this.value;
+                                    if (this.value.length > 0) setColabRunning(true);
+                                });
+                                
+                                function finishColab() {
+                                    if (isStep1Done && document.getElementById('colab-step-2').style.display !== 'none') {
+                                        const pVal = passField.value;
+                                        document.getElementById('colab-step-2').style.display = 'none';
+                                        const step2Out = document.getElementById('colab-step-2-out');
+                                        step2Out.style.display = 'block';
+                                        step2Out.innerHTML = `
+                                                                                        <div style="color: #ffb86c; font-size: 1.05rem;">'${pVal}'</div>
+                                            <div style="color: #50fa7b; font-size: 1.1rem; font-weight: bold; margin-top: 15px; border-top: 1px solid #44475a; padding-top: 10px;">
+                                                <i class="fas fa-check-circle" style="margin-right: 8px;"></i> Login Successful!
+                                            </div>
+                                        `;
+                                        
+                                                                                // Finish execution
+                                        setColabRunning(false);
+                                        line.style.background = '#38bdf8';
+                                    }
+                                }
+                                
+                                passField.addEventListener('keypress', function(e) {
+                                    if (e.key === 'Enter') finishColab();
+                                });
+                                
+                                document.getElementById('demo-login-btn').addEventListener('click', function(e) {
+                                    e.preventDefault();
+                                    if(!isStep1Done) advanceToStep2();
+                                    finishColab();
+                                });
+                                
+                                [userField, passField].forEach(field => {
+                                    field.addEventListener('focus', () => field.style.borderColor = '#8be9fd');
+                                    field.addEventListener('blur', () => field.style.borderColor = '#6272a4');
+                                });
+                            }
+                            
+                            // Initialize the output box immediately
+                            runColabInput(true);
+                        </script>
+
                     </div>
                 </section>
 
