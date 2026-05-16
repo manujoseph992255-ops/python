@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 2: Variables & Data Types | KVJ Python Mastery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1e40af;
+            --primary-dark: #1e3a8a;
+            --primary-light: #eff6ff;
+            --bg-page: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #cbd5e1;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            font-family: 'Outfit', sans-serif; 
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            height: 68px;
+            background: white;
+            padding: 0 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            top: 0; width: 100%; z-index: 1000;
+        }
+        
+        .logout-btn {
+            background: #ef4444; color: white;
+            padding: 9px 22px; border-radius: 8px;
+            text-decoration: none; font-weight: 700; font-size: 13px;
+        }
+
+        .layout-container {
+            display: flex;
+            max-width: 1360px;
+            margin: 90px auto 60px;
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .sidebar { 
+            width: 270px; 
+            flex: 0 0 270px;
+        }
+        
+        .sidebar-inner {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            border: 1px solid #e2e8f0;
+            position: sticky;
+            top: 90px;
+        }
+
+        .sidebar h3 {
+            font-size: 11px; text-transform: uppercase;
+            letter-spacing: 1.5px; color: var(--text-muted);
+            margin: 0 0 12px; font-weight: 700;
+        }
+
+        .sidebar a {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 13px; text-decoration: none;
+            color: #475569; font-weight: 500; font-size: 14px;
+            border-radius: 9px; transition: all 0.2s; margin-bottom: 3px;
+        }
+
+        .sidebar a:hover { background: var(--primary-light); color: var(--primary); }
+        .sidebar a.active {
+            background: var(--primary-light); color: var(--primary); font-weight: 700;
+        }
+
+        .main-content { 
+            flex: 1; 
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+            min-height: calc(100vh - 150px);
+        }
+
+        /* Wallet Component Styles */
+        .wallet-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .wallet-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .wallet-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .wallet-btn {
+            padding: 15px 20px;
+            border-radius: 14px;
+            border: none;
+            background: #f8fafc;
+            color: #334155;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .wallet-btn:hover {
+            transform: translateY(-3px);
+            background: #eff6ff;
+            color: #1e40af;
+            border-color: #3b82f6;
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.1);
+        }
+
+        .wallet-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Display Box Styles */
+        .balance-display {
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .balance-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
+        .balance-amount {
+            font-size: 2.5rem;
+            font-weight: 900;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .code-box {
+            background: #0f172a;
+            border-radius: 16px;
+            padding: 25px;
+            font-family: 'Fira Code', monospace;
+            flex-grow: 1;
+            position: relative;
+            height: 300px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            scroll-behavior: smooth;
+        }
+
+        .code-header {
+            position: sticky;
+            top: -25px;
+            background: #0f172a;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #64748b;
+            font-size: 0.75rem;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 10px;
+            margin-top: -10px;
+        }
+
+        .code-content {
+            color: #e2e8f0;
+            font-size: 1rem;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .code-line-entry {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            animation: codeFadeIn 0.3s ease-out forwards;
+        }
+
+        @keyframes codeFadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .code-keyword { color: #f472b6; }
+        .code-operator { color: #38bdf8; }
+        .code-number { color: #fbbf24; }
+        .code-func { color: #fbbf24; }
+        .code-comment { color: #64748b; }
+
+        @media (max-width: 992px) {
+            .wallet-container { grid-template-columns: 1fr; }
+        }
+
+        .module-header {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .module-header h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .module-header p {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-left">
+            <img src="Kvj logo.jpeg" alt="KVJ Logo" style="height: 40px;" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x40?text=KVJ+Analytics';">
+        </div>
+        <a href="roadmap.html" class="logout-btn">EXIT</a>
+    </nav>
+
+    <div class="layout-container">
+        <aside class="sidebar">
+            <div class="sidebar-inner">
+                <h3 style="color: var(--primary); font-weight: 800;"><i class="fas fa-map-signs"></i> MODULE PATH</h3>
+                <a href="robot_maze.html"><i class="fas fa-gamepad"></i> 01 Python World</a>
+                <a href="module_2.html" class="active" style="margin-top: 10px;"><i class="fas fa-cube"></i> 02 Variables & Data Types</a>
+
+                <h3 style="margin-top:30px;"><i class="fas fa-compass"></i> NAVIGATION</h3>
+                <a href="roadmap.html" style="background: #f8fafc; border: 1px solid var(--border);"><i class="fas fa-arrow-left"></i> Return to Roadmap</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="module-header">
+                <h1>Interactive Wallet Demo</h1>
+                <p>Learn how variables and math operations work in Python using a digital wallet.</p>
+            </div>
+
+            <div class="wallet-container">
+                <!-- Left Box: Controls -->
+                <div class="wallet-card">
+                    <div class="wallet-title">
+                        <i class="fas fa-wallet" style="color: #3b82f6;"></i>
+                        Wallet Controls
+                    </div>
+                    <div class="btn-grid">
+                        <button class="wallet-btn" onclick="updateWallet('add', 100)">
+                            <i class="fas fa-plus-circle" style="color: #22c55e;"></i> Add ₹100
+                        </button>
+                        <button class="wallet-btn" onclick="updateWallet('add', 500)">
+                            <i class="fas fa-hand-holding-dollar" style="color: #10b981;"></i> Add ₹500
+                        </button>
+                        <button class="wallet-btn" onclick="updateWallet('triple', 3)">
+                            <i class="fas fa-angles-up" style="color: #6366f1;"></i> Triple
+                        </button>
+                        <button class="wallet-btn" onclick="updateWallet('double', 2)">
+                            <i class="fas fa-arrow-up-right-dots" style="color: #8b5cf6;"></i> Double
+                        </button>
+                        <button class="wallet-btn" onclick="updateWallet('half', 2)">
+                            <i class="fas fa-divide" style="color: #f43f5e;"></i> Half
+                        </button>
+                        <button class="wallet-btn" onclick="updateWallet('withdraw', 100)">
+                            <i class="fas fa-minus-circle" style="color: #ef4444;"></i> Withdraw ₹100
+                        </button>
+                        <button class="wallet-btn" onclick="updateWallet('pay', 50)">
+                            <i class="fas fa-shopping-cart" style="color: #f59e0b;"></i> Pay ₹50
+                        </button>
+                        <button class="wallet-btn" onclick="updateWallet('tax', 0.1)">
+                            <i class="fas fa-percent" style="color: #94a3b8;"></i> 10% Tax
+                        </button>
+                    </div>
+                    <button class="wallet-btn" onclick="updateWallet('reset', 0)" style="width: 100%; margin-top: 10px; background: #fff1f2; color: #e11d48; border-color: #fecdd3;">
+                        <i class="fas fa-rotate-left"></i> Reset Wallet
+                    </button>
+                </div>
+
+                <!-- Right Box: Display & Code -->
+                <div class="wallet-card" style="padding: 0; background: transparent; border: none; box-shadow: none;">
+                    <div class="balance-display">
+                        <div class="balance-label">Current Balance</div>
+                        <div class="balance-amount" id="wallet-balance">₹0</div>
+                    </div>
+
+                    <div class="code-box">
+                        <div class="code-header">
+                            <span>PYTHON CONSOLE</span>
+                            <span>wallet_demo.py</span>
+                        </div>
+                        <div class="code-content" id="python-code">
+                            <span class="code-comment"># Click a button to see the code</span><br>
+                            <span class="code-keyword">wallet_balance</span> <span class="code-operator">=</span> <span class="code-number">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Arithmetic Operators Section -->
+            <div style="margin-top: 60px; text-align: left; width: 100%; border-top: 2px dashed #e2e8f0; padding-top: 50px;">
+                <h2 style="font-size: 2rem; font-weight: 800; color: #0f172a; margin-bottom: 15px;">Arithmetic Operators</h2>
+                <p style="color: #64748b; font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px;">
+                    Arithmetic operators are used with numeric values to perform common mathematical operations in Python.
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 16px; display: flex; align-items: center; gap: 15px;">
+                        <div style="width: 45px; height: 45px; background: #dcfce7; color: #166534; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900;">+</div>
+                        <div>
+                            <div style="font-weight: 700; color: #1e293b;">Addition</div>
+                            <div style="font-size: 0.9rem; color: #64748b;">x + y</div>
+                        </div>
+                    </div>
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 16px; display: flex; align-items: center; gap: 15px;">
+                        <div style="width: 45px; height: 45px; background: #fee2e2; color: #991b1b; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900;">-</div>
+                        <div>
+                            <div style="font-weight: 700; color: #1e293b;">Subtraction</div>
+                            <div style="font-size: 0.9rem; color: #64748b;">x - y</div>
+                        </div>
+                    </div>
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 16px; display: flex; align-items: center; gap: 15px;">
+                        <div style="width: 45px; height: 45px; background: #fef9c3; color: #854d0e; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900;">*</div>
+                        <div>
+                            <div style="font-weight: 700; color: #1e293b;">Multiplication</div>
+                            <div style="font-size: 0.9rem; color: #64748b;">x * y</div>
+                        </div>
+                    </div>
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 16px; display: flex; align-items: center; gap: 15px;">
+                        <div style="width: 45px; height: 45px; background: #eff6ff; color: #1e40af; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900;">/</div>
+                        <div>
+                            <div style="font-weight: 700; color: #1e293b;">Division</div>
+                            <div style="font-size: 0.9rem; color: #64748b;">x / y</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- New Activity: Sales Dashboard -->
+            <div style="margin-top: 80px; text-align: left; width: 100%; border-top: 2px dashed #e2e8f0; padding-top: 60px;">
+                <div class="module-header">
+                    <h1>Sales Calculation Activity</h1>
+                    <p>Observe how changing variable values (Units Sold & Price) automatically updates the Total Sales result.</p>
+                </div>
+
+                <div class="wallet-container">
+                    <!-- Dashboard Box -->
+                    <div class="wallet-card">
+                        <div class="wallet-title">
+                            <i class="fas fa-chart-line" style="color: #10b981;"></i>
+                            Product Dashboard
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 15px;">
+                            <div style="background: #f0fdf4; border: 1px solid #bcf0da; padding: 20px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-weight: 700; color: #065f46;">UNITS SOLD</span>
+                                <span id="display-units" style="font-family: 'Fira Code', monospace; font-size: 1.4rem; font-weight: 800; color: #047857;">50</span>
+                            </div>
+                            <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 20px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-weight: 700; color: #1e40af;">UNIT PRICE</span>
+                                <span id="display-price" style="font-family: 'Fira Code', monospace; font-size: 1.4rem; font-weight: 800; color: #1d4ed8;">₹200</span>
+                            </div>
+                        </div>
+
+                        <div class="btn-grid" style="margin-top: 10px;">
+                            <button class="wallet-btn" onclick="updateSales('units', 100)">+ 100 Units</button>
+                            <button class="wallet-btn" onclick="updateSales('units', 10)">+ 10 Units</button>
+                            <button class="wallet-btn" onclick="updateSales('price', 10)">+ ₹10 Price</button>
+                            <button class="wallet-btn" onclick="updateSales('price', 50)">+ ₹50 Price</button>
+                            <button class="wallet-btn" onclick="updateSales('reset', 0)" style="grid-column: span 2; background: #fef2f2; color: #b91c1c; border-color: #fecdd3;">Reset All</button>
+                        </div>
+                    </div>
+
+                    <!-- Sales & Editable Code Box -->
+                    <div class="wallet-card" style="padding: 0; background: transparent; border: none; box-shadow: none;">
+                        <div class="balance-display" style="background: linear-gradient(135deg, #059669 0%, #065f46 100%); margin-bottom: 20px;">
+                            <div class="balance-label">Total Sales Revenue</div>
+                            <div class="balance-amount" id="total-sales">₹10,000</div>
+                        </div>
+
+                        <div class="code-box" style="height: auto; min-height: 250px; background: #312e81; border: 1px solid #4338ca;">
+                            <div class="code-header" style="background: rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); color: #e0e7ff;">
+                                <span>EDITABLE PYTHON CODE</span>
+                                <span style="color: #fbbf24;"><i class="fas fa-terminal"></i> Multi-line Logic Enabled</span>
+                            </div>
+                            <div style="background: #ffffff; border: 2px solid #3b82f6; border-radius: 12px; padding: 5px; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15); margin-bottom: 15px;">
+                                <div style="background: #eff6ff; color: #1e40af; font-size: 0.7rem; font-weight: 800; padding: 4px 10px; border-radius: 6px 6px 0 0; display: inline-block; margin-bottom: 5px;">
+                                    <i class="fas fa-keyboard"></i> TYPE YOUR CODE HERE
+                                </div>
+                                <textarea id="sales-code-editor" style="width: 100%; height: 180px; background: transparent; border: none; color: #0f172a; font-family: 'Fira Code', monospace; font-size: 1.05rem; line-height: 1.6; outline: none; resize: none; white-space: pre-wrap; padding: 10px; display: block;" spellcheck="false">units_sold = 50
+unit_price = 200
+
+# You can add logic here!
+units_sold = units_sold * 2
+
+sales = units_sold * unit_price
+print(sales)</textarea>
+                            </div>
+                            <button onclick="runSalesCode()" style="background: #3b82f6; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s; width: 100%; justify-content: center;">
+                                <i class="fas fa-play"></i> RUN CODE & UPDATE DASHBOARD
+                            </button>
+
+                            <div style="margin-top: 10px; font-size: 0.75rem; color: #ffffff; opacity: 0.9;">
+                                <i class="fas fa-info-circle"></i> Try adding `units_sold = units_sold + 10` or `unit_price = unit_price - 50`!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            <!-- New Activity: Personal Expense Tracker Challenge -->
+            <div style="margin-top: 80px; text-align: left; width: 100%; border-top: 2px dashed #e2e8f0; padding-top: 60px; margin-bottom: 100px;">
+                <div class="module-header">
+                    <h1>Personal Expense Tracker Challenge</h1>
+                    <p>Solve the financial challenge below by writing Python code to track every transaction and find the final balance.</p>
+                </div>
+
+                <div class="wallet-container" style="max-width: 1200px; gap: 30px;">
+                    <!-- Challenge Tasks Box -->
+                    <div class="wallet-card" style="flex: 0.8; background: #ffffff; border: 1px solid #e2e8f0; height: fit-content;">
+                        <div class="wallet-title" style="color: #1e3a8a;">
+                            <i class="fas fa-file-invoice-dollar" style="color: #3b82f6;"></i>
+                            Corporate Ledger Challenge
+                        </div>
+                        <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 20px;">Process the following ledger entries to determine the final <span style="color: #1e40af; font-weight: 700;">Closing Balance</span>:</p>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <div style="padding: 14px; border-radius: 12px; background: #f0f9ff; border: 1px solid #bae6fd; font-size: 0.95rem; color: #0369a1;">
+                                <span style="font-weight: 800;">START:</span> <code style="background: #e0f2fe; padding: 2px 6px; border-radius: 4px; font-weight: 700;">current_balance</code>: <span style="font-weight: 800; float: right;">₹50,00,000</span>
+                            </div>
+                            <div style="padding: 12px; border-radius: 10px; background: #f8fafc; border-left: 4px solid #10b981; font-size: 0.9rem; color: #1e293b;">
+                                <span style="font-weight: 800; color: #059669;">1.</span> <code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px;">revenue_credit</code>: <span style="font-weight: 700; float: right;">+ ₹1,50,000</span>
+                            </div>
+                            <div style="padding: 12px; border-radius: 10px; background: #f8fafc; border-left: 4px solid #ef4444; font-size: 0.9rem; color: #1e293b;">
+                                <span style="font-weight: 800; color: #dc2626;">2.</span> <code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px;">commercial_lease</code>: <span style="font-weight: 700; float: right;">- ₹45,000</span>
+                            </div>
+                            <div style="padding: 12px; border-radius: 10px; background: #f8fafc; border-left: 4px solid #ef4444; font-size: 0.9rem; color: #1e293b;">
+                                <span style="font-weight: 800; color: #dc2626;">3.</span> <code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px;">payroll_disbursement</code>: <span style="font-weight: 700; float: right;">- ₹10,00,000</span>
+                            </div>
+                            <div style="padding: 12px; border-radius: 10px; background: #f8fafc; border-left: 4px solid #10b981; font-size: 0.9rem; color: #1e293b;">
+                                <span style="font-weight: 800; color: #059669;">4.</span> <code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px;">consultancy_fee</code>: <span style="font-weight: 700; float: right;">+ ₹3,50,000</span>
+                            </div>
+                            <div style="padding: 12px; border-radius: 10px; background: #f8fafc; border-left: 4px solid #ef4444; font-size: 0.9rem; color: #1e293b;">
+                                <span style="font-weight: 800; color: #dc2626;">5.</span> <code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px;">asset_acquisition</code>: <span style="font-weight: 700; float: right;">- ₹1,20,000</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Challenge Code Editor -->
+                    <div class="wallet-card" style="flex: 1.2; padding: 0; background: transparent; border: none; box-shadow: none;">
+                        <div class="balance-display" style="background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); margin-bottom: 20px; border: 2px solid #3b82f6;">
+                            <div class="balance-label" style="letter-spacing: 1px; opacity: 0.9;">CURRENT BALANCE</div>
+                            <div class="balance-amount" id="challenge-balance">₹50,00,000</div>
+                        </div>
+
+                        <div class="code-box" style="height: auto; min-height: 350px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 16px; overflow: hidden;">
+                            <div class="code-header" style="background: #ffffff; border-bottom: 1px solid #e2e8f0; color: #1e3a8a; font-weight: 800;">
+                                <span><i class="fas fa-terminal"></i> PYTHON LEDGER SCRIPT</span>
+                                <span style="color: #10b981;"><i class="fas fa-shield-alt"></i> Secure Mode</span>
+                            </div>
+                            
+                            <!-- Syntax Hint Badge -->
+                            <div style="margin: 15px 15px 0 15px; background: #fffbeb; border: 1px solid #fde68a; padding: 10px; border-radius: 8px; display: flex; gap: 10px; align-items: center;">
+                                <div style="background: #fbbf24; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 900;">PYTHON TIP</div>
+                                <div style="font-size: 0.8rem; color: #92400e;">To subtract, use: <code style="background: #fef3c7; padding: 2px 4px; font-weight: 700;">balance = balance - expense</code></div>
+                            </div>
+
+                            <div style="position: relative; background: #ffffff; border: 2px solid #3b82f6; border-radius: 12px; padding: 0; margin: 15px; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.1); overflow: hidden; min-height: 320px;">
+                                <!-- Highlighting Layer -->
+                                <pre id="challenge-highlight" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; margin: 0; padding: 20px; font-family: 'Fira Code', monospace; font-size: 0.85rem; line-height: 1.7; white-space: pre-wrap; word-wrap: break-word; color: #1e293b; pointer-events: none; z-index: 1;"></pre>
+                                
+                                <!-- Input Layer (Transparent Text) -->
+                                <textarea id="challenge-code-editor" 
+                                    oninput="updateHighlighting()" 
+                                    onscroll="syncScroll()"
+                                    style="position: relative; width: 100%; height: 320px; background: transparent; border: none; color: transparent; caret-color: #1e293b; font-family: 'Fira Code', monospace; font-size: 0.85rem; line-height: 1.7; outline: none; resize: none; white-space: pre-wrap; padding: 20px; display: block; z-index: 2;" 
+                                    spellcheck="false" 
+                                    placeholder="# Start writing your ledger entries here..."></textarea>
+                            </div>
+
+                            <div style="padding: 0 15px 15px 15px;">
+                                <button onclick="runChallengeCode()" style="background: #1e3a8a; color: white; border: none; padding: 14px 20px; border-radius: 10px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: all 0.2s; width: 100%; justify-content: center; box-shadow: 0 4px 6px rgba(30, 58, 138, 0.2);">
+                                    <i class="fas fa-play"></i> RUN LEDGER & UPDATE BALANCE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    <script>
+        // ... (Wallet logic remains unchanged) ...
+
+        // SALES DASHBOARD LOGIC
+        let unitsSold = 50;
+        let unitPrice = 200;
+
+        function updateSales(type, value) {
+            if (type === 'units') unitsSold += value;
+            else if (type === 'price') unitPrice += value;
+            else if (type === 'reset') {
+                unitsSold = 50;
+                unitPrice = 200;
+            }
+            // Auto-update the code editor to show current state
+            const editor = document.getElementById('sales-code-editor');
+            editor.value = `units_sold = ${unitsSold}\nunit_price = ${unitPrice}\n\nsales = units_sold * unit_price\nprint(sales)`;
+            runSalesCode(); // Trigger the run to sync dashboard
+        }
+
+        function runSalesCode() {
+            const code = document.getElementById('sales-code-editor').value;
+            const lines = code.split('\n');
+            
+            // Initial state
+            let state = {
+                units_sold: 0,
+                unit_price: 0,
+                sales: 0
+            };
+
+            try {
+                lines.forEach(line => {
+                    line = line.trim();
+                    if (!line || line.startsWith('#') || line.startsWith('print')) return;
+
+                    // Support: var = value OR var = var [op] value
+                    const match = line.match(/^(\w+)\s*=\s*(.+)$/);
+                    if (match) {
+                        const varName = match[1].trim();
+                        let expression = match[2].trim();
+
+                        // Simple expression evaluation (replacing variable names with their values)
+                        Object.keys(state).forEach(key => {
+                            const regex = new RegExp(`\\b${key}\\b`, 'g');
+                            expression = expression.replace(regex, state[key]);
+                        });
+
+                        // Security check: only allow numbers and basic math operators
+                        if (/^[0-9\s\+\-\*\/\(\)\.]+$/.test(expression)) {
+                            state[varName] = eval(expression);
+                        }
+                    }
+                });
+
+                // Final sync to UI
+                unitsSold = Math.round(state.units_sold);
+                unitPrice = Math.round(state.unit_price);
+                let sales = state.sales || (unitsSold * unitPrice); // Fallback to calculation if 'sales' isn't assigned in code
+
+                document.getElementById('display-units').innerText = unitsSold;
+                document.getElementById('display-price').innerText = `₹${unitPrice}`;
+                document.getElementById('total-sales').innerText = `₹${Math.round(sales).toLocaleString()}`;
+
+                // Success feedback
+                const revBox = document.getElementById('total-sales');
+                revBox.style.animation = 'none';
+                void revBox.offsetWidth; // trigger reflow
+                revBox.style.animation = 'pulse-emerald 0.5s ease';
+
+            } catch (err) {
+                console.error("Code simulation error:", err);
+            }
+        }
+
+        // Add the animation keyframe if not present
+        if (!document.getElementById('custom-animations')) {
+            const style = document.createElement('style');
+            style.id = 'custom-animations';
+            style.innerHTML = `
+                @keyframes pulse-emerald {
+                    0% { transform: scale(1); }
+                    50% { transform: scale(1.05); filter: brightness(1.2); }
+                    100% { transform: scale(1); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // SYNTAX HIGHLIGHTING LOGIC
+        function updateHighlighting() {
+            const textarea = document.getElementById('challenge-code-editor');
+            const highlightLayer = document.getElementById('challenge-highlight');
+            let text = textarea.value;
+
+            // 1. Escape HTML first to prevent injection
+            text = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+            // 2. We use a temporary placeholder technique to prevent double-highlighting
+            const highlights = [];
+            const addHighlight = (content, style) => {
+                const placeholder = `__HL_${highlights.length}__`;
+                highlights.push(`<span style="${style}">${content}</span>`);
+                return placeholder;
+            };
+
+            // Highlight Comments
+            text = text.replace(/(#.*)/g, (m) => addHighlight(m, 'color: #94a3b8;'));
+
+            // Highlight Variable Names
+            const variables = ['current_balance', 'revenue_credit', 'commercial_lease', 'payroll_disbursement', 'consultancy_fee', 'asset_acquisition'];
+            variables.forEach(v => {
+                const regex = new RegExp(`\\b${v}\\b`, 'g');
+                text = text.replace(regex, (m) => addHighlight(m, 'color: #2563eb; font-weight: 700;'));
+            });
+
+            // Highlight Operators
+            text = text.replace(/(\+|-|=|\*|\/)/g, (m) => addHighlight(m, 'color: #ea580c; font-weight: 800;'));
+
+            // Highlight Numbers
+            text = text.replace(/\b(\d+)\b/g, (m) => addHighlight(m, 'color: #059669; font-weight: 700;'));
+
+            // Final step: Replace placeholders with actual HTML
+            highlights.forEach((hl, i) => {
+                text = text.replace(`__HL_${i}__`, hl);
+            });
+
+            highlightLayer.innerHTML = text + (text.endsWith('\n') ? ' ' : '');
+        }
+
+        function syncScroll() {
+            const textarea = document.getElementById('challenge-code-editor');
+            const highlightLayer = document.getElementById('challenge-highlight');
+            highlightLayer.scrollTop = textarea.scrollTop;
+            highlightLayer.scrollLeft = textarea.scrollLeft;
+        }
+
+        // Run once on load
+        window.onload = function() {
+            runSalesCode();
+            updateHighlighting(); // Initialize highlighting
+        };
+        // CHALLENGE LOGIC
+        function runChallengeCode() {
+            const code = document.getElementById('challenge-code-editor').value;
+            const lines = code.split('\n');
+            
+            // Pre-defined Ledger Variables (Initialized based on the challenge list)
+            let state = {
+                current_balance: 5000000,
+                revenue_credit: 150000,
+                commercial_lease: 45000,
+                payroll_disbursement: 1000000,
+                consultancy_fee: 350000,
+                asset_acquisition: 120000
+            };
+
+            try {
+                lines.forEach(line => {
+                    line = line.trim();
+                    if (!line || line.startsWith('#') || line.startsWith('print')) return;
+
+                    const match = line.match(/^(\w+)\s*=\s*(.+)$/);
+                    if (match) {
+                        const varName = match[1].trim();
+                        let expression = match[2].trim();
+
+                        Object.keys(state).forEach(key => {
+                            const regex = new RegExp(`\\b${key}\\b`, 'g');
+                            expression = expression.replace(regex, state[key]);
+                        });
+
+                        if (/^[0-9\s\+\-\*\/\(\)\.]+$/.test(expression)) {
+                            state[varName] = eval(expression);
+                        }
+                    }
+                });
+
+                const finalBalance = state.current_balance || 0;
+                const display = document.getElementById('challenge-balance');
+                display.innerText = `₹${Math.round(finalBalance).toLocaleString()}`;
+
+            } catch (err) {
+                console.error("Challenge simulation error:", err);
+                const display = document.getElementById('challenge-balance');
+                display.innerText = "ERROR IN CODE";
+            }
+        }
+    </script>
+
+    <!-- COMPARISON OPERATORS SECTION -->
+            <div style="margin-top: 80px; text-align: left; width: 100%; border-top: 2px dashed #e2e8f0; padding-top: 60px;">
+                <div class="module-header">
+                    <h1>Comparison & Booleans</h1>
+                    <p>Comparison operators are used to compare two values. They return either <strong style="color: #3b82f6;">True</strong> or <strong style="color: #ef4444;">False</strong>.</p>
+                </div>
+
+                <div style="display: flex; gap: 30px; margin-top: 40px; flex-wrap: wrap;">
+                    <!-- LEFT: STUDENT PROFILE CARD -->
+                    <div style="flex: 1; min-width: 350px;">
+                        <h3 style="margin-bottom: 20px; font-size: 1.1rem; color: #1e3a8a;">1. Digital Student ID</h3>
+                        <div id="student-card" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border-radius: 24px; padding: 30px; color: white; position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(30, 58, 138, 0.2); transition: all 0.3s ease;">
+                            <!-- Chip Decor -->
+                            <div style="width: 50px; height: 35px; background: #fbbf24; border-radius: 6px; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.1);"></div>
+                            
+                            <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 30px;">
+                                <div style="width: 80px; height: 80px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">
+                                    <i class="fas fa-user-graduate"></i>
+                                </div>
+                                <div>
+                                    <h2 id="card-name" style="font-size: 1.6rem; font-weight: 800; margin: 0;">LIONEL MESSI</h2>
+                                    <p id="card-email" style="font-size: 0.85rem; opacity: 0.8; margin: 0;">messi.goat@kvj-analytics.com</p>
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                <div>
+                                    <label style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7;">Phone Number</label>
+                                    <p id="card-phone" style="font-weight: 700; font-size: 0.95rem; margin: 5px 0 0 0;">+91 98765 43210</p>
+                                </div>
+                                <div>
+                                    <label style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7;">Blood Group</label>
+                                    <p id="card-blood" style="font-weight: 700; font-size: 0.95rem; margin: 5px 0 0 0;">O+ POSITIVE</p>
+                                </div>
+                                <div style="grid-column: span 2; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span style="font-weight: 600; font-size: 1.1rem;">STUDENT SCORE:</span>
+                                        <input type="number" id="input-score" value="85" style="width: 80px; background: white; color: #1e3a8a; border: none; padding: 8px; border-radius: 8px; font-weight: 900; text-align: center; font-size: 1.2rem;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button onclick="generateRandomStudent()" style="width: 100%; margin-top: 20px; background: #0f172a; color: white; border: none; padding: 16px; border-radius: 14px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s;">
+                            <i class="fas fa-user-plus"></i> GENERATE STUDENT INFORMATION
+                        </button>
+                    </div>
+
+                    <!-- RIGHT: LOGIC CONSOLE -->
+                    <div style="flex: 1.2; min-width: 400px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 24px; padding: 30px;">
+                        <h3 style="margin-bottom: 10px; font-size: 1.1rem; color: #1e3a8a;">2. Python Logic Verification</h3>
+                        <p style="color: #64748b; font-size: 0.85rem; margin-bottom: 25px;">Predict the Boolean result for each condition based on the score above.</p>
+
+                        <div id="logic-list" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px;">
+                            <div class="logic-row" data-op=">" data-val="100" style="background: white; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between;">
+                                <code style="font-size: 1.1rem; color: #1e3a8a; font-weight: 700;">score > 100</code>
+                                <div style="display: flex; gap: 8px;">
+                                    <button onclick="selectLogicOption(this, true)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">TRUE</button>
+                                    <button onclick="selectLogicOption(this, false)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">FALSE</button>
+                                </div>
+                            </div>
+                            <div class="logic-row" data-op="<" data-val="100" style="background: white; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between;">
+                                <code style="font-size: 1.1rem; color: #1e3a8a; font-weight: 700;">score < 100</code>
+                                <div style="display: flex; gap: 8px;">
+                                    <button onclick="selectLogicOption(this, true)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">TRUE</button>
+                                    <button onclick="selectLogicOption(this, false)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">FALSE</button>
+                                </div>
+                            </div>
+                            <div class="logic-row" data-op="==" data-val="100" style="background: white; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between;">
+                                <code style="font-size: 1.1rem; color: #1e3a8a; font-weight: 700;">score == 100</code>
+                                <div style="display: flex; gap: 8px;">
+                                    <button onclick="selectLogicOption(this, true)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">TRUE</button>
+                                    <button onclick="selectLogicOption(this, false)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">FALSE</button>
+                                </div>
+                            </div>
+                            <div class="logic-row" data-op=">=" data-val="100" style="background: white; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between;">
+                                <code style="font-size: 1.1rem; color: #1e3a8a; font-weight: 700;">score >= 100</code>
+                                <div style="display: flex; gap: 8px;">
+                                    <button onclick="selectLogicOption(this, true)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">TRUE</button>
+                                    <button onclick="selectLogicOption(this, false)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">FALSE</button>
+                                </div>
+                            </div>
+                            <div class="logic-row" data-op="<=" data-val="100" style="background: white; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between;">
+                                <code style="font-size: 1.1rem; color: #1e3a8a; font-weight: 700;">score <= 100</code>
+                                <div style="display: flex; gap: 8px;">
+                                    <button onclick="selectLogicOption(this, true)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">TRUE</button>
+                                    <button onclick="selectLogicOption(this, false)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">FALSE</button>
+                                </div>
+                            </div>
+                            <div class="logic-row" data-op="!=" data-val="100" style="background: white; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between;">
+                                <code style="font-size: 1.1rem; color: #1e3a8a; font-weight: 700;">score != 100</code>
+                                <div style="display: flex; gap: 8px;">
+                                    <button onclick="selectLogicOption(this, true)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">TRUE</button>
+                                    <button onclick="selectLogicOption(this, false)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">FALSE</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="verifyBooleanLogic()" style="width: 100%; background: #3b82f6; color: white; border: none; padding: 16px; border-radius: 14px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);">
+                            <i class="fas fa-play-circle"></i> RUN & CHECK ANSWERS
+                        </button>
+
+                        <div id="logic-feedback" style="margin-top: 20px; padding: 15px; border-radius: 12px; display: none; font-weight: 700; text-align: center;"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let logicSelections = {};
+
+        const students = [
+            { name: "LIONEL MESSI", email: "messi.goat@kvj-analytics.com", phone: "+91 98765 43210", blood: "O+ POSITIVE" },
+            { name: "CRISTIANO RONALDO", email: "cr7.stats@kvj-analytics.com", phone: "+91 88888 77777", blood: "A+ POSITIVE" },
+            { name: "NEYMAR JR", email: "neymar.skill@kvj-analytics.com", phone: "+91 77766 55544", blood: "B- NEGATIVE" },
+            { name: "KYLIAN MBAPPE", email: "mbappe.speed@kvj-analytics.com", phone: "+91 99900 11122", blood: "AB+ POSITIVE" },
+            { name: "ERLING HAALAND", email: "haaland.cyborg@kvj-analytics.com", phone: "+91 91111 22233", blood: "O- NEGATIVE" },
+            { name: "MOHAMED SALAH", email: "salah.king@kvj-analytics.com", phone: "+91 88800 55544", blood: "A- NEGATIVE" },
+            { name: "KEVIN DE BRUYNE", email: "kdb.assist@kvj-analytics.com", phone: "+91 77711 00011", blood: "B+ POSITIVE" },
+            { name: "ROBERT LEWANDOWSKI", email: "lewa.goals@kvj-analytics.com", phone: "+91 90000 88888", blood: "AB- NEGATIVE" },
+            { name: "ZLATAN IBRAHIMOVIC", email: "zlatan.lion@kvj-analytics.com", phone: "+91 99999 99999", blood: "O+ POSITIVE" },
+            { name: "HARRY KANE", email: "kane.striker@kvj-analytics.com", phone: "+91 88855 44433", blood: "A+ POSITIVE" },
+            { name: "LUKA MODRIC", email: "modric.maestro@kvj-analytics.com", phone: "+91 77744 11122", blood: "B+ POSITIVE" },
+            { name: "KARIM BENZEMA", email: "benz.ballon@kvj-analytics.com", phone: "+91 90055 66677", blood: "O+ POSITIVE" },
+            { name: "SON HEUNG-MIN", email: "sonny.spurs@kvj-analytics.com", phone: "+91 80011 22233", blood: "A- NEGATIVE" },
+            { name: "VINICIUS JR", email: "vini.magic@kvj-analytics.com", phone: "+91 70099 88877", blood: "B- NEGATIVE" },
+            { name: "PAULO DYBALA", email: "dybala.mask@kvj-analytics.com", phone: "+91 91122 33344", blood: "AB+ POSITIVE" },
+            { name: "ANTOINE GRIEZMANN", email: "grizou.atleti@kvj-analytics.com", phone: "+91 82233 44455", blood: "O- NEGATIVE" },
+            { name: "MARCUS RASHFORD", email: "rash.united@kvj-analytics.com", phone: "+91 73344 55566", blood: "A+ POSITIVE" },
+            { name: "BUKAYO SAKA", email: "saka.starboy@kvj-analytics.com", phone: "+91 94455 66677", blood: "B+ POSITIVE" },
+            { name: "PHIL FODEN", email: "foden.city@kvj-analytics.com", phone: "+91 85566 77788", blood: "AB- NEGATIVE" },
+            { name: "JUDE BELLINGHAM", email: "jude.real@kvj-analytics.com", phone: "+91 76677 88899", blood: "O+ POSITIVE" }
+        ];
+
+        function selectLogicOption(btn, value) {
+            const row = btn.closest('.logic-row');
+            const op = row.getAttribute('data-op');
+            row.querySelectorAll('button').forEach(b => {
+                b.style.background = '#f8fafc';
+                b.style.color = '#1e293b';
+                b.style.borderColor = '#cbd5e1';
+            });
+            btn.style.background = value ? '#3b82f6' : '#ef4444';
+            btn.style.color = 'white';
+            btn.style.borderColor = 'transparent';
+            logicSelections[op] = value;
+        }
+
+        function generateRandomStudent() {
+            // 1. Randomly pick a student
+            const randomStudent = students[Math.floor(Math.random() * students.length)];
+            
+            // 2. Update the ID Card UI
+            document.getElementById('card-name').innerText = randomStudent.name;
+            document.getElementById('card-email').innerText = randomStudent.email;
+            document.getElementById('card-phone').innerText = randomStudent.phone;
+            document.getElementById('card-blood').innerText = randomStudent.blood;
+
+            // 3. Randomize the Score (Between 40 and 150)
+            const randomScore = Math.floor(Math.random() * (150 - 40 + 1)) + 40;
+            document.getElementById('input-score').value = randomScore;
+
+            // 4. Randomize the Comparison Targets (the values checked against the score)
+            const rows = document.querySelectorAll('.logic-row');
+            const targetValues = [
+                100, 
+                randomScore, 
+                randomScore + (Math.random() > 0.5 ? 10 : -10),
+                Math.floor(Math.random() * 50) + 50,
+                75,
+                90
+            ];
+            
+            rows.forEach((row, index) => {
+                const op = row.getAttribute('data-op');
+                const newVal = targetValues[index];
+                row.setAttribute('data-val', newVal);
+                row.querySelector('code').innerText = `score ${op} ${newVal}`;
+                
+                // Reset row styling
+                row.style.borderColor = '#e2e8f0';
+                row.style.background = 'white';
+                row.querySelectorAll('button').forEach(b => {
+                    b.style.background = '#f8fafc';
+                    b.style.color = '#1e293b';
+                    b.style.borderColor = '#cbd5e1';
+                });
+            });
+
+            // 5. Reset logic feedback
+            const feedbackBox = document.getElementById('logic-feedback');
+            feedbackBox.style.display = 'none';
+            logicSelections = {}; // Clear previous choices
+        }
+
+        function verifyBooleanLogic() {
+            const score = parseInt(document.getElementById('input-score').value) || 0;
+            const feedbackBox = document.getElementById('logic-feedback');
+            const rows = document.querySelectorAll('.logic-row');
+            
+            let correct = 0, missing = 0;
+
+            rows.forEach(row => {
+                const op = row.getAttribute('data-op');
+                const targetVal = parseInt(row.getAttribute('data-val'));
+                
+                let check = false;
+                if (op === '>') check = score > targetVal;
+                else if (op === '<') check = score < targetVal;
+                else if (op === '==') check = score == targetVal;
+                else if (op === '>=') check = score >= targetVal;
+                else if (op === '<=') check = score <= targetVal;
+                else if (op === '!=') check = score != targetVal;
+
+                if (logicSelections[op] === undefined) missing++;
+                else if (logicSelections[op] === check) {
+                    correct++;
+                    row.style.borderColor = '#10b981';
+                    row.style.background = '#f0fdf4';
+                } else {
+                    row.style.borderColor = '#ef4444';
+                    row.style.background = '#fef2f2';
+                }
+            });
+
+            feedbackBox.style.display = 'block';
+            if (missing > 0) {
+                feedbackBox.style.background = '#fffbeb';
+                feedbackBox.style.color = '#92400e';
+                feedbackBox.textContent = `⚠️ Predict all ${missing} conditions first!`;
+            } else if (correct === 6) {
+                feedbackBox.style.background = '#dcfce7';
+                feedbackBox.style.color = '#166534';
+                feedbackBox.innerHTML = `🏆 LOGIC MASTER! All results are correct for score: ${score}`;
+            } else {
+                feedbackBox.style.background = '#fee2e2';
+                feedbackBox.style.color = '#991b1b';
+                feedbackBox.textContent = `❌ You got ${correct}/6 correct. Check the red rows!`;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3: Arithmetic Operators | KVJ Python Mastery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1e40af;
+            --primary-dark: #1e3a8a;
+            --primary-light: #eff6ff;
+            --bg-page: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #cbd5e1;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            font-family: 'Outfit', sans-serif; 
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            height: 68px;
+            background: white;
+            padding: 0 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            top: 0; width: 100%; z-index: 1000;
+        }
+        
+        .logout-btn {
+            background: #ef4444; color: white;
+            padding: 9px 22px; border-radius: 8px;
+            text-decoration: none; font-weight: 700; font-size: 13px;
+        }
+
+        .layout-container {
+            display: flex;
+            max-width: 1360px;
+            margin: 90px auto 60px;
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .sidebar { 
+            width: 270px; 
+            flex: 0 0 270px;
+        }
+        
+        .sidebar-inner {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            border: 1px solid #e2e8f0;
+            position: sticky;
+            top: 90px;
+        }
+
+        .sidebar h3 {
+            font-size: 11px; text-transform: uppercase;
+            letter-spacing: 1.5px; color: var(--text-muted);
+            margin: 0 0 12px; font-weight: 700;
+        }
+
+        .sidebar a {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 13px; text-decoration: none;
+            color: #475569; font-weight: 500; font-size: 14px;
+            border-radius: 9px; transition: all 0.2s; margin-bottom: 3px;
+        }
+
+        .sidebar a:hover { background: var(--primary-light); color: var(--primary); }
+        .sidebar a.active {
+            background: var(--primary-light); color: var(--primary); font-weight: 700;
+        }
+
+        .main-content { 
+            flex: 1; 
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 60px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+            min-height: calc(100vh - 150px);
+        }
+
+        .module-header {
+            text-align: left;
+            margin-bottom: 40px;
+        }
+
+        .module-header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+
+        .module-header p {
+            color: #64748b;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .operator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .operator-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 30px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        .operator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.05);
+            border-color: #3b82f6;
+        }
+
+        .operator-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .operator-name {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .operator-example {
+            font-family: 'Fira Code', monospace;
+            background: #f8fafc;
+            padding: 8px 12px;
+            border-radius: 8px;
+            color: #475569;
+            font-size: 0.95rem;
+            border: 1px solid #f1f5f9;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-left">
+            <img src="Kvj logo.jpeg" alt="KVJ Logo" style="height: 40px;" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x40?text=KVJ+Analytics';">
+        </div>
+        <a href="roadmap.html" class="logout-btn">EXIT</a>
+    </nav>
+
+    <div class="layout-container">
+        <aside class="sidebar">
+            <div class="sidebar-inner">
+                <h3 style="color: var(--primary); font-weight: 800;"><i class="fas fa-map-signs"></i> MODULE PATH</h3>
+                <a href="robot_maze.html"><i class="fas fa-gamepad"></i> 01 Python World</a>
+                <a href="module_2.html" style="margin-top: 10px; background: white; border: 1px solid var(--border); color: #475569; transition: all 0.3s;"><i class="fas fa-cube" style="color: #3b82f6;"></i> 02 Variables & Data Types</a>
+                <a href="module_3.html" class="active" style="margin-top: 10px;"><i class="fas fa-calculator"></i> 03 Arithmetic Operators</a>
+
+                <h3 style="margin-top:30px;"><i class="fas fa-compass"></i> NAVIGATION</h3>
+                <a href="roadmap.html" style="background: #f8fafc; border: 1px solid var(--border);"><i class="fas fa-arrow-left"></i> Return to Roadmap</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="module-header">
+                <h1>Arithmetic Operators</h1>
+                <p>Arithmetic operators are used with numeric values to perform common mathematical operations in Python.</p>
+            </div>
+
+            </div>
+
+            <!-- COMPARISON OPERATORS SECTION -->
+            <div style="margin-top: 80px; text-align: left; width: 100%; border-top: 2px dashed #e2e8f0; padding-top: 60px;">
+                <div class="module-header">
+                    <h1>Comparison & Booleans</h1>
+                    <p>Comparison operators are used to compare two values. They return either <strong style="color: #3b82f6;">True</strong> or <strong style="color: #ef4444;">False</strong>.</p>
+                </div>
+
+                <div style="display: flex; gap: 30px; margin-top: 40px; flex-wrap: wrap;">
+                    <!-- LEFT: STUDENT PROFILE CARD -->
+                    <div style="flex: 1; min-width: 350px;">
+                        <h3 style="margin-bottom: 20px; font-size: 1.1rem; color: #1e3a8a;">1. Digital Student ID</h3>
+                        <div id="student-card" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border-radius: 24px; padding: 30px; color: white; position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(30, 58, 138, 0.2);">
+                            <!-- Chip Decor -->
+                            <div style="width: 50px; height: 35px; background: #fbbf24; border-radius: 6px; margin-bottom: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.1);"></div>
+                            
+                            <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 30px;">
+                                <div style="width: 80px; height: 80px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">
+                                    <i class="fas fa-user-graduate"></i>
+                                </div>
+                                <div>
+                                    <h2 id="card-name" style="font-size: 1.6rem; font-weight: 800; margin: 0;">LIONEL MESSI</h2>
+                                    <p id="card-email" style="font-size: 0.85rem; opacity: 0.8; margin: 0;">messi.goat@kvj-analytics.com</p>
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                <div>
+                                    <label style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7;">Phone Number</label>
+                                    <p id="card-phone" style="font-weight: 700; font-size: 0.95rem; margin: 5px 0 0 0;">+91 98765 43210</p>
+                                </div>
+                                <div>
+                                    <label style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7;">Blood Group</label>
+                                    <p id="card-blood" style="font-weight: 700; font-size: 0.95rem; margin: 5px 0 0 0;">O+ POSITIVE</p>
+                                </div>
+                                <div style="grid-column: span 2; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span style="font-weight: 600; font-size: 1.1rem;">STUDENT SCORE:</span>
+                                        <input type="number" id="input-score" value="85" style="width: 80px; background: white; color: #1e3a8a; border: none; padding: 8px; border-radius: 8px; font-weight: 900; text-align: center; font-size: 1.2rem;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button onclick="generateData()" style="width: 100%; margin-top: 20px; background: #0f172a; color: white; border: none; padding: 16px; border-radius: 14px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s;">
+                            <i class="fas fa-sync-alt"></i> GENERATE STUDENT DATA
+                        </button>
+                    </div>
+
+                    <!-- RIGHT: LOGIC CONSOLE -->
+                    <div style="flex: 1.2; min-width: 400px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 24px; padding: 30px;">
+                        <h3 style="margin-bottom: 10px; font-size: 1.1rem; color: #1e3a8a;">2. Python Logic Verification</h3>
+                        <p style="color: #64748b; font-size: 0.85rem; margin-bottom: 25px;">Predict the Boolean result for each condition based on the score above.</p>
+
+                        <div id="logic-list" style="display: flex; flex-direction: column; gap: 12px;">
+                            <!-- Logic Row 1: > 100 -->
+                            <div class="logic-row" data-op=">" data-val="100" style="background: white; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between;">
+                                <code style="font-size: 1.1rem; color: #1e3a8a; font-weight: 700;">score > 100</code>
+                                <div style="display: flex; gap: 8px;">
+                                    <button onclick="selectOption(this, true)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">TRUE</button>
+                                    <button onclick="selectOption(this, false)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">FALSE</button>
+                                </div>
+                            </div>
+                            <!-- Logic Row 2: < 100 -->
+                            <div class="logic-row" data-op="<" data-val="100" style="background: white; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between;">
+                                <code style="font-size: 1.1rem; color: #1e3a8a; font-weight: 700;">score < 100</code>
+                                <div style="display: flex; gap: 8px;">
+                                    <button onclick="selectOption(this, true)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">TRUE</button>
+                                    <button onclick="selectOption(this, false)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">FALSE</button>
+                                </div>
+                            </div>
+                            <!-- Logic Row 3: == 100 -->
+                            <div class="logic-row" data-op="==" data-val="100" style="background: white; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between;">
+                                <code style="font-size: 1.1rem; color: #1e3a8a; font-weight: 700;">score == 100</code>
+                                <div style="display: flex; gap: 8px;">
+                                    <button onclick="selectOption(this, true)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">TRUE</button>
+                                    <button onclick="selectOption(this, false)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">FALSE</button>
+                                </div>
+                            </div>
+                            <!-- Logic Row 4: >= 100 -->
+                            <div class="logic-row" data-op=">=" data-val="100" style="background: white; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between;">
+                                <code style="font-size: 1.1rem; color: #1e3a8a; font-weight: 700;">score >= 100</code>
+                                <div style="display: flex; gap: 8px;">
+                                    <button onclick="selectOption(this, true)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">TRUE</button>
+                                    <button onclick="selectOption(this, false)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">FALSE</button>
+                                </div>
+                            </div>
+                            <!-- Logic Row 5: <= 100 -->
+                            <div class="logic-row" data-op="<=" data-val="100" style="background: white; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between;">
+                                <code style="font-size: 1.1rem; color: #1e3a8a; font-weight: 700;">score <= 100</code>
+                                <div style="display: flex; gap: 8px;">
+                                    <button onclick="selectOption(this, true)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">TRUE</button>
+                                    <button onclick="selectOption(this, false)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">FALSE</button>
+                                </div>
+                            </div>
+                            <!-- Logic Row 6: != 100 -->
+                            <div class="logic-row" data-op="!=" data-val="100" style="background: white; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between;">
+                                <code style="font-size: 1.1rem; color: #1e3a8a; font-weight: 700;">score != 100</code>
+                                <div style="display: flex; gap: 8px;">
+                                    <button onclick="selectOption(this, true)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">TRUE</button>
+                                    <button onclick="selectOption(this, false)" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; font-weight: 700; font-size: 0.8rem;">FALSE</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="logic-feedback" style="margin-top: 25px; padding: 15px; border-radius: 12px; display: none; font-weight: 700; text-align: center;">
+                            <!-- Feedback appears here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let selections = {};
+
+        function selectOption(btn, value) {
+            const row = btn.closest('.logic-row');
+            const op = row.getAttribute('data-op');
+            
+            // Clear other buttons in this row
+            row.querySelectorAll('button').forEach(b => {
+                b.style.background = '#f8fafc';
+                b.style.color = '#1e293b';
+                b.style.borderColor = '#cbd5e1';
+            });
+
+            // Highlight selected
+            btn.style.background = value ? '#3b82f6' : '#ef4444';
+            btn.style.color = 'white';
+            btn.style.borderColor = 'transparent';
+
+            selections[op] = value;
+        }
+
+        function generateData() {
+            const score = parseInt(document.getElementById('input-score').value) || 0;
+            const feedbackBox = document.getElementById('logic-feedback');
+            
+            // Check all 6 operations
+            const operations = [
+                { op: '>', check: score > 100 },
+                { op: '<', check: score < 100 },
+                { op: '==', check: score == 100 },
+                { op: '>=', check: score >= 100 },
+                { op: '<=', check: score <= 100 },
+                { op: '!=', check: score != 100 }
+            ];
+
+            let correctCount = 0;
+            let missingCount = 0;
+
+            operations.forEach(item => {
+                const row = document.querySelector(`.logic-row[data-op="${item.op}"]`);
+                if (selections[item.op] === undefined) {
+                    missingCount++;
+                    row.style.borderColor = '#e2e8f0';
+                } else if (selections[item.op] === item.check) {
+                    correctCount++;
+                    row.style.borderColor = '#10b981';
+                    row.style.background = '#f0fdf4';
+                } else {
+                    row.style.borderColor = '#ef4444';
+                    row.style.background = '#fef2f2';
+                }
+            });
+
+            feedbackBox.style.display = 'block';
+            if (missingCount > 0) {
+                feedbackBox.style.background = '#fffbeb';
+                feedbackBox.style.color = '#92400e';
+                feedbackBox.textContent = `⚠️ Please select True/False for all ${missingCount} remaining conditions!`;
+            } else if (correctCount === 6) {
+                feedbackBox.style.background = '#dcfce7';
+                feedbackBox.style.color = '#166534';
+                feedbackBox.innerHTML = `🏆 PERFECT! Logic Master. All 6 Boolean results are correct for score: ${score}`;
+                confettiEffect();
+            } else {
+                feedbackBox.style.background = '#fee2e2';
+                feedbackBox.style.color = '#991b1b';
+                feedbackBox.textContent = `❌ You got ${correctCount}/6 correct. Check the red boxes and try again!`;
+            }
+        }
+
+        function confettiEffect() {
+            // Simple visual feedback
+            const card = document.getElementById('student-card');
+            card.style.transform = 'scale(1.05)';
+            setTimeout(() => card.style.transform = 'scale(1)', 300);
+        }
+    </script>
+        </main>
+    </div>
+
+</body>
+</html>
